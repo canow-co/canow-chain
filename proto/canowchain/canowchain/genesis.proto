@@ -1,0 +1,14 @@
+syntax = "proto3";
+package canowchain.canowchain;
+
+import "gogoproto/gogo.proto";
+import "canowchain/canowchain/params.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "canow-chain/x/canowchain/types";
+
+// GenesisState defines the canowchain module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+  // this line is used by starport scaffolding # genesis/proto/state
+}

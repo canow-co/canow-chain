@@ -1,0 +1,12 @@
+syntax = "proto3";
+package canowchain.canowchain;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "canow-chain/x/canowchain/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+  
+}
