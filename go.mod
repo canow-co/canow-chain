@@ -3,7 +3,7 @@ module canow-chain
 go 1.18
 
 require (
-	github.com/canow-co/cheqd-node v0.0.0-20221115075030-83593b5a8229
+	github.com/canow-co/cheqd-node v0.0.0-20221116135127-9e5665026ee9
 	github.com/cosmos/cosmos-sdk v0.46.3
 	github.com/cosmos/ibc-go/v5 v5.0.0
 	github.com/ignite/cli v0.25.1
