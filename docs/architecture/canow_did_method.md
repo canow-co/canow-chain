@@ -438,7 +438,7 @@ Thus, sending a DID Document creation transaction would require
 
 In the absence of the controller field, signature with at least one key from "authentication" section is required.
 
-![Identity request](sources/identity-request.png)
+<img src="sources/identity-request.png" alt="Identity request" width=400px>
 
 ### Trusted DID chain with anonymity
 
