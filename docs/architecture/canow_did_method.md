@@ -20,6 +20,8 @@ In addition, Canow DID Method supports multiple Verifiable Credential types, inc
 
 However, Canow also offers innovative ideas in familiar SSI concepts, such as **DID Documents linked by a chain of trust** similar to the CAs concept. The verifier will no longer have to have personal trust to the issuer, it will be enough to trust at least one of the issuers higher up the trust chain. More in the section Linked DID Documents
 
+To tell more, Canow DID Method supports DIDComm Messaging V2 which makes possible using Canow Ledger for [Aries](https://github.com/hyperledger/aries-rfcs/tree/main/concepts/0302-aries-interop-profile) and [WACI](https://identity.foundation/waci-presentation-exchange/) protocols. It allows Canow to be compatible with both well-known interoperable standards.
+
 ## DID Syntax
 
 | parameter          | value                                                   |
