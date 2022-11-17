@@ -303,9 +303,9 @@ For supporting CL Anoncreds, Schema and Credential definition(Cred_def) entities
 
 ### BBS+ signature
 
-[BBS+ signature](https://w3c-ccg.github.io/ldp-bbs2020/) is a new alternative to [CL signature](https://eprint.iacr.org/2012/562.pdf) in SSI world. It is a new modern flow that supports selective disclosure and hence can be used as alternative to CL Anoncreds in many cases.
+[BBS+ signature](https://w3c-ccg.github.io/ldp-bbs2020/) is an alternative to [CL signature](https://eprint.iacr.org/2012/562.pdf) in SSI world. It is a new modern flow that supports selective disclosure and hence can be used instead of CL Anoncreds in many cases.
 
-BBS signature is stored in DID Doc [[spec](https://www.w3.org/TR/did-core/#core-properties)] like [Verification method](#verification-method) (`publicKeyMultibase` or `publicKeyJwk`) in ****[Assertion](https://www.w3.org/TR/did-core/#assertion)** section.
+BBS signature is stored in DID Doc [[spec](https://www.w3.org/TR/did-core/#core-properties)] as a [Verification method](#verification-method) (`publicKeyMultibase` or `publicKeyJwk`) in **[Assertion](https://www.w3.org/TR/did-core/#assertion)** section.
 
 ****Example:****
 
@@ -400,7 +400,7 @@ The main idea here is storing in DID2 Resource a verifiable credential issued by
 
 ![Linked DID Sequence diagram](sources/linked-did-sequence.png)
 
-This option is similar with CAs, because trusted DIDs store their “certificate” inside their DID Resource. But there are no specific roots of trust like DIDs with specific status. All DIDs have the same permissions. 
+This option is similar to CAs, because trusted DIDs store their “certificate” inside their DID Resource. But there are no specific roots of trust like DIDs with specific status. All DIDs have the same permissions. 
 
 Like any other verifiable credentials, **a credential issued by trusting DID to trusted DID can be revoked**. In such a case, it will be contained in a [Revocation Status List](https://w3c-ccg.github.io/vc-status-rl-2020/) or [Revocation Entry](https://hyperledger.github.io/anoncreds-spec/#issuer-create-and-publish-revocation-registry-objects), depending on the manner in which this type of credentials is revoked. Revocation Status List will be put into the Issuer’s DID resource.
 
@@ -436,7 +436,7 @@ Thus, sending a DID Document creation transaction would require
 - a Cosmos signature to pay some fee for writing to the ledger and
 - identity signatures of all DID Document controllers contained in the message.
 
-In the absence of the controller field, signature with at least one key from "authentication" section is required.
+In the absence of the controller field, signature with at least one key from `authentication` section is required.
 
 <img src="sources/identity-request.png" alt="Identity request" width=400px>
 
