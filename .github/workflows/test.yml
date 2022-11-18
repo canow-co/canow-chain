@@ -76,7 +76,7 @@ jobs:
   report-results:
     name: "Report"
     runs-on: ubuntu-latest
-    needs: [unit-tests, integration-tests]
+    needs: [integration-tests]
     if: always()
 
     steps:
