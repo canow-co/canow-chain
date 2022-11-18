@@ -1,0 +1,80 @@
+name: "Build"
+on:
+  workflow_call:
+defaults:
+  run:
+    shell: bash
+
+
+jobs:
+
+  build-binary:
+    name: "Node binary"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: actions/setup-go@v3
+        with:
+          go-version-file: ./go.mod
+          cache: true
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v3
+        with:
+          distribution: goreleaser
+          version: latest
+          args: build --rm-dist --snapshot --id ubuntu-latest-amd64
+
+      - name: Store artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: canow-chain
+          path: dist/ubuntu-latest-amd64_linux_amd64_v1/canow-chain
+
+  build-docker:
+    name: "Docker image"
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ${{ github.repository }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        id: buildx
+        with:
+          install: true
+          version: latest
+
+      - name: Configure Docker image metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=raw,value=build-latest
+            type=sha,format=long
+
+      - name: Build image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: linux/amd64
+          load: true
+          target: runner
+          tags: ${{ steps.meta.outputs.tags }}
+          outputs: type=docker,dest=/tmp/canow-chain-build.tar
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+
+      - name: Upload Docker build image
+        uses: actions/upload-artifact@v3
+        with:
+          name: canow-chain-build.tar
+          path: /tmp/canow-chain-build.tar
