@@ -39,6 +39,8 @@ import (
 
 	"canow-chain/app"
 	appparams "canow-chain/app/params"
+
+	cheqdcmd "github.com/canow-co/cheqd-node/cmd/cheqd-noded/cmd"
 )
 
 // NewRootCmd creates a new root command for a Cosmos SDK application
@@ -118,8 +120,10 @@ func initRootCmd(
 		genutilcli.ValidateGenesisCmd(app.ModuleBasics),
 		AddGenesisAccountCmd(app.DefaultNodeHome),
 		tmcli.NewCompletionCmd(rootCmd, true),
-		debug.Cmd(),
 		config.Cmd(),
+		cheqdcmd.ExtendInit(genutilcli.InitCmd(app.ModuleBasics, app.DefaultNodeHome)),
+		cheqdcmd.ConfigureCmd(app.DefaultNodeHome),
+		cheqdcmd.ExtendDebug(debug.Cmd()),
 		// this line is used by starport scaffolding # root/commands
 	)
 
