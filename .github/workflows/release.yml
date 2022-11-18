@@ -1,53 +1,129 @@
-## This workflow is useful if you want to automate the process of:
-##
-## a) Creating a new prelease when you push a new tag with a "v" prefix (version).
-##
-##    This type of prerelease is meant to be used for production: alpha, beta, rc, etc. types of releases.
-##    After the prerelease is created, you need to make your changes on the release page at the relevant
-##    Github page and publish your release.
-##
-## b) Creating/updating the "latest" prerelease when you push to your default branch.
-##
-##    This type of prelease is useful to make your bleeding-edge binaries available to advanced users.
-##
-## The workflow will not run if there is no tag pushed with a "v" prefix and no change pushed to your
-## default branch.
-#on: push
-#
-#jobs:
-#  might_release:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v2
-#        with:
-#          fetch-depth: 0
-#
-#      - name: Prepare Release Variables
-#        id: vars
-#        uses: ignite/cli/actions/release/vars@develop
-#
-#      - name: Issue Release Assets
-#        uses: ignite/cli/actions/cli@develop
-#        if: ${{ steps.vars.outputs.should_release == 'true' }}
-#        with:
-#          args: chain build --release --release.prefix ${{ steps.vars.outputs.tarball_prefix }} -t linux:amd64 -t darwin:amd64 -t darwin:arm64
-#
-#      - name: Delete the "latest" Release
-#        uses: dev-drprasad/delete-tag-and-release@v0.2.0
-#        if: ${{ steps.vars.outputs.is_release_type_latest == 'true' }}
-#        with:
-#          tag_name: ${{ steps.vars.outputs.tag_name }}
-#          delete_release: true
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-#
-#      - name: Publish the Release
-#        uses: softprops/action-gh-release@v1
-#        if: ${{ steps.vars.outputs.should_release == 'true' }}
-#        with:
-#          tag_name: ${{ steps.vars.outputs.tag_name }}
-#          files: release/*
-#          prerelease: true
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+name: "Release"
+on:
+  workflow_call:
+defaults:
+  run:
+    shell: bash
+permissions:
+  contents: write
+  packages: write
+
+
+jobs:
+
+  release-binary:
+    name: "Node binary"
+    runs-on: ubuntu-latest
+    outputs:
+      RELEASE_VERSION: ${{ steps.set-version.outputs.RELEASE_VERSION }}
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Required to fetch version
+          persist-credentials: false
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version-file: ./go.mod
+          cache: true
+
+      # Node.js setup is needed to run Semantic Release
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      # Setup for pushing to Buf.build later
+      - uses: bufbuild/buf-setup-action@v1.9.0
+
+      # Required for short-lived token provided to Semantic Release
+      - name: "Obtain Github App token"
+        id: app-token
+        uses: getsentry/action-github-app-token@v2.0.0
+        with:
+          app_id: ${{ secrets.BOT_APP_ID }}
+          private_key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+
+      - name: "Install Semantic Release dependencies"
+        run: npm ci
+
+      - name: "Execute Semantic Release"
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v3
+        with:
+          distribution: goreleaser
+          version: latest
+          args: release --rm-dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Set release version number
+        id: set-version
+        run: |
+          RELEASE_VERSION=$( git describe --tags ${{ github.sha }})
+          echo ::set-output name=RELEASE_VERSION::"$RELEASE_VERSION"
+
+      # Push Protobufs to Buf.build registry
+      - uses: bufbuild/buf-push-action@v1
+        with:
+          input: proto
+          buf_token: ${{ secrets.BUF_TOKEN }}
+
+  release-docker:
+    name: "Docker image"
+    needs: release-binary
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ${{ github.repository }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        id: buildx
+        with:
+          version: latest
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_TOKEN }}
+      
+      - name: Configure Docker image metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository}}
+          flavor: |
+            latest=auto
+          tags: |
+            type=semver,pattern={{version}},value=${{ needs.release-binary.outputs.RELEASE_VERSION }}
+            type=raw,value=production-latest
+            type=sha,format=long
+          labels: |
+            org.opencontainers.image.vendor="Canow"
+            org.opencontainers.image.created={{date 'dddd, MMMM Do YYYY, h:mm:ss a'}}
+#            org.opencontainers.image.documentation="https://docs.cheqd.io/node"
+
+      - name: Build and push image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
