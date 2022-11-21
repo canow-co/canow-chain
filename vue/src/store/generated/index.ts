@@ -1,10 +1,8 @@
 // THIS FILE IS GENERATED AUTOMATICALLY. DO NOT MODIFY.
 
-import CanowchainCanowchain from './canowchain.canowchain'
 
 
 export default { 
-  CanowchainCanowchain: load(CanowchainCanowchain, 'canowchain.canowchain'),
   
 }
 
