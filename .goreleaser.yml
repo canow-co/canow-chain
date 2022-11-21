@@ -10,7 +10,6 @@ before:
     - make clean
     - go mod tidy
     - go mod download
-    - make proto-gen
 
 builds:
   - id: ubuntu-latest-amd64
