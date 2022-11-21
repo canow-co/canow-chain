@@ -51,24 +51,6 @@ jobs:
           version: v1.47
           args: --config .github/linters/.golangci.yaml
 
-#  proto-lint:
-#    name: "Protobuf"
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#
-#      # Install the `buf` CLI
-#      - uses: bufbuild/buf-setup-action@v1.8.0
-#
-#      # Lint
-#      - uses: bufbuild/buf-lint-action@v1
-#
-#      # Breaking change detection
-#      - uses: bufbuild/buf-breaking-action@v1
-#        with:
-#          input: 'proto'
-#          against: 'https://github.com/canow-co/canow-chain.git#branch=develop,ref=HEAD~1,subdir=proto'
-
   super-lint:
     name: "Super Linter"
     runs-on: ubuntu-latest
@@ -82,6 +64,7 @@ jobs:
       uses: github/super-linter/slim@v4
       env:
         IGNORE_GITIGNORED_FILES: true
+        FILTER_REGEX_EXCLUDE: vue/.*
         DEFAULT_BRANCH: main
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         LOG_LEVEL: WARN
@@ -94,7 +77,7 @@ jobs:
         VALIDATE_GITHUB_ACTIONS: true
         VALIDATE_JSON: true
         VALIDATE_MARKDOWN: true
-        VALIDATE_OPENAPI: true
+#        VALIDATE_OPENAPI: true
         VALIDATE_PYTHON_PYLINT: true
         VALIDATE_XML: true
         VALIDATE_YAML: true

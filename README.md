@@ -1,2 +1,3 @@
-# aurum
-Aurum ledger
+# Canow chain
+
+Canow ledger
