@@ -27,16 +27,3 @@ jobs:
     needs: call-lint
     uses: ./.github/workflows/build.yml
     secrets: inherit
-  
-  call-test:
-    name: "Tests"
-    needs: call-build
-    uses: ./.github/workflows/test.yml
-    secrets: inherit
-
-  call-release:
-    name: "Release"
-    needs: call-test
-    if: ${{ github.ref_type == 'tag' }}
-    uses: ./.github/workflows/release.yml
-    secrets: inherit
