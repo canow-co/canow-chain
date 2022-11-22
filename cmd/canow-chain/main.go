@@ -1,13 +1,12 @@
 package main
 
 import (
+	"canow-chain/app"
+	"canow-chain/cmd/canow-chain/cmd"
 	"os"
 
 	"github.com/cosmos/cosmos-sdk/server"
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
-
-	"canow-chain/app"
-	"canow-chain/cmd/canow-chain/cmd"
 )
 
 func main() {

@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"canow-chain/app"
 	"errors"
 	"io"
 	"os"
@@ -37,7 +38,6 @@ import (
 
 	// this line is used by starport scaffolding # root/moduleImport
 
-	"canow-chain/app"
 	appparams "canow-chain/app/params"
 
 	cheqdcmd "github.com/canow-co/cheqd-node/cmd/cheqd-noded/cmd"
@@ -234,7 +234,10 @@ func overwriteFlagDefaults(c *cobra.Command, defaults map[string]string) {
 	set := func(s *pflag.FlagSet, key, val string) {
 		if f := s.Lookup(key); f != nil {
 			f.DefValue = val
-			f.Value.Set(val)
+			err := f.Value.Set(val)
+			if err != nil {
+				panic(err)
+			}
 		}
 	}
 	for key, val := range defaults {
