@@ -1,5 +1,16 @@
 name: "Workflow Dispatch"
-on: push
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
+      - ready_for_review
+      - review_requested
+  push:
+    tags:
+      - '*'
 concurrency: 
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -27,6 +38,6 @@ jobs:
   call-release:
     name: "Release"
     needs: call-test
-    if: ${{ github.ref_protected == true }}
+    if: ${{ github.ref_type == 'tag' }}
     uses: ./.github/workflows/release.yml
     secrets: inherit

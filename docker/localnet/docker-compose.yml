@@ -26,7 +26,7 @@ services:
     volumes:
       - type: volume
         source: validator-0-data
-        target: /home/cheqd
+        target: /home/canow
     env_file:
       - container-env/validator-0.env
     configs:
@@ -64,7 +64,7 @@ services:
     volumes:
       - type: volume
         source: validator-1-data
-        target: /home/cheqd
+        target: /home/canow
     env_file:
       - container-env/validator-1.env
     configs:
@@ -102,7 +102,7 @@ services:
     volumes:
       - type: volume
         source: validator-2-data
-        target: /home/cheqd
+        target: /home/canow
     env_file:
       - container-env/validator-2.env
     configs:
@@ -140,7 +140,7 @@ services:
     volumes:
       - type: volume
         source: validator-3-data
-        target: /home/cheqd
+        target: /home/canow
     env_file:
       - container-env/validator-3.env
     configs:
@@ -178,7 +178,7 @@ services:
     volumes:
       - type: volume
         source: seed-0-data
-        target: /home/cheqd
+        target: /home/canow
     env_file:
       - container-env/seed-0.env
     configs:
@@ -209,7 +209,7 @@ services:
     volumes:
       - type: volume
         source: observer-0-data
-        target: /home/cheqd
+        target: /home/canow
     entrypoint: [ "node-start" ]
     healthcheck:
       test: curl -s http://localhost:27157/status | grep -c false

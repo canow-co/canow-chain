@@ -114,7 +114,7 @@ jobs:
           labels: |
             org.opencontainers.image.vendor="Canow"
             org.opencontainers.image.created={{date 'dddd, MMMM Do YYYY, h:mm:ss a'}}
-#            org.opencontainers.image.documentation="https://docs.cheqd.io/node"
+#            org.opencontainers.image.documentation=""
 
       - name: Build and push image
         uses: docker/build-push-action@v3

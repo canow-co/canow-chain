@@ -12,7 +12,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # Params
-CHAIN_ID=${1:-"cheqd"} # First parameter, default is "cheqd"
+CHAIN_ID=${1:-"canow"} # First parameter, default is "canow"
 
 VALIDATORS_COUNT=${2:-4} # Second parameter, default is 4
 SEEDS_COUNT=${3:-1} # Third parameter, default is 1

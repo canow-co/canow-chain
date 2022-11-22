@@ -30,13 +30,13 @@ RUN apk update && apk add --no-cache bash ca-certificates
 COPY --from=builder /go/src/github.com/canow-co/canow-chain/build/canow-chain /bin/canow-chain
 
 # Set user directory and details
-ARG HOME_DIR="/home/cheqd"
-ARG USER="cheqd"
+ARG HOME_DIR="/home/canow"
+ARG USER="canow"
 ARG GROUP=${USER}
 ARG UID=1000
 ARG GID=${UID}
 
-# Add cheqd user to use in the container
+# Add canow user to use in the container
 RUN addgroup --system ${GROUP} --gid ${GID} \
     && adduser ${USER} --uid ${UID} -G ${GROUP} --system --home ${HOME_DIR} --shell /bin/bash
 

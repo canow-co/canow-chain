@@ -4,11 +4,11 @@
 # e -> exit immediately, u -> treat unset variables as errors and immediately, o -> sets the exit code to the rightmost command 
 set -euo pipefail
 
-# within the container, $HOME=/home/cheqd
-CHEQD_ROOT_DIR="$HOME/.cheqdnode"
+# within the container, $HOME=/home/canow
+CANOW_ROOT_DIR="$HOME/.canowchain"
 
 # Init node config directory
-if [ ! -d "${CHEQD_ROOT_DIR}/config" ]
+if [ ! -d "${CANOW_ROOT_DIR}/config" ]
 then
     echo "Node config not found. Initializing."
     canow-chain init "moniker-placeholder"
@@ -20,7 +20,7 @@ fi
 if [ -f "/genesis" ]
 then
     echo "Genesis file passed. Adding/replacing current genesis file."
-    cp /genesis "${CHEQD_ROOT_DIR}/config/genesis.json"
+    cp /genesis "${CANOW_ROOT_DIR}/config/genesis.json"
 else
     echo "No genesis file passed. Skipping and retaining existing genesis."
 fi
@@ -29,8 +29,8 @@ fi
 if [ -f "/seeds" ]
 then
     echo "Seeds file passed. Overriding current seeds."
-    cp /seeds "${CHEQD_ROOT_DIR}/config/seeds.txt"
-    CANOW_CHAIN_P2P_SEEDS="$(cat "${CHEQD_ROOT_DIR}/config/seeds.txt")"
+    cp /seeds "${CANOW_ROOT_DIR}/config/seeds.txt"
+    CANOW_CHAIN_P2P_SEEDS="$(cat "${CANOW_ROOT_DIR}/config/seeds.txt")"
     export CANOW_CHAIN_P2P_SEEDS
 else
     echo "No seeds file passed. Skipping and retaining existing seeds."
@@ -40,7 +40,7 @@ fi
 if [ -f "/node_key" ]
 then
     echo "Node key file passed. Overriding current key."
-    cp /node_key "${CHEQD_ROOT_DIR}/config/node_key.json"
+    cp /node_key "${CANOW_ROOT_DIR}/config/node_key.json"
 else
     echo "No node key file passed. Skipping and retaining existing node key."
 fi
@@ -49,7 +49,7 @@ fi
 if [ -f "/priv_validator_key" ]
 then
     echo "Private validator key file passed. Replacing current key."
-    cp /priv_validator_key "${CHEQD_ROOT_DIR}/config/priv_validator_key.json"
+    cp /priv_validator_key "${CANOW_ROOT_DIR}/config/priv_validator_key.json"
 else
     echo "No private validator key file passed. Skipping and retaining existing key."
 fi
