@@ -19,9 +19,10 @@ function import_key() {
     echo "${MNEMONIC}" | canow-chain keys add "${ALIAS}" --keyring-backend ${KEYRING_BACKEND} --recover
 }
 
-import_key "base_account_1" "sketch mountain erode window enact net enrich smoke claim kangaroo another visual write meat latin bacon pulp similar forum guilt father state erase bright"
-import_key "base_account_2" "ugly dirt sorry girl prepare argue door man that manual glow scout bomb pigeon matter library transfer flower clown cat miss pluck drama dizzy"
-import_key "base_vesting_account" "coach index fence broken very cricket someone casino dial truth fitness stay habit such three jump exotic spawn planet fragile walk enact angry great"
-import_key "continuous_vesting_account" "phone worry flame safe panther dirt picture pepper purchase tiny search theme issue genre orange merit stove spoil surface color garment mind chuckle image"
-import_key "delayed_vesting_account" "pilot text keen deal economy donkey use artist divide foster walk pink breeze proud dish brown icon shaft infant level labor lift will tomorrow"
-import_key "periodic_vesting_account" "want merge flame plate trouble moral submit wing whale sick meat lonely yellow lens enable oyster slight health vast weird radar mesh grab olive"
+
+import_key "base_account_1" "web region erupt kitchen ignore scout always cool advance tip window thank become liberty uncle reject powder task wheat industry blouse frozen trend two"
+import_key "base_account_2" "field result budget animal friend solar update diesel sock almost casino play emotion pink honey conduct check witness copy eagle unlock genius brown dice"
+import_key "base_vesting_account" "decide black crew connect cricket duck return finish piece license rough design lunch rude remember faculty shy cannon list toddler throw divide rent antique"
+import_key "continuous_vesting_account" "pill soap false obvious echo still marine salute wheel patrol tourist sunset pizza destroy know alpha scare foot tragic lamp twin zero tonight defy"
+import_key "delayed_vesting_account" "grant sample panda define master just pink mesh trash bulk north nominee avocado car banner wide hip amateur boost seek basic ribbon phrase day"
+import_key "periodic_vesting_account" "cattle deliver practice infant clip want tag exercise inch guilt equal license connect shoe boat high garage people slim party display demise lesson curious"
