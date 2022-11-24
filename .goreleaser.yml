@@ -92,7 +92,7 @@ changelog:
 
 release:
   github:
-    owner: canow
+    owner: canow-co
     name: canow-chain
   
   draft: false
