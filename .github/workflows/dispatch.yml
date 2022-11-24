@@ -30,7 +30,7 @@ jobs:
 
   call-release:
     name: "Release"
-    needs: call-test
+    needs: call-build
 #    if: ${{ github.ref_type == 'tag' }}
     uses: ./.github/workflows/release.yml
     secrets: inherit
