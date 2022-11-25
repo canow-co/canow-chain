@@ -55,6 +55,9 @@ jobs:
 
       - name: Restore binary permissions
         run: sudo chmod +x ${{ env.RUNNER_BIN_DIR }}/canow-chain
+      
+      - name: Change broadcast-mode an application CLI configuration file
+        run: canow-chain config broadcast-mode block
 
       - name: Download node Docker image
         uses: actions/download-artifact@v3
