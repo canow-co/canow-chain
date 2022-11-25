@@ -1,10 +1,9 @@
 package cli
 
 import (
+	"canow-chain/tests/integration/network"
 	"encoding/json"
 	"strings"
-
-	"canow-chain/tests/integration/network"
 
 	"github.com/canow-co/cheqd-node/tests/integration/helpers"
 	"github.com/canow-co/cheqd-node/x/did/client/cli"
