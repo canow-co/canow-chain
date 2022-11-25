@@ -20,18 +20,14 @@ jobs:
           go-version-file: ./go.mod
           cache: true
 
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v3
-        with:
-          distribution: goreleaser
-          version: latest
-          args: build --rm-dist --snapshot --id ubuntu-latest-amd64
+      - name: Build application binary
+        run: make build
 
       - name: Store artifact
         uses: actions/upload-artifact@v3
         with:
           name: canow-chain
-          path: dist/ubuntu-latest-amd64_linux_amd64_v1/canow-chain
+          path: build/canow-chain
 
   build-docker:
     name: "Docker image"
