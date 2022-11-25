@@ -3,11 +3,11 @@
 | Category              | Status                                                                                   |
 |-----------------------|------------------------------------------------------------------------------------------|
 | Document type         | Specification                                                                            |
-| Authors               | Renata Toktar, Alexander Sherbakov, Kunihiro Katsuragi, Mathias Glintborg, Houssein Diab |
+| Authors               | Kunihiro Katsuragi, Mathias Glintborg, Houssein Diab, Renata Toktar, Alexander Sherbakov |
 | Stage                 | Draft                                                                                    |
 | Implementation Status | Not implemented                                                                          |
 | Start Date            | 2022-11-03                                                                               |
-| Last Updated          | 2022-11-21                                                                                |
+| Last Updated          | 2022-11-25                                                                               |
 
 ## Summary
 
