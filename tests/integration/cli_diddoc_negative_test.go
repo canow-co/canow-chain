@@ -6,10 +6,10 @@ import (
 	"crypto/ed25519"
 	"fmt"
 
-	"github.com/canow-co/cheqd-node/tests/integration/cli"
+	"canow-chain/tests/integration/cli"
+	"canow-chain/tests/integration/network"
+	"canow-chain/tests/integration/testdata"
 	helpers "github.com/canow-co/cheqd-node/tests/integration/helpers"
-	"github.com/canow-co/cheqd-node/tests/integration/network"
-	"github.com/canow-co/cheqd-node/tests/integration/testdata"
 	cli_types "github.com/canow-co/cheqd-node/x/did/client/cli"
 	"github.com/canow-co/cheqd-node/x/did/types"
 	"github.com/google/uuid"
@@ -19,9 +19,15 @@ import (
 )
 
 var _ = Describe("cheqd cli - negative did", func() {
+	var tmpDir string
+
+	BeforeEach(func() {
+		tmpDir = GinkgoT().TempDir()
+	})
+
 	It("cannot create diddoc with missing cli arguments, sign inputs mismatch, non-supported VM type, already existing did", func() {
 		// Define a valid new DID Doc
-		did := "did:cheqd:" + network.DID_NAMESPACE + ":" + uuid.NewString()
+		did := "did:canow:" + network.DID_NAMESPACE + ":" + uuid.NewString()
 		keyId := did + "#key1"
 
 		pubKey, privKey, err := ed25519.GenerateKey(nil)
@@ -41,6 +47,7 @@ var _ = Describe("cheqd cli - negative did", func() {
 				},
 			},
 			Authentication: []string{keyId},
+			VersionId:      uuid.NewString(),
 		}
 
 		signInputs := []cli_types.SignInput{
@@ -49,13 +56,12 @@ var _ = Describe("cheqd cli - negative did", func() {
 				PrivKey:              privKey,
 			},
 		}
-
-		res, err := cli.CreateDidDoc(payload, signInputs, testdata.BASE_ACCOUNT_1)
+		res, err := cli.CreateDidDoc(tmpDir, payload, signInputs, testdata.BASE_ACCOUNT_1)
 		Expect(err).To(BeNil())
 		Expect(res.Code).To(BeEquivalentTo(0))
 
 		// Second new valid DID Doc
-		did2 := "did:cheqd:" + network.DID_NAMESPACE + ":" + uuid.NewString()
+		did2 := "did:canow:" + network.DID_NAMESPACE + ":" + uuid.NewString()
 		keyId2 := did2 + "#key1"
 
 		pubKey2, privKey2, err := ed25519.GenerateKey(nil)
@@ -75,6 +81,7 @@ var _ = Describe("cheqd cli - negative did", func() {
 				},
 			},
 			Authentication: []string{keyId2},
+			VersionId:      uuid.NewString(),
 		}
 
 		signInputs2 := []cli_types.SignInput{
@@ -87,39 +94,39 @@ var _ = Describe("cheqd cli - negative did", func() {
 		AddReportEntry("Integration", fmt.Sprintf("%sNegative: %s", cli.PURPLE, "cannot create diddoc with missing cli arguments"))
 		// Fail to create a new DID Doc with missing cli arguments
 		//   a. missing payload, sign inputs and account
-		_, err = cli.CreateDidDoc(types.MsgCreateDidDocPayload{}, []cli_types.SignInput{}, "")
+		_, err = cli.CreateDidDoc(tmpDir, types.MsgCreateDidDocPayload{}, []cli_types.SignInput{}, "")
 		Expect(err).ToNot(BeNil())
 
 		//   b. missing payload, sign inputs
-		_, err = cli.CreateDidDoc(types.MsgCreateDidDocPayload{}, []cli_types.SignInput{}, testdata.BASE_ACCOUNT_2)
+		_, err = cli.CreateDidDoc(tmpDir, types.MsgCreateDidDocPayload{}, []cli_types.SignInput{}, testdata.BASE_ACCOUNT_2)
 		Expect(err).ToNot(BeNil())
 
 		//   c. missing payload, account
-		_, err = cli.CreateDidDoc(types.MsgCreateDidDocPayload{}, signInputs2, "")
+		_, err = cli.CreateDidDoc(tmpDir, types.MsgCreateDidDocPayload{}, signInputs2, "")
 
 		//   d. missing sign inputs, account
-		_, err = cli.CreateDidDoc(payload2, []cli_types.SignInput{}, "")
+		_, err = cli.CreateDidDoc(tmpDir, payload2, []cli_types.SignInput{}, "")
 
 		//   e. missing payload
-		_, err = cli.CreateDidDoc(types.MsgCreateDidDocPayload{}, signInputs2, testdata.BASE_ACCOUNT_2)
+		_, err = cli.CreateDidDoc(tmpDir, types.MsgCreateDidDocPayload{}, signInputs2, testdata.BASE_ACCOUNT_2)
 		Expect(err).ToNot(BeNil())
 
 		//   f. missing sign inputs
-		_, err = cli.CreateDidDoc(payload2, []cli_types.SignInput{}, testdata.BASE_ACCOUNT_2)
+		_, err = cli.CreateDidDoc(tmpDir, payload2, []cli_types.SignInput{}, testdata.BASE_ACCOUNT_2)
 		Expect(err).ToNot(BeNil())
 
 		//   g. missing account
-		_, err = cli.CreateDidDoc(payload2, signInputs2, "")
+		_, err = cli.CreateDidDoc(tmpDir, payload2, signInputs2, "")
 		Expect(err).ToNot(BeNil())
 
 		AddReportEntry("Integration", fmt.Sprintf("%sNegative: %s", cli.PURPLE, "cannot create diddoc with sign inputs mismatch"))
 		// Fail to create a new DID Doc with sign inputs mismatch
 		//   a. sign inputs mismatch
-		_, err = cli.CreateDidDoc(payload2, signInputs, testdata.BASE_ACCOUNT_2)
+		_, err = cli.CreateDidDoc(tmpDir, payload2, signInputs, testdata.BASE_ACCOUNT_2)
 		Expect(err).ToNot(BeNil())
 
 		//   b. non-existing key id
-		_, err = cli.CreateDidDoc(payload2, []cli_types.SignInput{
+		_, err = cli.CreateDidDoc(tmpDir, payload2, []cli_types.SignInput{
 			{
 				VerificationMethodId: "non-existing-key-id",
 				PrivKey:              privKey2,
@@ -128,7 +135,7 @@ var _ = Describe("cheqd cli - negative did", func() {
 		Expect(err).ToNot(BeNil())
 
 		//   c. non-matching private key
-		_, err = cli.CreateDidDoc(payload2, []cli_types.SignInput{
+		_, err = cli.CreateDidDoc(tmpDir, payload2, []cli_types.SignInput{
 			{
 				VerificationMethodId: keyId2,
 				PrivKey:              privKey,
@@ -139,12 +146,12 @@ var _ = Describe("cheqd cli - negative did", func() {
 		// Fail to create a new DID Doc with non-supported VM type
 		payload3 := payload2
 		payload3.VerificationMethod[0].Type = "NonSupportedVMType"
-		_, err = cli.CreateDidDoc(payload3, signInputs2, testdata.BASE_ACCOUNT_2)
+		_, err = cli.CreateDidDoc(tmpDir, payload3, signInputs2, testdata.BASE_ACCOUNT_2)
 		Expect(err).ToNot(BeNil())
 
 		AddReportEntry("Integration", fmt.Sprintf("%sNegative: %s", cli.PURPLE, "cannot create diddoc with already existing DID"))
 		// Fail to create a new DID Doc with already existing DID
-		_, err = cli.CreateDidDoc(payload, signInputs, testdata.BASE_ACCOUNT_1)
+		_, err = cli.CreateDidDoc(tmpDir, payload, signInputs, testdata.BASE_ACCOUNT_1)
 		Expect(err).ToNot(BeNil())
 	})
 
@@ -152,7 +159,7 @@ var _ = Describe("cheqd cli - negative did", func() {
 
 	It("cannot update a DID Doc with missing cli arguments, sign inputs mismatch, non-supported VM type, non-existing did, unchanged payload", func() {
 		// Define a valid DID Doc to be updated
-		did := "did:cheqd:" + network.DID_NAMESPACE + ":" + uuid.NewString()
+		did := "did:canow:" + network.DID_NAMESPACE + ":" + uuid.NewString()
 		keyId := did + "#key1"
 
 		pubKey, privKey, err := ed25519.GenerateKey(nil)
@@ -173,6 +180,7 @@ var _ = Describe("cheqd cli - negative did", func() {
 				},
 			},
 			Authentication: []string{keyId},
+			VersionId:      uuid.NewString(),
 		}
 
 		signInputs := []cli_types.SignInput{
@@ -182,7 +190,7 @@ var _ = Describe("cheqd cli - negative did", func() {
 			},
 		}
 
-		res, err := cli.CreateDidDoc(payload, signInputs, testdata.BASE_ACCOUNT_1)
+		res, err := cli.CreateDidDoc(tmpDir, payload, signInputs, testdata.BASE_ACCOUNT_1)
 		Expect(err).To(BeNil())
 		Expect(res.Code).To(BeEquivalentTo(0))
 
@@ -199,15 +207,15 @@ var _ = Describe("cheqd cli - negative did", func() {
 			},
 			Authentication:  []string{keyId},
 			AssertionMethod: []string{keyId},
-			VersionId:       res.TxHash,
+			VersionId:       uuid.NewString(),
 		}
 
-		res, err = cli.UpdateDidDoc(updatedPayload, signInputs, testdata.BASE_ACCOUNT_1)
+		res, err = cli.UpdateDidDoc(tmpDir, updatedPayload, signInputs, testdata.BASE_ACCOUNT_1)
 		Expect(err).To(BeNil())
 		Expect(res.Code).To(BeEquivalentTo(0))
 
 		// Generate second controller
-		did2 := "did:cheqd:" + network.DID_NAMESPACE + ":" + uuid.NewString()
+		did2 := "did:canow:" + network.DID_NAMESPACE + ":" + uuid.NewString()
 		keyId2 := did2 + "#key1"
 		keyId2AsExtraController := did + "#key2"
 
@@ -229,6 +237,7 @@ var _ = Describe("cheqd cli - negative did", func() {
 				},
 			},
 			Authentication: []string{keyId2},
+			VersionId:      uuid.NewString(),
 		}
 
 		signInputs2 := []cli_types.SignInput{
@@ -238,7 +247,7 @@ var _ = Describe("cheqd cli - negative did", func() {
 			},
 		}
 
-		res_, err := cli.CreateDidDoc(payload2, signInputs2, testdata.BASE_ACCOUNT_2)
+		res_, err := cli.CreateDidDoc(tmpDir, payload2, signInputs2, testdata.BASE_ACCOUNT_2)
 		Expect(err).To(BeNil())
 		Expect(res_.Code).To(BeEquivalentTo(0))
 
@@ -286,51 +295,52 @@ var _ = Describe("cheqd cli - negative did", func() {
 		followingUpdatedPayload.Authentication = append(followingUpdatedPayload.Authentication, keyId2AsExtraController)
 		followingUpdatedPayload.CapabilityDelegation = []string{keyId}
 		followingUpdatedPayload.CapabilityInvocation = []string{keyId}
+		followingUpdatedPayload.VersionId = uuid.NewString()
 
 		signInputsAugmented := append(signInputs, signInputs2...)
 
 		AddReportEntry("Integration", fmt.Sprintf("%sNegative: %s", cli.PURPLE, "cannot update diddoc with missing cli arguments"))
 		// Fail to update the DID Doc with missing cli arguments
 		//   a. missing payload, sign inputs and account
-		_, err = cli.UpdateDidDoc(types.MsgUpdateDidDocPayload{}, []cli_types.SignInput{}, "")
+		_, err = cli.UpdateDidDoc(tmpDir, types.MsgUpdateDidDocPayload{}, []cli_types.SignInput{}, "")
 		Expect(err).ToNot(BeNil())
 
 		//   b. missing payload, sign inputs
-		_, err = cli.UpdateDidDoc(types.MsgUpdateDidDocPayload{}, []cli_types.SignInput{}, testdata.BASE_ACCOUNT_1)
+		_, err = cli.UpdateDidDoc(tmpDir, types.MsgUpdateDidDocPayload{}, []cli_types.SignInput{}, testdata.BASE_ACCOUNT_1)
 		Expect(err).ToNot(BeNil())
 
 		//   c. missing payload, account
-		_, err = cli.UpdateDidDoc(types.MsgUpdateDidDocPayload{}, signInputs, testdata.BASE_ACCOUNT_1)
+		_, err = cli.UpdateDidDoc(tmpDir, types.MsgUpdateDidDocPayload{}, signInputs, testdata.BASE_ACCOUNT_1)
 		Expect(err).ToNot(BeNil())
 
 		//   d. missing sign inputs, account
-		_, err = cli.UpdateDidDoc(followingUpdatedPayload, []cli_types.SignInput{}, testdata.BASE_ACCOUNT_1)
+		_, err = cli.UpdateDidDoc(tmpDir, followingUpdatedPayload, []cli_types.SignInput{}, testdata.BASE_ACCOUNT_1)
 		Expect(err).ToNot(BeNil())
 
 		//   e. missing payload
-		_, err = cli.UpdateDidDoc(types.MsgUpdateDidDocPayload{}, signInputs, testdata.BASE_ACCOUNT_1)
+		_, err = cli.UpdateDidDoc(tmpDir, types.MsgUpdateDidDocPayload{}, signInputs, testdata.BASE_ACCOUNT_1)
 		Expect(err).ToNot(BeNil())
 
 		//   f. missing sign inputs
-		_, err = cli.UpdateDidDoc(followingUpdatedPayload, []cli_types.SignInput{}, testdata.BASE_ACCOUNT_1)
+		_, err = cli.UpdateDidDoc(tmpDir, followingUpdatedPayload, []cli_types.SignInput{}, testdata.BASE_ACCOUNT_1)
 		Expect(err).ToNot(BeNil())
 
 		//   g. missing account
-		_, err = cli.UpdateDidDoc(followingUpdatedPayload, signInputs, "")
+		_, err = cli.UpdateDidDoc(tmpDir, followingUpdatedPayload, signInputs, "")
 		Expect(err).ToNot(BeNil())
 
 		AddReportEntry("Integration", fmt.Sprintf("%sNegative: %s", cli.PURPLE, "cannot update diddoc with sign inputs mismatch"))
 		// Fail to update the DID Doc with sign inputs mismatch
 		//   a. sign inputs total mismatch
-		_, err = cli.UpdateDidDoc(followingUpdatedPayload, signInputsFuzzed, testdata.BASE_ACCOUNT_1)
+		_, err = cli.UpdateDidDoc(tmpDir, followingUpdatedPayload, signInputsFuzzed, testdata.BASE_ACCOUNT_1)
 		Expect(err).ToNot(BeNil())
 
 		//   b. sign inputs invalid length
-		_, err = cli.UpdateDidDoc(followingUpdatedPayload, signInputs, testdata.BASE_ACCOUNT_1)
+		_, err = cli.UpdateDidDoc(tmpDir, followingUpdatedPayload, signInputs, testdata.BASE_ACCOUNT_1)
 		Expect(err).ToNot(BeNil())
 
 		//   c. non-existing key id
-		_, err = cli.UpdateDidDoc(followingUpdatedPayload, []cli_types.SignInput{
+		_, err = cli.UpdateDidDoc(tmpDir, followingUpdatedPayload, []cli_types.SignInput{
 			{
 				VerificationMethodId: keyId,
 				PrivKey:              privKey,
@@ -343,7 +353,7 @@ var _ = Describe("cheqd cli - negative did", func() {
 		Expect(err).ToNot(BeNil())
 
 		//  d. non-matching private key
-		_, err = cli.UpdateDidDoc(followingUpdatedPayload, []cli_types.SignInput{
+		_, err = cli.UpdateDidDoc(tmpDir, followingUpdatedPayload, []cli_types.SignInput{
 			{
 				VerificationMethodId: keyId2AsExtraController,
 				PrivKey:              privKey,
@@ -356,7 +366,7 @@ var _ = Describe("cheqd cli - negative did", func() {
 		Expect(err).ToNot(BeNil())
 
 		//  e. invalid private key
-		_, err = cli.UpdateDidDoc(followingUpdatedPayload, []cli_types.SignInput{
+		_, err = cli.UpdateDidDoc(tmpDir, followingUpdatedPayload, []cli_types.SignInput{
 			{
 				VerificationMethodId: keyId,
 				PrivKey:              privKeyFuzzedExtra,
@@ -380,25 +390,27 @@ var _ = Describe("cheqd cli - negative did", func() {
 				VerificationMaterial: "{\"publicKeyMultibase\":\"pretty-long-public-key-multibase\"}",
 			},
 		}
-		_, err = cli.UpdateDidDoc(invalidVmTypePayload, signInputsAugmented, testdata.BASE_ACCOUNT_1)
+		invalidVmTypePayload.VersionId = uuid.NewString()
+		_, err = cli.UpdateDidDoc(tmpDir, invalidVmTypePayload, signInputsAugmented, testdata.BASE_ACCOUNT_1)
 		Expect(err).ToNot(BeNil())
 
 		AddReportEntry("Integration", fmt.Sprintf("%sNegative: %s", cli.PURPLE, "cannot update diddoc with a non-existing DID"))
 		// Fail to update a non-existing DID Doc
-		nonExistingDid := "did:cheqd:" + network.DID_NAMESPACE + ":" + uuid.NewString()
+		nonExistingDid := "did:canow:" + network.DID_NAMESPACE + ":" + uuid.NewString()
 		nonExistingDidPayload := deepCopierUpdateDid.DeepCopy(followingUpdatedPayload)
 		nonExistingDidPayload.Id = nonExistingDid
-		_, err = cli.UpdateDidDoc(nonExistingDidPayload, signInputsAugmented, testdata.BASE_ACCOUNT_1)
+		_, err = cli.UpdateDidDoc(tmpDir, nonExistingDidPayload, signInputsAugmented, testdata.BASE_ACCOUNT_1)
 		Expect(err).ToNot(BeNil())
 
 		// Finally, update the DID Doc
-		res, err = cli.UpdateDidDoc(followingUpdatedPayload, signInputsAugmented, testdata.BASE_ACCOUNT_1)
+		res, err = cli.UpdateDidDoc(tmpDir, followingUpdatedPayload, signInputsAugmented, testdata.BASE_ACCOUNT_1)
 		Expect(err).To(BeNil())
 		Expect(res.Code).To(BeEquivalentTo(0))
 
 		AddReportEntry("Integration", fmt.Sprintf("%sNegative: %s", cli.PURPLE, "cannot update diddoc with an unchanged payload"))
 		// Fail to update the DID Doc with an unchanged payload
-		_, err = cli.UpdateDidDoc(followingUpdatedPayload, signInputsAugmented, testdata.BASE_ACCOUNT_1)
+		followingUpdatedPayload.VersionId = uuid.NewString()
+		_, err = cli.UpdateDidDoc(tmpDir, followingUpdatedPayload, signInputsAugmented, testdata.BASE_ACCOUNT_1)
 		Expect(err).To(BeNil()) // TODO: Decide if this should be an error, if the DID Doc is unchanged
 	})
 
@@ -411,7 +423,7 @@ var _ = Describe("cheqd cli - negative did", func() {
 
 		AddReportEntry("Integration", fmt.Sprintf("%sNegative: %s", cli.PURPLE, "cannot query diddoc with a non-existing DID"))
 		// Fail to query a non-existing DID Doc
-		nonExistingDid := "did:cheqd:" + network.DID_NAMESPACE + ":" + uuid.NewString()
+		nonExistingDid := "did:canow:" + network.DID_NAMESPACE + ":" + uuid.NewString()
 		_, err = cli.QueryDidDoc(nonExistingDid)
 		Expect(err).ToNot(BeNil())
 	})

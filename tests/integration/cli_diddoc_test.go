@@ -6,9 +6,9 @@ import (
 	"crypto/ed25519"
 	"fmt"
 
-	"github.com/canow-co/cheqd-node/tests/integration/cli"
-	"github.com/canow-co/cheqd-node/tests/integration/network"
-	"github.com/canow-co/cheqd-node/tests/integration/testdata"
+	"canow-chain/tests/integration/cli"
+	"canow-chain/tests/integration/network"
+	"canow-chain/tests/integration/testdata"
 	cli_types "github.com/canow-co/cheqd-node/x/did/client/cli"
 	"github.com/canow-co/cheqd-node/x/did/types"
 	"github.com/google/uuid"
@@ -19,10 +19,16 @@ import (
 )
 
 var _ = Describe("cheqd cli - positive did", func() {
+	var tmpDir string
+
+	BeforeEach(func() {
+		tmpDir = GinkgoT().TempDir()
+	})
+
 	It("can create diddoc, update it and query the result", func() {
 		AddReportEntry("Integration", fmt.Sprintf("%sPositive: %s", cli.GREEN, "can create diddoc"))
 		// Create a new DID Doc
-		did := "did:cheqd:" + network.DID_NAMESPACE + ":" + uuid.NewString()
+		did := "did:canow:" + network.DID_NAMESPACE + ":" + uuid.NewString()
 		keyId := did + "#key1"
 
 		pubKey, privKey, err := ed25519.GenerateKey(nil)
@@ -42,6 +48,7 @@ var _ = Describe("cheqd cli - positive did", func() {
 				},
 			},
 			Authentication: []string{keyId},
+			VersionId:      uuid.NewString(),
 		}
 
 		signInputs := []cli_types.SignInput{
@@ -51,7 +58,8 @@ var _ = Describe("cheqd cli - positive did", func() {
 			},
 		}
 
-		res, err := cli.CreateDidDoc(payload, signInputs, testdata.BASE_ACCOUNT_1)
+		res, err := cli.CreateDidDoc(tmpDir, payload, signInputs, testdata.BASE_ACCOUNT_1)
+		fmt.Println(err)
 		Expect(err).To(BeNil())
 		Expect(res.Code).To(BeEquivalentTo(0))
 
@@ -74,7 +82,7 @@ var _ = Describe("cheqd cli - positive did", func() {
 				},
 			},
 			Authentication: []string{keyId},
-			VersionId:      res.TxHash,
+			VersionId:      uuid.NewString(),
 		}
 
 		signInputs2 := []cli_types.SignInput{
@@ -88,7 +96,7 @@ var _ = Describe("cheqd cli - positive did", func() {
 			},
 		}
 
-		res2, err := cli.UpdateDidDoc(payload2, signInputs2, testdata.BASE_ACCOUNT_1)
+		res2, err := cli.UpdateDidDoc(tmpDir, payload2, signInputs2, testdata.BASE_ACCOUNT_1)
 		Expect(err).To(BeNil())
 		Expect(res2.Code).To(BeEquivalentTo(0))
 

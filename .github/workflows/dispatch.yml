@@ -27,3 +27,9 @@ jobs:
     needs: call-lint
     uses: ./.github/workflows/build.yml
     secrets: inherit
+  
+  call-test:
+    name: "Tests"
+    needs: call-build
+    uses: ./.github/workflows/test.yml
+    secrets: inherit
