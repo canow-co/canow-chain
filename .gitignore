@@ -7,3 +7,6 @@ release/
 
 # Localnet generate folder
 **/network-config
+
+### APP-SPECIFIC EXCLUSIONS ###
+build/
