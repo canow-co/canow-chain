@@ -5,7 +5,7 @@
 set -euo pipefail
 
 # within the container, $HOME=/home/canow
-CANOW_ROOT_DIR="$HOME/.canowchain"
+CANOW_ROOT_DIR="$HOME/.canow-chain"
 
 # Init node config directory
 if [ ! -d "${CANOW_ROOT_DIR}/config" ]
