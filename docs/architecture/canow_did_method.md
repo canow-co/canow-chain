@@ -7,13 +7,13 @@
 | Stage                 | Draft                                                                                    |
 | Implementation Status | Not implemented                                                                          |
 | Start Date            | 2022-11-03                                                                               |
-| Last Updated          | 2022-11-25                                                                               |
+| Last Updated          | 2022-11-28                                                                               |
 
 ## Summary
 
 This document describes **Canow DID Method (did:canow)**, entities, transactions and more. Not only are we talking about the data structure here, but also about the features of data storage in scalable, performant and interoperable Canow ledger.
 
-Due to the use of the **CosmosSDK** framework, Canow Network has **Proof-of-Stake** protocol with a flexible and reliable payment system. 
+Due to the use of the **CosmosSDK** framework, Canow Network has **Proof-of-Stake** protocol with a flexible and reliable payment system.
 At the same time, thanks to **Tendermint** framework, the speed and reliability of the network is much higher than that of many other systems with PBFT consensus protocols. In addition, the Tendermint framework used in CosmosSDK is tailored to the network architecture with secure validator nodes, which can significantly increase network fault tolerance. The network capacity can **exceed 200 validators** and an unlimited number of observers. More in the section Privacy and Security Considerations
 
 In addition, Canow DID Method supports multiple Verifiable Credential types, including **CL Anoncreds** (Cheqd DID Resource Module integration) and **BBS+** (Aries Framework integration). This allows the ledger to be used as a verifiable data registry for most SSI flows. More in the section Verifiable credentials
@@ -43,13 +43,13 @@ DID URL can be used to retrieve things like representations of [DID subjects](ht
 Resources
 
 - `/1.0/identifiers/{did}/resources/{resourceId}` - Get resource value without dereferencing wrappers. Parameters:
-    - **did** (required, path, string) - Resource collection id. DID Doc Id. *Example : "did:canow:testnet:*SEp33q43PsdP7nDATyySSH*"*
+  - **did** (required, path, string) - Resource collection id. DID Doc Id. *Example : "did:canow:testnet:*SEp33q43PsdP7nDATyySSH*"*
     - **resourceId** (required, path, string) - DID Resource identifier. *Example : "60ad67be-b65b-40b8-b2f4-3923141ef382"*
 - `/1.0/identifiers/{did}/resources/{resourceId}/metadata` - Get resource metadata without value by DID Doc. Parameters:
-    - **did** (required, path, string) - Resource collection id. DID Doc Id. *Example : "did:canow:testnet:*SEp33q43PsdP7nDATyySSH*"*
+  - **did** (required, path, string) - Resource collection id. DID Doc Id. *Example : "did:canow:testnet:*SEp33q43PsdP7nDATyySSH*"*
     - **resourceId** (required, path, string) - DID Resource identifier. *Example : "60ad67be-b65b-40b8-b2f4-3923141ef382"*
 - `/1.0/identifiers/{did}/resources/all` - Get a list of all collection resources metadata. Parameters:
-    - **did** (required, path, string) - DID Doc Id. *Example : "did:canow:testnet:*SEp33q43PsdP7nDATyySSH*"*
+  - **did** (required, path, string) - DID Doc Id. *Example : "did:canow:testnet:*SEp33q43PsdP7nDATyySSH*"*
 
 ### Query
 
@@ -62,7 +62,7 @@ Example of DID URL for a Secondary Resource (DID fragment): `did:canow:testnet:5
 ## DID Document properties
 
 1. **@context** (optional): A list of strings with links or JSONs for describing specifications that this DID Document is following to.
-2. **id**: Target DID with canow DID Method prefix did:canow:<namespace>: and a unique-id identifier.
+2. **id**: Target DID with canow DID Method prefix `did:canow:<namespace>:` and a unique-id identifier.
 3. **controller** (optional): A list of fully qualified DID strings or one string. Contains one or more DIDs who can update this DIDdoc. All DIDs must exist.
 4. **verificationMethod** (optional): A list of [Verification Methods](#verification-method)
 5. **authentication** (optional): A set of either [Verification Methods](#verification-method) or strings with Verification Method IDs (DID URL)
@@ -112,7 +112,7 @@ Services can be defined in a DIDDoc to express means of communicating with the D
 1. **id** (string): The value of the id property for a Service MUST be a URI conforming to [RFC3986](https://www.rfc-editor.org/rfc/rfc3986). A conforming producer MUST NOT produce multiple service entries with the same ID. A conforming consumer MUST produce an error if it detects multiple service entries with the same ID. It has a follow formats: `did:canow:<namespace>:<id>#<service-alias>` or `#<service-alias>`.
 2. **type** (string): The service type and its associated properties SHOULD be registered in the [DID Specification Registries](https://www.w3.org/TR/did-spec-registries/)
 3. **serviceEndpoint** (strings): A string that conforms to the rules of [RFC3986](https://www.rfc-editor.org/rfc/rfc3986) for URIs, a map, or a set composed of a one or more strings that conform to the rules of [RFC3986](https://www.rfc-editor.org/rfc/rfc3986) for URIs and/or maps.
-4. **accept** ([string], optional): An array of media types in the order of preference for sending a message to the endpoint. These identify a *profile* of DIDComm Messaging that the endpoint supports. 
+4. **accept** ([string], optional): An array of media types in the order of preference for sending a message to the endpoint. These identify a *profile* of DIDComm Messaging that the endpoint supports.
 5. **routingKeys** ([string], optional): An ordered array of strings referencing keys to be used when preparing the message for transmission as specified in [Sender Process to Enable Forwarding](https://identity.foundation/didcomm-messaging/spec/#sender-process-to-enable-forwarding), above.
 
 Example of Service in a DIDDoc:
@@ -207,7 +207,7 @@ Example of DIDDoc metadata:
 It is associated with DID Document bytes data with specific Resource metadata. More details in [ADR 008: On-ledger Resources with DID URLs](https://github.com/cheqd/node-docs/blob/main/architecture/adr-list/adr-008-ledger-resources.md). DID Resource properties:
 
 - **ResourceMetadata**
-    - **Resource Collection ID:** an identifier of a “parent” DID Document without `did:canow:testnet:` prefix;
+  - **Resource Collection ID:** an identifier of a “parent” DID Document without `did:canow:testnet:` prefix;
     - **Resource ID:** UUID specific to resource, also effectively a version number;
     - **Resource Name:** a client defined name of a resource;
     - **Resource Type:** a client defined type of resource in a string format without any enum values;
@@ -222,18 +222,18 @@ It is associated with DID Document bytes data with specific Resource metadata. M
 
 ```jsonc
 {
-	"resourceMetadata": {
-			  "resourceCollectionId":      "DAzMQo4MDMxCjgwM",
-			  "resourceId":                "bb2118f3-5e55-4510-b420-33ef9e1726d2",
-			  "resourceName":              "PassportSchema",
-			  "resourceType":              "CL-Schema",
-			  "mediaType":                 "application/json",
-			  "created":                   "2022-04-20T20:19:19Z",
-			  "checksum":                  "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
-			  "previousVersionId":         null,
-			  "nextVersionId":             null
-	},
-	"resourceData": <"test_data" in bytes>
+ "resourceMetadata": {
+     "resourceCollectionId":      "DAzMQo4MDMxCjgwM",
+     "resourceId":                "bb2118f3-5e55-4510-b420-33ef9e1726d2",
+     "resourceName":              "PassportSchema",
+     "resourceType":              "CL-Schema",
+     "mediaType":                 "application/json",
+     "created":                   "2022-04-20T20:19:19Z",
+     "checksum":                  "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
+     "previousVersionId":         null,
+     "nextVersionId":             null
+ },
+ "resourceData": <"test_data" in bytes>
 }
 ```
 
@@ -251,18 +251,18 @@ For supporting CL Anoncreds, Schema and Credential definition(Cred_def) entities
 
 ```json
 {
-	"resourceMetadata": {
-			  "resourceCollectionId":      "DAzMQo4MDMxCjgwM",
-			  "resourceId":                "bb2118f3-5e55-4510-b420-33ef9e1726d2",
-			  "resourceName":              "PassportSchema",
-			  "resourceType":              "CL-Schema",
-			  "mediaType":                 "application/json",
-			  "created":                   "2022-04-20T20:19:19Z",
-			  "checksum":                  "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
-			  "previousVersionId":         null,
-			  "nextVersionId":             null
-	},
-	"resourceData": {"attrNames":["name","age","sex"]}
+ "resourceMetadata": {
+     "resourceCollectionId":      "DAzMQo4MDMxCjgwM",
+     "resourceId":                "bb2118f3-5e55-4510-b420-33ef9e1726d2",
+     "resourceName":              "PassportSchema",
+     "resourceType":              "CL-Schema",
+     "mediaType":                 "application/json",
+     "created":                   "2022-04-20T20:19:19Z",
+     "checksum":                  "a7c369ee9da8b25a2d6e93973fa8ca939b75abb6c39799d879a929ebea1adc0a",
+     "previousVersionId":         null,
+     "nextVersionId":             null
+ },
+ "resourceData": {"attrNames":["name","age","sex"]}
 }
 ```
 
@@ -270,36 +270,36 @@ For supporting CL Anoncreds, Schema and Credential definition(Cred_def) entities
 
 ```json
 {
-	"resourceMetadata": {
-			  "resourceCollectionId":      "DAzMQo4MDMxCjgwM",
-			  "resourceId":                "92f5ed06-0489-44e0-9215-99851654b610",
-			  "resourceName":              "PassportCredentialDefinition",
-			  "resourceType":              "CL-CredDef",
-			  "mediaType":                 "application/json",
-			  "created":                   "2022-04-20T21:10:10Z",
-			  "checksum":                  "a5abed82596e023395d0bb0c30516e78bd5eee7131245d94e54b38ab67c924e5",
-			  "previousVersionId":         null,
-			  "nextVersionId":             null
-	},
-	"resourceData": {
-				"primary": {
-				      "n": "779...397",
-				      "r": {
-				        "birthdate": "294...298",
-				        "birthlocation": "533...284",
-				        "citizenship": "894...102",
-				        "expiry_date": "650...011",
-				        "facephoto": "870...274",
-				        "firstname": "656...226",
-				        "link_secret": "521...922",
-				        "name": "410...200",
-				        "uuid": "226...757"
-			      },
-			      "rctxt": "774...977",
-			      "s": "750..893",
-			      "z": "632...005"
+ "resourceMetadata": {
+     "resourceCollectionId":      "DAzMQo4MDMxCjgwM",
+     "resourceId":                "92f5ed06-0489-44e0-9215-99851654b610",
+     "resourceName":              "PassportCredentialDefinition",
+     "resourceType":              "CL-CredDef",
+     "mediaType":                 "application/json",
+     "created":                   "2022-04-20T21:10:10Z",
+     "checksum":                  "a5abed82596e023395d0bb0c30516e78bd5eee7131245d94e54b38ab67c924e5",
+     "previousVersionId":         null,
+     "nextVersionId":             null
+ },
+ "resourceData": {
+    "primary": {
+          "n": "779...397",
+          "r": {
+            "birthdate": "294...298",
+            "birthlocation": "533...284",
+            "citizenship": "894...102",
+            "expiry_date": "650...011",
+            "facephoto": "870...274",
+            "firstname": "656...226",
+            "link_secret": "521...922",
+            "name": "410...200",
+            "uuid": "226...757"
+         },
+         "rctxt": "774...977",
+         "s": "750..893",
+         "z": "632...005"
     }
-	}
+ }
 }
 ```
 
@@ -320,26 +320,26 @@ BBS signature is stored in DID Doc [[spec](https://www.w3.org/TR/did-core/#core-
   "id": "did:canow:testnet:123456789abcdefghi",
  ...
   "authentication": [
-		{
-		  "id": "did:canow:testnet:123456789abcdefghi#key-1",
-		  "type": "Bls12381G1Key2020",
-		  "controller": "did:canow:testnet:123",
-		  "publicKeyJwk": {
-		    "kty": "EC",
-		    "crv": "BLS12381_G1",
-		    "x": "tCgCNuUYQotPEsrljWi-lIRIPpzhqsnJV1NPnE7je6glUb-FJm9IYkuv2hbHw22i"
-		  }
-		},
-		{
-		  "id": "did:canow:testnet:123456789abcdefghi#key-2",
-		  "type": "Bls12381G2Key2020",
-		  "controller": "did:canow:testnet:123",
-			"publicKeyJwk": {
-			    "crv": "BLS12381_G2",
-			    "kty": "EC",
-			    "x": "h_rkcTKXXzRbOPr9UxSfegCbid2U_cVNXQUaKeGF7UhwrMJFP70uMH0VQ9-3-_2zDPAAjflsdeLkOXW3-ShktLxuPy8UlXSNgKNmkfb-rrj-FRwbs13pv_WsIf-eV66-"
-			  }
-		}
+  {
+    "id": "did:canow:testnet:123456789abcdefghi#key-1",
+    "type": "Bls12381G1Key2020",
+    "controller": "did:canow:testnet:123",
+    "publicKeyJwk": {
+      "kty": "EC",
+      "crv": "BLS12381_G1",
+      "x": "tCgCNuUYQotPEsrljWi-lIRIPpzhqsnJV1NPnE7je6glUb-FJm9IYkuv2hbHw22i"
+    }
+  },
+  {
+    "id": "did:canow:testnet:123456789abcdefghi#key-2",
+    "type": "Bls12381G2Key2020",
+    "controller": "did:canow:testnet:123",
+   "publicKeyJwk": {
+       "crv": "BLS12381_G2",
+       "kty": "EC",
+       "x": "h_rkcTKXXzRbOPr9UxSfegCbid2U_cVNXQUaKeGF7UhwrMJFP70uMH0VQ9-3-_2zDPAAjflsdeLkOXW3-ShktLxuPy8UlXSNgKNmkfb-rrj-FRwbs13pv_WsIf-eV66-"
+     }
+  }
   ],
 }
 ```
@@ -355,7 +355,7 @@ The purpose of DIDComm Messaging is to provide a secure, private communication m
 
 Target DIDComm keys for a message encryption declared in the `keyAgreement` section of a DID Document. Keys used in a signed JWM are declared in the `authentication`
  section.
-Parties who communicate via DIDComm Messaging may tell other parties how to reach them by declaring a `serviceEndpoint` block in their DID document. 
+Parties who communicate via DIDComm Messaging may tell other parties how to reach them by declaring a `serviceEndpoint` block in their DID document.
 
 Optionally, it is allowed to keep inside DID Document:
 
@@ -368,7 +368,7 @@ A description of DIDComm Messaging v2.0 work is available in [the specification]
 
 ## Linked DID Documents
 
-Decentralized identifiers is an alternative approach to CAs. However, the way how to make a trust chain or tree using DID Documents is not clear defined yet. 
+Decentralized identifiers is an alternative approach to CAs. However, the way how to make a trust chain or tree using DID Documents is not clear defined yet.
 
 ### What is the business issue it helps to solve?
 
@@ -380,7 +380,7 @@ Let’s explain the issue by the following example:
 
 *Issue:* The Pharmacy can check that an entity with the given DID prescribed a medicine to this Patient. **But** the Pharmacy doesn’t know if this DID really belongs to the Medical clinic. Moreover, the Pharmacy doesn’t know if the Medical clinic can be trusted from the governance perspective (for example, it has an accreditation).
 
-*Solution*:  A hybrid approach could be implemented by the integration of CAs into the DID ecosystem. This combines the decentralized authentication infrastructure with established chains of trust. The Pharmacy can look at the Issuer’s DIDDoc (Medical Clinic Doc), and find a cryptographical proof that this DID is trusted by another DID. The process can be continued until the Pharmacy sees a DID it trusts (it can be a root DID, or one of intermediate DIDs). 
+*Solution*:  A hybrid approach could be implemented by the integration of CAs into the DID ecosystem. This combines the decentralized authentication infrastructure with established chains of trust. The Pharmacy can look at the Issuer’s DIDDoc (Medical Clinic Doc), and find a cryptographical proof that this DID is trusted by another DID. The process can be continued until the Pharmacy sees a DID it trusts (it can be a root DID, or one of intermediate DIDs).
 
 Canow DID Method defines one of the ways how it can be done.
 
@@ -392,7 +392,7 @@ Where
 - *DID_Doc_11* trusts *DID_Doc_111* and *DID_Doc_112*
 - *DID_Doc_12* trusts *DID_Doc_121*
 
-For example, there is a Medical Centers Certificates. Governance layer DID Document trusts a list of certification centers and delegates them permission to include different clinics in a trusted list. It is done by issuing a verifiable credential to the trusted DID. 
+For example, there is a Medical Centers Certificates. Governance layer DID Document trusts a list of certification centers and delegates them permission to include different clinics in a trusted list. It is done by issuing a verifiable credential to the trusted DID.
 
 ![Levels of DID](sources/levels-of-did.png)
 
@@ -402,7 +402,7 @@ The main idea here is storing in DID2 Resource a verifiable credential issued by
 
 ![Linked DID Sequence diagram](sources/linked-did-sequence.png)
 
-This option is similar to CAs, because trusted DIDs store their “certificate” inside their DID Resource. But there are no specific roots of trust like DIDs with specific status. All DIDs have the same permissions. 
+This option is similar to CAs, because trusted DIDs store their “certificate” inside their DID Resource. But there are no specific roots of trust like DIDs with specific status. All DIDs have the same permissions.
 
 Like any other verifiable credentials, **a credential issued by trusting DID to trusted DID can be revoked**. In such a case, it will be contained in a [Revocation Status List](https://w3c-ccg.github.io/vc-status-rl-2020/) or [Revocation Entry](https://hyperledger.github.io/anoncreds-spec/#issuer-create-and-publish-revocation-registry-objects), depending on the manner in which this type of credentials is revoked. Revocation Status List will be put into the Issuer’s DID resource.
 
@@ -455,10 +455,10 @@ Using the idea of linked DIDs (trusted DID chain) does not exclude the possibili
 - [Verifiable Credentials Data Model](https://www.w3.org/TR/vc-data-model/) specification
 - [BBS+ signature](https://w3c-ccg.github.io/ldp-bbs2020/) specification
 - [CL Anoncreds](https://hyperledger.github.io/anoncreds-spec/) specification
-    - [CL signatures](https://eprint.iacr.org/2012/562.pdf)
+  - [CL signatures](https://eprint.iacr.org/2012/562.pdf)
     - [Revocation Entry](https://hyperledger.github.io/anoncreds-spec/#issuer-create-and-publish-revocation-registry-objects)
 - [Revocation Status List](https://w3c-ccg.github.io/vc-status-rl-2020/)
 - [DID Resources](https://github.com/cheqd/node-docs/blob/main/architecture/adr-list/adr-008-ledger-resources.md)
 - [Tendermint](https://tendermint.com/)
 - [Cosmos blockchain framework](https://cosmos.network/) official project website
-    - [cosmos-sdk](https://github.com/cosmos/cosmos-sdk) GitHub repository ([documentation](https://docs.cosmos.network/))
+  - [cosmos-sdk](https://github.com/cosmos/cosmos-sdk) GitHub repository ([documentation](https://docs.cosmos.network/))
