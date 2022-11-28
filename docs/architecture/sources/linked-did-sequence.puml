@@ -1,0 +1,16 @@
+@startuml
+    participant DID1 [
+        =DID1
+        ----
+        ""Trusting DID""
+    ]
+    
+    participant DID2 [
+        =DID2
+        ----
+        ""Trusted DID""
+    ]
+    
+    DID1 -> DID2: issuing a credential with additional specific proof (signature)
+    DID2 -> DID2: puts the credential to its own DID Resource
+@enduml
