@@ -37,6 +37,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
+      - name: Build application binary
+        run: |
+          make build
+          tar czf build/${{ env.BIN_NAME }}${{ matrix.tgz_name_suffix }} -C build ${{ env.BIN_NAME }}
+        shell: bash
+
       - name: Set release version number
         id: set-version
         run: |

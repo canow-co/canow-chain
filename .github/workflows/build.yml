@@ -5,12 +5,17 @@ defaults:
   run:
     shell: bash
 
+env:
+  BIN_NAME: canow-chain
 
 jobs:
 
   build-binary:
     name: "Node binary"
-    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, ARM64, macos-11]
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v3
@@ -20,13 +25,10 @@ jobs:
           go-version-file: ./go.mod
           cache: true
 
-      - name: Build application binary
-        run: make build
-
       - name: Store artifact
         uses: actions/upload-artifact@v3
         with:
-          name: canow-chain
+          name: canow-chain-${{ matrix.os }}
           path: build/canow-chain
 
   build-docker:
