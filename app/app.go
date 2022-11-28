@@ -1,6 +1,7 @@
 package app
 
 import (
+	"canow-chain/docs"
 	"fmt"
 	"io"
 	"net/http"
@@ -107,11 +108,17 @@ import (
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	appparams "canow-chain/app/params"
-	"canow-chain/docs"
+
+	did "github.com/canow-co/cheqd-node/x/did"
+	didkeeper "github.com/canow-co/cheqd-node/x/did/keeper"
+	didtypes "github.com/canow-co/cheqd-node/x/did/types"
+	"github.com/canow-co/cheqd-node/x/resource"
+	resourcekeeper "github.com/canow-co/cheqd-node/x/resource/keeper"
+	resourcetypes "github.com/canow-co/cheqd-node/x/resource/types"
 )
 
 const (
-	AccountAddressPrefix = "cosmos"
+	AccountAddressPrefix = "canow"
 	Name                 = "canow-chain"
 )
 
@@ -162,6 +169,8 @@ var (
 		transfer.AppModuleBasic{},
 		ica.AppModuleBasic{},
 		vesting.AppModuleBasic{},
+		did.AppModuleBasic{},
+		resource.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 	)
 
@@ -243,6 +252,9 @@ type App struct {
 	// sm is the simulation manager
 	sm           *module.SimulationManager
 	configurator module.Configurator
+
+	didKeeper      didkeeper.Keeper
+	resourceKeeper resourcekeeper.Keeper
 }
 
 // New returns a reference to an initialized blockchain app
@@ -279,6 +291,8 @@ func New(
 		paramstypes.StoreKey, ibchost.StoreKey, upgradetypes.StoreKey, feegrant.StoreKey, evidencetypes.StoreKey,
 		ibctransfertypes.StoreKey, icahosttypes.StoreKey, capabilitytypes.StoreKey, group.StoreKey,
 		icacontrollertypes.StoreKey,
+		didtypes.StoreKey,
+		resourcetypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -476,6 +490,14 @@ func New(
 	// If evidence needs to be handled for the app, set routes in router here and seal
 	app.EvidenceKeeper = *evidenceKeeper
 
+	app.didKeeper = *didkeeper.NewKeeper(
+		appCodec, keys[didtypes.StoreKey],
+	)
+
+	app.resourceKeeper = *resourcekeeper.NewKeeper(
+		appCodec, keys[resourcetypes.StoreKey],
+	)
+
 	govRouter := govv1beta1.NewRouter()
 	govRouter.
 		AddRoute(govtypes.RouterKey, govv1beta1.ProposalHandler).
@@ -541,6 +563,8 @@ func New(
 		params.NewAppModule(app.ParamsKeeper),
 		transferModule,
 		icaModule,
+		did.NewAppModule(appCodec, app.didKeeper),
+		resource.NewAppModule(appCodec, app.resourceKeeper, app.didKeeper),
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 
@@ -570,6 +594,8 @@ func New(
 		group.ModuleName,
 		paramstypes.ModuleName,
 		vestingtypes.ModuleName,
+		didtypes.ModuleName,
+		resourcetypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	)
 
@@ -594,6 +620,8 @@ func New(
 		paramstypes.ModuleName,
 		upgradetypes.ModuleName,
 		vestingtypes.ModuleName,
+		didtypes.ModuleName,
+		resourcetypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	)
 
@@ -623,6 +651,8 @@ func New(
 		paramstypes.ModuleName,
 		upgradetypes.ModuleName,
 		vestingtypes.ModuleName,
+		didtypes.ModuleName,
+		resourcetypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	)
 

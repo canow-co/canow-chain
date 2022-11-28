@@ -1,11 +1,11 @@
 package cmd
 
 import (
+	"canow-chain/app"
 	"errors"
 	"io"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -37,8 +37,9 @@ import (
 
 	// this line is used by starport scaffolding # root/moduleImport
 
-	"canow-chain/app"
 	appparams "canow-chain/app/params"
+
+	cheqdcmd "github.com/canow-co/cheqd-node/cmd/cheqd-noded/cmd"
 )
 
 // NewRootCmd creates a new root command for a Cosmos SDK application
@@ -84,7 +85,7 @@ func NewRootCmd() (*cobra.Command, appparams.EncodingConfig) {
 
 	initRootCmd(rootCmd, encodingConfig)
 	overwriteFlagDefaults(rootCmd, map[string]string{
-		flags.FlagChainID:        strings.ReplaceAll(app.Name, "-", ""),
+		flags.FlagChainID:        "canow",
 		flags.FlagKeyringBackend: "test",
 	})
 
@@ -118,8 +119,10 @@ func initRootCmd(
 		genutilcli.ValidateGenesisCmd(app.ModuleBasics),
 		AddGenesisAccountCmd(app.DefaultNodeHome),
 		tmcli.NewCompletionCmd(rootCmd, true),
-		debug.Cmd(),
 		config.Cmd(),
+		cheqdcmd.ExtendInit(genutilcli.InitCmd(app.ModuleBasics, app.DefaultNodeHome)),
+		cheqdcmd.ConfigureCmd(app.DefaultNodeHome),
+		cheqdcmd.ExtendDebug(debug.Cmd()),
 		// this line is used by starport scaffolding # root/commands
 	)
 
@@ -230,7 +233,10 @@ func overwriteFlagDefaults(c *cobra.Command, defaults map[string]string) {
 	set := func(s *pflag.FlagSet, key, val string) {
 		if f := s.Lookup(key); f != nil {
 			f.DefValue = val
-			f.Value.Set(val)
+			err := f.Value.Set(val)
+			if err != nil {
+				panic(err)
+			}
 		}
 	}
 	for key, val := range defaults {

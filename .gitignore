@@ -4,3 +4,9 @@ release/
 .idea/
 .vscode/
 .DS_Store
+
+# Localnet generate folder
+**/network-config
+
+### APP-SPECIFIC EXCLUSIONS ###
+build/

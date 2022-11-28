@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
-
 	"canow-chain/app"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 func initSDKConfig() {

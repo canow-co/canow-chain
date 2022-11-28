@@ -1,0 +1,10 @@
+# Exclude all Markdown files
+**/*.md
+
+# Skip build/test folders
+networks/**
+tests/**
+
+# Skip Git-related folders
+.github/**
+**/.git
