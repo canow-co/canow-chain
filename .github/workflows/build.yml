@@ -25,10 +25,18 @@ jobs:
           go-version-file: ./go.mod
           cache: true
 
+      - name: Build application binary
+        with:
+          platforms: 'arm64,x86_64'
+        run: |
+          make build
+          tar czf build/${{ env.BIN_NAME }}${{ matrix.tgz_name_suffix }} -C build ${{ env.BIN_NAME }}
+        shell: bash
+
       - name: Store artifact
         uses: actions/upload-artifact@v3
         with:
-          name: canow-chain-${{ matrix.os }}
+          name: canow-chain
           path: build/canow-chain
 
   build-docker:
