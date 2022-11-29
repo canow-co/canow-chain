@@ -30,23 +30,18 @@ jobs:
           go-version-file: ./go.mod
           cache: true
 
-      - name: Download binary artifact (linux)
+      - name: Download binary artifacts
         uses: actions/download-artifact@v3
-        id: download-linux
+        id: download
         with:
-          name: ${{ env.BIN_NAME }}-linux
           path: release/
 
-      - name: Download binary artifact (macos)
-        uses: actions/download-artifact@v3
-        id: download-macos
-        with:
-          name: ${{ env.BIN_NAME }}-darwin
-          path: release/
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: release
 
       - name: Archive application binaries
         run: |
-          ls release
           tar czf release/${{ env.BIN_NAME }}-linux.tar.gz LICENSE README.md -C release ${{ env.BIN_NAME }}-linux
           tar czf release/${{ env.BIN_NAME }}-darwin.tar.gz LICENSE README.md -C release ${{ env.BIN_NAME }}-darwin
         shell: bash
