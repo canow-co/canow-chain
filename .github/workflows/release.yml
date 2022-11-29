@@ -32,14 +32,14 @@ jobs:
 
       - name: Download binary artifact (linux)
         uses: actions/download-artifact@v3
-        id: download
+        id: download-linux
         with:
           name: ${{ env.BIN_NAME }}-linux
           path: release/
 
       - name: Download binary artifact (macos)
         uses: actions/download-artifact@v3
-        id: download
+        id: download-macos
         with:
           name: ${{ env.BIN_NAME }}-darwin
           path: release/
@@ -74,10 +74,10 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.vars.outputs.tag_name }}
-          files:
-            - release/*
-            - deployment/cosmovisor.service
-            - ${{ steps.get_gobin.outputs.gobin }}/cosmovisor
+          files: |
+            release/*
+            deployment/cosmovisor.service
+            ${{ steps.get_gobin.outputs.gobin }}/cosmovisor
           prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
