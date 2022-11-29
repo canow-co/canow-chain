@@ -8,11 +8,14 @@ permissions:
   contents: write
   packages: write
 
+env:
+  BIN_NAME: canow-chain
 
 jobs:
 
   release-binary:
     name: "Node binary"
+    matrix:
     runs-on: ubuntu-latest
     outputs:
       RELEASE_VERSION: ${{ steps.set-version.outputs.RELEASE_VERSION }}
@@ -28,17 +31,25 @@ jobs:
           go-version-file: ./go.mod
           cache: true
 
-      - name: Download binary artifact
+      - name: Download binary artifact (linux)
         uses: actions/download-artifact@v3
         id: download
         with:
-          name: ${{ env.BIN_NAME }}
-          path: .
+          name: ${{ env.BIN_NAME }}-linux
+          path: release/
 
-      - name: Archive application binary
-        run: tar czf ${{ env.BIN_NAME }}.tar.gz -C build ${{ env.BIN_NAME }}
+      - name: Download binary artifact (macos)
+        uses: actions/download-artifact@v3
+        id: download
+        with:
+          name: ${{ env.BIN_NAME }}-darwin
+          path: release/
+
+      - name: Archive application binaries
+        run: |
+          tar czf release/${{ env.BIN_NAME }}-linux.tar.gz -C build release/${{ env.BIN_NAME }}-linux
+          tar czf release/${{ env.BIN_NAME }}-darwin.tar.gz -C build release/${{ env.BIN_NAME }}-darwin
         shell: bash
-
 
       - name: Set release version number
         id: set-version
@@ -46,29 +57,7 @@ jobs:
           RELEASE_VERSION=$( git describe --tags ${{ github.sha }})
           echo ::set-output name=RELEASE_VERSION::"$RELEASE_VERSION"
 
-      - name: upload to GitHub (application binary)
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.checks.outputs.upload_url }}
-          asset_path: build/${{ env.BIN_NAME }}
-          asset_name: ${{ env.BIN_NAME }}
-          asset_content_type: application/octet-stream  # TODO check for less generic type
-
-      - name: upload to GitHub (archived application binary)
-        if: ${{ !matrix.tgz }}
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.checks.outputs.upload_url }}
-          asset_path: build/${{ env.BIN_NAME }}${{ matrix.tgz_name_suffix }}
-          asset_name: ${{ env.BIN_NAME }}${{ matrix.tgz_name_suffix }}
-          asset_content_type: application/x-gtar
-
       - name: build cosmovisor binary
-        if: ${{ !matrix.cosmovisor }}
         run: |
           go install github.com/cosmos/cosmos-sdk/cosmovisor/cmd/cosmovisor@v1.0.0
         shell: bash
@@ -82,27 +71,17 @@ jobs:
           echo "::set-output name=gobin::$GOBIN"
         shell: bash
 
-      - name: upload to GitHub (cosmovisor binary)
-        if: ${{ !matrix.cosmovisor }}
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish the Release
+        uses: softprops/action-gh-release@v1
         with:
-          upload_url: ${{ needs.checks.outputs.upload_url }}
-          asset_path: ${{ steps.get_gobin.outputs.gobin }}/cosmovisor
-          asset_name: cosmovisor
-          asset_content_type: application/octet-stream  # TODO check for less generic type
-
-      - name: upload to GitHub (service file)
-        if: ${{ !matrix.service }}
-        uses: actions/upload-release-asset@v1
+          tag_name: ${{ steps.vars.outputs.tag_name }}
+          files:
+            - release/*
+            - deployment/cosmovisor.service
+            - ${{ steps.get_gobin.outputs.gobin }}/cosmovisor
+          prerelease: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.checks.outputs.upload_url }}
-          asset_path: deployment/cosmovisor.service
-          asset_name: cosmovisor.service
-          asset_content_type: text/plain
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
 
 

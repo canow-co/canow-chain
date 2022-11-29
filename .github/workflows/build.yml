@@ -36,8 +36,8 @@ jobs:
       - name: Store artifact
         uses: actions/upload-artifact@v3
         with:
-          name: canow-chain-${{ matrix.os }}
-          path: build/canow-chain
+          name: ${{ env.BIN_NAME }}-${{ matrix.goos }}
+          path: build/${{ env.BIN_NAME }}
 
   build-docker:
     name: "Docker image"
