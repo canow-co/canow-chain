@@ -42,8 +42,8 @@ jobs:
 
       - name: Archive application binaries
         run: |
-          tar czf release/${{ env.BIN_NAME }}-linux.tar.gz LICENSE README.md -C release ${{ env.BIN_NAME }}-linux
-          tar czf release/${{ env.BIN_NAME }}-darwin.tar.gz LICENSE README.md -C release ${{ env.BIN_NAME }}-darwin
+          tar czf release/${{ env.BIN_NAME }}-${{ github.ref }}-linux.tar.gz LICENSE README.md -C release/${{ env.BIN_NAME }}-linux ${{ env.BIN_NAME }}
+          tar czf release/${{ env.BIN_NAME }}-${{ github.ref }}-darwin.tar.gz LICENSE README.md -C release/${{ env.BIN_NAME }}-darwin ${{ env.BIN_NAME }}
         shell: bash
 
       - name: Set release version number

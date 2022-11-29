@@ -50,8 +50,8 @@ jobs:
         uses: actions/download-artifact@v3
         id: download
         with:
-          name: canow-chain
-          path: ${{ env.RUNNER_BIN_DIR }}
+          name: canow-chain-linux
+          path: ${{ env.RUNNER_BIN_DIR }}/canow-chain
 
       - name: Restore binary permissions
         run: sudo chmod +x ${{ env.RUNNER_BIN_DIR }}/canow-chain
