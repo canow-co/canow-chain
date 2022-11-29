@@ -1,12 +1,12 @@
 name: "Workflow Dispatch"
 on:
-  pull_request:
-    types:
-      - opened
-      - edited
-      - closed
-      - reopened
-      - synchronize
+#  pull_request:
+#    types:
+#      - opened
+#      - edited
+#      - closed
+#      - reopened
+#      - synchronize
   push:
     tags:
       - '*'
@@ -36,7 +36,7 @@ jobs:
 
   call-release:
     name: "Release"
-#    needs: call-build
+    needs: call-build
     if: ${{ github.ref_type == 'tag' }}
     uses: ./.github/workflows/release.yml
     secrets: inherit
