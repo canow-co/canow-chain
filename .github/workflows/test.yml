@@ -51,7 +51,7 @@ jobs:
         id: download
         with:
           name: canow-chain-linux
-          path: ${{ env.RUNNER_BIN_DIR }}/canow-chain
+          path: ${{ env.RUNNER_BIN_DIR }}
 
       - name: Restore binary permissions
         run: sudo chmod +x ${{ env.RUNNER_BIN_DIR }}/canow-chain
