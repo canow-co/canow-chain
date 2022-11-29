@@ -15,6 +15,11 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-20.04, macos-11]
+        include:
+          - os: ubuntu-20.04
+            goos: linux
+          - os: macos-11
+            goos: darwin
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -26,12 +31,12 @@ jobs:
           cache: true
 
       - name: Build application binary
-        run: env GOOS=${{ matrix.os }} GOARCH=arm64 make build
+        run: env GOOS=${{ matrix.goos }} GOARCH=arm64 make build
 
       - name: Store artifact
         uses: actions/upload-artifact@v3
         with:
-          name: canow-chain
+          name: canow-chain-${{ matrix.os }}
           path: build/canow-chain
 
   build-docker:
