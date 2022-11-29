@@ -69,12 +69,14 @@ jobs:
       - name: Publish the Release
         uses: softprops/action-gh-release@v1
         with:
+          name: Release Notes for Canow Chain ${{ steps.vars.outputs.tag_name }}
           tag_name: ${{ steps.vars.outputs.tag_name }}
           files: |
             release/*
             deployment/cosmovisor.service
             ${{ steps.get_gobin.outputs.gobin }}/cosmovisor
           prerelease: true
+          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 

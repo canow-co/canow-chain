@@ -1,12 +1,12 @@
 name: "Workflow Dispatch"
 on:
-#  pull_request:
-#    types:
-#      - opened
-#      - edited
-#      - closed
-#      - reopened
-#      - synchronize
+  pull_request:
+    types:
+      - opened
+      - edited
+      - closed
+      - reopened
+      - synchronize
   push:
     tags:
       - '*'
@@ -14,29 +14,28 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-
 jobs:
-#
-#  call-lint:
-#    name: "Lint"
-#    uses: ./.github/workflows/lint.yml
-#    secrets: inherit
-#
+
+  call-lint:
+    name: "Lint"
+    uses: ./.github/workflows/lint.yml
+    secrets: inherit
+
   call-build:
     name: "Build"
-#    needs: call-lint
+    needs: call-lint
     uses: ./.github/workflows/build.yml
     secrets: inherit
 
-#  call-test:
-#    name: "Tests"
-#    needs: call-build
-#    uses: ./.github/workflows/test.yml
-#    secrets: inherit
+  call-test:
+    name: "Tests"
+    needs: call-build
+    uses: ./.github/workflows/test.yml
+    secrets: inherit
 
   call-release:
     name: "Release"
-    needs: call-build
+    needs: call-test
     if: ${{ github.ref_type == 'tag' }}
     uses: ./.github/workflows/release.yml
     secrets: inherit
