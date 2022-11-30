@@ -31,9 +31,7 @@ jobs:
           cache: true
 
       - name: Build application binary
-        run: |
-          VERSION=$( git describe --tags ${{ github.sha }})
-          env CGO_ENABLED=1 GOOS=${{ matrix.goos }} GOARCH=amd64 make build
+        run: env VERSION=$( git describe --tags ${{ github.sha }}) CGO_ENABLED=1 GOOS=${{ matrix.goos }} GOARCH=amd64 make build
 
       - name: Store artifact
         uses: actions/upload-artifact@v3
