@@ -25,6 +25,12 @@ jobs:
           fetch-depth: 0 # Required to fetch version
           persist-credentials: false
 
+      - name: Set release version number
+        id: set-version
+        run: |
+          RELEASE_VERSION=$( git describe --tags ${{ github.sha }})
+          echo ::set-output name=RELEASE_VERSION::"$RELEASE_VERSION"
+
       - uses: actions/setup-go@v3
         with:
           go-version-file: ./go.mod
@@ -42,15 +48,9 @@ jobs:
 
       - name: Archive application binaries
         run: |
-          tar czf release/${{ env.BIN_NAME }}-${{ github.ref }}-linux.tar.gz LICENSE README.md -C release/${{ env.BIN_NAME }}-linux ${{ env.BIN_NAME }}
-          tar czf release/${{ env.BIN_NAME }}-${{ github.ref }}-darwin.tar.gz LICENSE README.md -C release/${{ env.BIN_NAME }}-darwin ${{ env.BIN_NAME }}
+          tar czf release/${{ env.BIN_NAME }}-${{ steps.set-version.outputs.RELEASE_VERSION }}-linux.tar.gz LICENSE README.md -C release/${{ env.BIN_NAME }}-linux ${{ env.BIN_NAME }}
+          tar czf release/${{ env.BIN_NAME }}-${{ steps.set-version.outputs.RELEASE_VERSION }}-darwin.tar.gz LICENSE README.md -C release/${{ env.BIN_NAME }}-darwin ${{ env.BIN_NAME }}
         shell: bash
-
-      - name: Set release version number
-        id: set-version
-        run: |
-          RELEASE_VERSION=$( git describe --tags ${{ github.sha }})
-          echo ::set-output name=RELEASE_VERSION::"$RELEASE_VERSION"
 
       - name: build cosmovisor binary
         run: |
@@ -69,8 +69,8 @@ jobs:
       - name: Publish the Release
         uses: softprops/action-gh-release@v1
         with:
-          name: Release Notes for Canow Chain ${{ github.ref }}
-          tag_name: ${{ github.ref }}
+          name: Release Notes for Canow Chain ${{ steps.set-version.outputs.RELEASE_VERSION }}
+          tag_name: ${{ steps.set-version.outputs.RELEASE_VERSION }}
           files: |
             release/*
             deployment/cosmovisor.service
