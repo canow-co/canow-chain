@@ -50,7 +50,7 @@ jobs:
         uses: actions/download-artifact@v3
         id: download
         with:
-          name: canow-chain
+          name: canow-chain-linux
           path: ${{ env.RUNNER_BIN_DIR }}
 
       - name: Restore binary permissions

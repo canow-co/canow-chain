@@ -1,0 +1,26 @@
+[Unit]
+Description=Canow Ledger service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Restart=on-failure
+RestartSec=30
+StartLimitBurst=5
+StartLimitInterval=60
+TimeoutSec=120
+StandardOutput=syslog
+StandardError=syslog
+SyslogFacility=syslog
+SyslogIdentifier=cosmovisor
+LimitNOFILE=65535
+Type=simple
+User=canow
+Environment="DAEMON_HOME=/var/lib/ubuntu/.canow-chain"
+Environment="DAEMON_NAME=canow-chain"
+Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"
+ExecStart=/usr/bin/cosmovisor start
+
+
+[Install]
+WantedBy=multi-user.target

@@ -5,12 +5,22 @@ defaults:
   run:
     shell: bash
 
+env:
+  BIN_NAME: canow-chain
 
 jobs:
 
   build-binary:
     name: "Node binary"
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, macos-11]
+        include:
+          - os: ubuntu-20.04
+            goos: linux
+          - os: macos-11
+            goos: darwin
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v3
@@ -20,18 +30,14 @@ jobs:
           go-version-file: ./go.mod
           cache: true
 
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v3
-        with:
-          distribution: goreleaser
-          version: latest
-          args: build --rm-dist --snapshot --id ubuntu-latest-amd64
+      - name: Build application binary
+        run: env VERSION="$( git describe --tags ${{ github.sha }})" CGO_ENABLED=1 GOOS=${{ matrix.goos }} GOARCH=amd64 make build
 
       - name: Store artifact
         uses: actions/upload-artifact@v3
         with:
-          name: canow-chain
-          path: dist/ubuntu-latest-amd64_linux_amd64_v1/canow-chain
+          name: ${{ env.BIN_NAME }}-${{ matrix.goos }}
+          path: build/${{ env.BIN_NAME }}
 
   build-docker:
     name: "Docker image"

@@ -1,0 +1,136 @@
+name: "Release"
+on:
+  workflow_call:
+defaults:
+  run:
+    shell: bash
+permissions:
+  contents: write
+  packages: write
+
+env:
+  BIN_NAME: canow-chain
+
+jobs:
+
+  release-binary:
+    name: "Node binary"
+    runs-on: ubuntu-latest
+    outputs:
+      RELEASE_VERSION: ${{ steps.set-version.outputs.RELEASE_VERSION }}
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Required to fetch version
+          persist-credentials: false
+
+      - name: Set release version number
+        id: set-version
+        run: |
+          RELEASE_VERSION=$( git describe --tags ${{ github.sha }})
+          echo ::set-output name=RELEASE_VERSION::"$RELEASE_VERSION"
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version-file: ./go.mod
+          cache: true
+
+      - name: Download binary artifacts
+        uses: actions/download-artifact@v3
+        id: download
+        with:
+          path: release/
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: release
+
+      - name: Archive application binaries
+        run: |
+          tar czf release/${{ env.BIN_NAME }}-${{ steps.set-version.outputs.RELEASE_VERSION }}-linux.tar.gz LICENSE README.md -C release/${{ env.BIN_NAME }}-linux ${{ env.BIN_NAME }}
+          tar czf release/${{ env.BIN_NAME }}-${{ steps.set-version.outputs.RELEASE_VERSION }}-darwin.tar.gz LICENSE README.md -C release/${{ env.BIN_NAME }}-darwin ${{ env.BIN_NAME }}
+        shell: bash
+
+      - name: build cosmovisor binary
+        run: |
+          go install github.com/cosmos/cosmos-sdk/cosmovisor/cmd/cosmovisor@v1.0.0
+        shell: bash
+
+      - name: get GOBIN
+        id: get_gobin
+        run: |
+          GOPATH=${GOPATH:-${HOME}/go}
+          GOBIN=${GOBIN:-${GOPATH}/bin}
+          echo "$GOBIN"
+          echo "::set-output name=gobin::$GOBIN"
+        shell: bash
+
+      - name: Publish the Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release Notes for Canow Chain ${{ steps.set-version.outputs.RELEASE_VERSION }}
+          tag_name: ${{ steps.set-version.outputs.RELEASE_VERSION }}
+          files: |
+            release/*
+            deployment/cosmovisor.service
+            ${{ steps.get_gobin.outputs.gobin }}/cosmovisor
+          prerelease: true
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+
+
+  release-docker:
+    name: "Docker image"
+    needs: release-binary
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ${{ github.repository }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        id: buildx
+        with:
+          version: latest
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_TOKEN }}
+      
+      - name: Configure Docker image metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository}}
+          flavor: |
+            latest=auto
+          tags: |
+            type=semver,pattern={{version}},value=${{ needs.release-binary.outputs.RELEASE_VERSION }}
+            type=raw,value=production-latest
+            type=sha,format=long
+          labels: |
+            org.opencontainers.image.vendor="Canow"
+            org.opencontainers.image.created={{date 'dddd, MMMM Do YYYY, h:mm:ss a'}}
+#            org.opencontainers.image.documentation=""
+
+      - name: Build and push image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
