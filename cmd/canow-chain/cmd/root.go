@@ -121,7 +121,6 @@ func initRootCmd(
 		tmcli.NewCompletionCmd(rootCmd, true),
 		config.Cmd(),
 		cheqdcmd.ExtendInit(genutilcli.InitCmd(app.ModuleBasics, app.DefaultNodeHome)),
-		cheqdcmd.ConfigureCmd(app.DefaultNodeHome),
 		cheqdcmd.ExtendDebug(debug.Cmd()),
 		// this line is used by starport scaffolding # root/commands
 	)
@@ -310,7 +309,6 @@ func (a appCreator) newApp(
 		baseapp.SetIndexEvents(cast.ToStringSlice(appOpts.Get(server.FlagIndexEvents))),
 		baseapp.SetSnapshot(snapshotStore, snapshotOptions),
 		baseapp.SetIAVLCacheSize(cast.ToInt(appOpts.Get(server.FlagIAVLCacheSize))),
-		baseapp.SetIAVLDisableFastNode(cast.ToBool(appOpts.Get(server.FlagIAVLFastNode))),
 	)
 }
 

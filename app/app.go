@@ -492,10 +492,12 @@ func New(
 
 	app.didKeeper = *didkeeper.NewKeeper(
 		appCodec, keys[didtypes.StoreKey],
+		app.GetSubspace(didtypes.ModuleName),
 	)
 
 	app.resourceKeeper = *resourcekeeper.NewKeeper(
 		appCodec, keys[resourcetypes.StoreKey],
+		app.GetSubspace(resourcetypes.ModuleName),
 	)
 
 	govRouter := govv1beta1.NewRouter()
