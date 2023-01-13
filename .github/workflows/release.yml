@@ -59,11 +59,8 @@ jobs:
         id: get_gobin
         run: |
           GOPATH=${GOPATH:-${HOME}/go}
-          GOBIN=${GOBIN:-${GOPATH}/bin}
-          echo "$GOBIN"
+          echo "GOBIN=${GOBIN:-${GOPATH}/bin}" >> $GITHUB_OUTPUTS
         shell: bash
-        outputs:
-          gobin: $GOBIN
 
       - name: Publish the Release
         uses: softprops/action-gh-release@v1
