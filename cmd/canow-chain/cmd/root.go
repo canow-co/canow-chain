@@ -1,11 +1,12 @@
 package cmd
 
 import (
-	"canow-chain/app"
 	"errors"
 	"io"
 	"os"
 	"path/filepath"
+
+	"github.com/canow-co/canow-chain/app"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -37,7 +38,7 @@ import (
 
 	// this line is used by starport scaffolding # root/moduleImport
 
-	appparams "canow-chain/app/params"
+	appparams "github.com/canow-co/canow-chain/app/params"
 
 	cheqdcmd "github.com/canow-co/cheqd-node/cmd/cheqd-noded/cmd"
 )

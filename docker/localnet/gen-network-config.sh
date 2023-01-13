@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2086
 
 # Generates network configuration for an arbitrary amount of validators, observers, and seeds.
 
