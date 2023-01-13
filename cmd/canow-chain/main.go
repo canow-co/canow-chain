@@ -1,8 +1,8 @@
 package main
 
 import (
-	"canow-chain/app"
-	"canow-chain/cmd/canow-chain/cmd"
+	"github.com/canow-co/canow-chain/app"
+	"github.com/canow-co/canow-chain/cmd/canow-chain/cmd"
 	"os"
 
 	"github.com/cosmos/cosmos-sdk/server"

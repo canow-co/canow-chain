@@ -1,7 +1,7 @@
 package network
 
 import (
-	"canow-chain/app"
+	"github.com/canow-co/canow-chain/app"
 	"fmt"
 	"testing"
 	"time"
