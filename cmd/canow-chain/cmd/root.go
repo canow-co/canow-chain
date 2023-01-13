@@ -1,11 +1,12 @@
 package cmd
 
 import (
-	"github.com/canow-co/canow-chain/app"
 	"errors"
 	"io"
 	"os"
 	"path/filepath"
+
+	"github.com/canow-co/canow-chain/app"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"

@@ -1,9 +1,10 @@
 package main
 
 import (
+	"os"
+
 	"github.com/canow-co/canow-chain/app"
 	"github.com/canow-co/canow-chain/cmd/canow-chain/cmd"
-	"os"
 
 	"github.com/cosmos/cosmos-sdk/server"
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"

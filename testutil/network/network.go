@@ -1,10 +1,11 @@
 package network
 
 import (
-	"github.com/canow-co/canow-chain/app"
 	"fmt"
 	"testing"
 	"time"
+
+	"github.com/canow-co/canow-chain/app"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/crypto/hd"

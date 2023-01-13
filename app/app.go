@@ -1,12 +1,13 @@
 package app
 
 import (
-	"github.com/canow-co/canow-chain/docs"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
+
+	"github.com/canow-co/canow-chain/docs"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
