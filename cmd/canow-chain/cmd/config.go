@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"canow-chain/app"
+	"github.com/canow-co/canow-chain/app"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

@@ -1,7 +1,7 @@
 package app
 
 import (
-	"canow-chain/app/params"
+	"github.com/canow-co/canow-chain/app/params"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/codec/types"

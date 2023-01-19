@@ -6,9 +6,9 @@ import (
 	"crypto/ed25519"
 	"fmt"
 
-	"canow-chain/tests/integration/cli"
-	"canow-chain/tests/integration/network"
-	"canow-chain/tests/integration/testdata"
+	"github.com/canow-co/canow-chain/tests/integration/cli"
+	"github.com/canow-co/canow-chain/tests/integration/network"
+	"github.com/canow-co/canow-chain/tests/integration/testdata"
 	cli_types "github.com/canow-co/cheqd-node/x/did/client/cli"
 	"github.com/canow-co/cheqd-node/x/did/types"
 	"github.com/google/uuid"

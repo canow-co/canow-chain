@@ -3,8 +3,8 @@
 package integration
 
 import (
-	"canow-chain/tests/integration/cli"
-	"canow-chain/tests/integration/testdata"
+	"github.com/canow-co/canow-chain/tests/integration/cli"
+	"github.com/canow-co/canow-chain/tests/integration/testdata"
 	"fmt"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"

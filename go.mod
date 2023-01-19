@@ -1,4 +1,4 @@
-module canow-chain
+module github.com/canow-co/canow-chain
 
 go 1.18
 

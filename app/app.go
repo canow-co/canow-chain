@@ -1,12 +1,13 @@
 package app
 
 import (
-	"canow-chain/docs"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
+
+	"github.com/canow-co/canow-chain/docs"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -107,7 +108,7 @@ import (
 
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
-	appparams "canow-chain/app/params"
+	appparams "github.com/canow-co/canow-chain/app/params"
 
 	did "github.com/canow-co/cheqd-node/x/did"
 	didkeeper "github.com/canow-co/cheqd-node/x/did/keeper"
