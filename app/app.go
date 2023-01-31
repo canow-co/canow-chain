@@ -185,6 +185,8 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
+		didtypes.ModuleName:            nil,
+		resourcetypes.ModuleName:       nil,
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -493,10 +495,12 @@ func New(
 
 	app.didKeeper = *didkeeper.NewKeeper(
 		appCodec, keys[didtypes.StoreKey],
+		app.GetSubspace(didtypes.ModuleName),
 	)
 
 	app.resourceKeeper = *resourcekeeper.NewKeeper(
 		appCodec, keys[resourcetypes.StoreKey],
+		app.GetSubspace(resourcetypes.ModuleName),
 	)
 
 	govRouter := govv1beta1.NewRouter()
@@ -683,6 +687,9 @@ func New(
 		evidence.NewAppModule(app.EvidenceKeeper),
 		ibc.NewAppModule(app.IBCKeeper),
 		transferModule,
+		// TODO:
+		// did.NewAppModule(appCodec, app.didKeeper),
+		// resource.NewAppModule(appCodec, app.resourceKeeper, app.didKeeper),
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 	app.sm.RegisterStoreDecoders()
@@ -881,6 +888,8 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(ibchost.ModuleName)
 	paramsKeeper.Subspace(icacontrollertypes.SubModuleName)
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
+	paramsKeeper.Subspace(didtypes.ModuleName).WithKeyTable(didtypes.ParamKeyTable())
+	paramsKeeper.Subspace(resourcetypes.ModuleName).WithKeyTable(resourcetypes.ParamKeyTable())
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 
 	return paramsKeeper
