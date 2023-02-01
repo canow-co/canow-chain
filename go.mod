@@ -8,7 +8,6 @@ require (
 	github.com/cosmos/ibc-go/v5 v5.1.0
 	github.com/google/uuid v1.3.0
 	github.com/ignite/cli v0.25.1
-	github.com/multiformats/go-multibase v0.1.1
 	github.com/onsi/ginkgo/v2 v2.7.0
 	github.com/onsi/gomega v1.26.0
 	github.com/spf13/cast v1.5.0
@@ -162,6 +161,7 @@ require (
 	github.com/mtibben/percent v0.2.1 // indirect
 	github.com/multiformats/go-base32 v0.0.3 // indirect
 	github.com/multiformats/go-base36 v0.1.0 // indirect
+	github.com/multiformats/go-multibase v0.1.1 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/opencontainers/image-spec v1.1.0-rc2 // indirect
 	github.com/opencontainers/runc v1.1.3 // indirect
