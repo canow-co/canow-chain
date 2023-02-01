@@ -7,7 +7,7 @@ const (
 	OUTPUT_FORMAT   = "json"
 	GAS             = "auto"
 	GAS_ADJUSTMENT  = "1.3"
-	GAS_PRICES      = "1ncheq"
+	GAS_PRICES      = "1zarx"
 )
 
 const (

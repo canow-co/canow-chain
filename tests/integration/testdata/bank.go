@@ -1,3 +1,3 @@
 package testdata
 
-const DEMON = "ncheq"
+const DEMON = "zarx"
