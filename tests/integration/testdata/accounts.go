@@ -15,10 +15,10 @@ const (
 	BASE_ACCOUNT_1_ADDR     = "canow1xx3k0c86g9hclfh26u6gdjmdfkp75tvt3qa4mn"
 	BASE_ACCOUNT_2_ADDR     = "canow1p0xxlce6mvzh4kpdq06szr5z5uxrp9qx5gdt4k"
 
-	BASE_ACCOUNT_3_ADDR             = "cheqd14wymr6h8a0rvynwayytssy5rhn3evltcpxh0zh" // insufficient funds
-	BASE_ACCOUNT_4_ADDR             = "cheqd1c8tq9wcfwtunkunng5pe442jlmwns9sgve42mf"
-	BASE_ACCOUNT_5_ADDR             = "cheqd1xnx6fe4fg4etlaxm0ty25j3ae5thhadraskplv"
-	BASE_ACCOUNT_6_ADDR             = "cheqd1makysw7c788c7fzkfzn7al80wyfl4at6jtjyg4" // insufficient funds
+	BASE_ACCOUNT_3_ADDR             = "canow1m7qjmjc7lhm4ydly70mj6gsqc4pdynmzvprpxn" // insufficient funds
+	BASE_ACCOUNT_4_ADDR             = "canow16tf864x097ejh2wav793z4938j0lr2fg8l26rt"
+	BASE_ACCOUNT_5_ADDR             = "canow1yd7n3hc2yh2gjtlxh6lwz3eqpz8k7uz0s0ncuj"
+	BASE_ACCOUNT_6_ADDR             = "canow1h48utnqhmkzvlp76qv65da0ahtz64smz2yw2rg" // insufficient funds
 	BASE_VESTING_ACCOUNT_ADDR       = "canow1m6j32klalgrzpg6vlzhmkwtjj5aay9kn5ezl76"
 	CONTINUOUS_VESTING_ACCOUNT_ADDR = "canow1jnaaf6qyczz746cae67d79zg8cst2enuc6h9q7"
 	DELAYED_VESTING_ACCOUNT_ADDR    = "canow197twl7px8chkezr4n4r9nmgw4mg4et90vpd7pc"
