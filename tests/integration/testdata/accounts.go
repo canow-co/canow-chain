@@ -12,9 +12,8 @@ const (
 	DELAYED_VESTING_ACCOUNT    = "delayed_vesting_account"
 	PERIODIC_VESTING_ACCOUNT   = "periodic_vesting_account"
 
-	BASE_ACCOUNT_1_ADDR     = "canow1xx3k0c86g9hclfh26u6gdjmdfkp75tvt3qa4mn"
-	BASE_ACCOUNT_2_ADDR     = "canow1p0xxlce6mvzh4kpdq06szr5z5uxrp9qx5gdt4k"
-
+	BASE_ACCOUNT_1_ADDR             = "canow1xx3k0c86g9hclfh26u6gdjmdfkp75tvt3qa4mn"
+	BASE_ACCOUNT_2_ADDR             = "canow1p0xxlce6mvzh4kpdq06szr5z5uxrp9qx5gdt4k"
 	BASE_ACCOUNT_3_ADDR             = "canow1m7qjmjc7lhm4ydly70mj6gsqc4pdynmzvprpxn" // insufficient funds
 	BASE_ACCOUNT_4_ADDR             = "canow16tf864x097ejh2wav793z4938j0lr2fg8l26rt"
 	BASE_ACCOUNT_5_ADDR             = "canow1yd7n3hc2yh2gjtlxh6lwz3eqpz8k7uz0s0ncuj"
