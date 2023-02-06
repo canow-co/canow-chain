@@ -25,6 +25,6 @@ const (
 
 	//? Module accounts can be safely hardcoded, as they are generated per module name
 	//? and the hex bytes are deterministically generated from the module name.
-	FEE_COLLECTOR_ADDR      = "canow1kmth7uphj3z83qrtaaw22unu3n4sqduufgjhsk"
-	DID_MODULE_ACCOUNT_ADDR = "canow1hp7xxun0tce4yktd9x8p52dch72svxw6lxn8kn"
+	FEE_COLLECTOR_ADDR      = "canow17xpfvakm2amg962yls6f84z3kell8c5lntenw5"
+	DID_MODULE_ACCOUNT_ADDR = "canow1neus3an933cxp7ewuxw6jcuf6j8ka7776puj5d"
 )
