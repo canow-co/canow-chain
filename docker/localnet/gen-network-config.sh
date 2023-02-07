@@ -81,28 +81,28 @@ function configure_genesis() {
 
   BASE_ACCOUNT_3="canow1m7qjmjc7lhm4ydly70mj6gsqc4pdynmzvprpxn"
   # Mnemonic: alien worry rent coil melt treat eager used pioneer truck warfare number glimpse describe pulse bar scout nurse twenty lab lunch defy blossom bridge
-  jq '.app_state.bank.balances += [{"address": "'${BASE_ACCOUNT_3}'", "coins": [{"denom": "ncheq", "amount": "100"}] }]' "$GENESIS" > "$GENESIS_TMP"  && \
+  jq '.app_state.bank.balances += [{"address": "'${BASE_ACCOUNT_3}'", "coins": [{"denom": "zarx", "amount": "100"}] }]' "$GENESIS" > "$GENESIS_TMP"  && \
     mv "${GENESIS_TMP}" "${GENESIS}"
   jq '.app_state.auth.accounts += [{"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "'${BASE_ACCOUNT_3}'", "pub_key": null,"account_number": "0","sequence": "0"}]' "$GENESIS" > "$GENESIS_TMP" && \
     mv "${GENESIS_TMP}" "${GENESIS}"
 
   BASE_ACCOUNT_4="canow16tf864x097ejh2wav793z4938j0lr2fg8l26rt"
   # Mnemonic: hope naive brief outdoor purchase abandon place output ten suffer grape cliff strike loud arch switch attract link panic retreat planet lion potato repair
-  jq '.app_state.bank.balances += [{"address": "'${BASE_ACCOUNT_4}'", "coins": [{"denom": "ncheq", "amount": "100001000000000000"}] }]' "$GENESIS" > "$GENESIS_TMP"  && \
+  jq '.app_state.bank.balances += [{"address": "'${BASE_ACCOUNT_4}'", "coins": [{"denom": "zarx", "amount": "100001000000000000"}] }]' "$GENESIS" > "$GENESIS_TMP"  && \
     mv "${GENESIS_TMP}" "${GENESIS}"
   jq '.app_state.auth.accounts += [{"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "'${BASE_ACCOUNT_4}'", "pub_key": null,"account_number": "0","sequence": "0"}]' "$GENESIS" > "$GENESIS_TMP" && \
     mv "${GENESIS_TMP}" "${GENESIS}"
 
   BASE_ACCOUNT_5="canow1yd7n3hc2yh2gjtlxh6lwz3eqpz8k7uz0s0ncuj"
   # Mnemonic: later sentence pumpkin logic front area patch salmon insect quick topple hollow scissors purchase pluck focus climb food enforce private rotate abstract more advice
-  jq '.app_state.bank.balances += [{"address": "'${BASE_ACCOUNT_5}'", "coins": [{"denom": "ncheq", "amount": "100001000000000000"}] }]' "$GENESIS" > "$GENESIS_TMP"  && \
+  jq '.app_state.bank.balances += [{"address": "'${BASE_ACCOUNT_5}'", "coins": [{"denom": "zarx", "amount": "100001000000000000"}] }]' "$GENESIS" > "$GENESIS_TMP"  && \
     mv "${GENESIS_TMP}" "${GENESIS}"
   jq '.app_state.auth.accounts += [{"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "'${BASE_ACCOUNT_5}'", "pub_key": null,"account_number": "0","sequence": "0"}]' "$GENESIS" > "$GENESIS_TMP" && \
     mv "${GENESIS_TMP}" "${GENESIS}"
 
   BASE_ACCOUNT_6="canow1h48utnqhmkzvlp76qv65da0ahtz64smz2yw2rg"
   # Mnemonic: margin burden miss kidney plug replace jaguar sound spoil notice lens inquiry laugh canvas firm sister fortune later tired asset scatter true athlete nice
-  jq '.app_state.bank.balances += [{"address": "'${BASE_ACCOUNT_6}'", "coins": [{"denom": "ncheq", "amount": "100"}] }]' "$GENESIS" > "$GENESIS_TMP"  && \
+  jq '.app_state.bank.balances += [{"address": "'${BASE_ACCOUNT_6}'", "coins": [{"denom": "zarx", "amount": "100"}] }]' "$GENESIS" > "$GENESIS_TMP"  && \
     mv "${GENESIS_TMP}" "${GENESIS}"
   jq '.app_state.auth.accounts += [{"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "'${BASE_ACCOUNT_6}'", "pub_key": null,"account_number": "0","sequence": "0"}]' "$GENESIS" > "$GENESIS_TMP" && \
     mv "${GENESIS_TMP}" "${GENESIS}"
