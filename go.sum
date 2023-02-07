@@ -164,8 +164,8 @@ github.com/btcsuite/websocket v0.0.0-20150119174127-31079b680792/go.mod h1:ghJtE
 github.com/btcsuite/winsvc v1.0.0/go.mod h1:jsenWakMcC0zFBFurPLEAyrnc/teJEM1O46fmI40EZs=
 github.com/bwesterb/go-ristretto v1.2.0/go.mod h1:fUIoIZaG73pV5biE2Blr2xEzDoMj7NFEuV9ekS419A0=
 github.com/c-bata/go-prompt v0.2.2/go.mod h1:VzqtzE2ksDBcdln8G7mk2RX9QyGjH+OVqOCSiVIqS34=
-github.com/canow-co/cheqd-node v1.2.2-canow.0.20230207162447-799b42bd3f58 h1:VPM1iiN5kWJwB3Y1im1YyhP3C8V5TgL0vn0hjLgJqVE=
-github.com/canow-co/cheqd-node v1.2.2-canow.0.20230207162447-799b42bd3f58/go.mod h1:A6saEUDFxPdLJt01Vi0nWqumVBs97GuOgA/PZkzW+H8=
+github.com/canow-co/cheqd-node v1.2.2-canow2 h1:WrWVFF5mD3cbEyBb2O7L6ybGDb9HtmsCORV/DNT9QIM=
+github.com/canow-co/cheqd-node v1.2.2-canow2/go.mod h1:A6saEUDFxPdLJt01Vi0nWqumVBs97GuOgA/PZkzW+H8=
 github.com/casbin/casbin/v2 v2.1.2/go.mod h1:YcPU1XXisHhLzuxH9coDNf2FbKpjGlbCg3n9yuLkIJQ=
 github.com/cenkalti/backoff v2.2.1+incompatible h1:tNowT99t7UNflLxfYYSlKYsBpXdEet03Pg2g16Swow4=
 github.com/cenkalti/backoff v2.2.1+incompatible/go.mod h1:90ReRw6GdpyfrHakVjL/QHaoyV4aDUVVkXQJJJ3NXXM=

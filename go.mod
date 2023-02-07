@@ -3,7 +3,7 @@ module github.com/canow-co/canow-chain
 go 1.18
 
 require (
-	github.com/canow-co/cheqd-node v1.2.2-canow.0.20230207162447-799b42bd3f58
+	github.com/canow-co/cheqd-node v1.2.2-canow2
 	github.com/cosmos/cosmos-sdk v0.46.8
 	github.com/cosmos/ibc-go/v6 v6.1.0
 	github.com/google/uuid v1.3.0
