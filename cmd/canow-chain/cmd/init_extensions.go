@@ -36,7 +36,7 @@ func applyConfigDefaults(cmd *cobra.Command) error {
 
 	err := cheqdcmd.UpdateTmConfig(clientCtx.HomeDir, func(config *tmcfg.Config) {
 		config.Consensus.CreateEmptyBlocks = false
-		config.Consensus.CreateEmptyBlocksInterval = time.Duration(600*time.Second)
+		config.Consensus.CreateEmptyBlocksInterval = time.Duration(600 * time.Second)
 		config.FastSync.Version = "v0"
 		config.LogFormat = "json"
 		config.LogLevel = "error"
@@ -46,8 +46,6 @@ func applyConfigDefaults(cmd *cobra.Command) error {
 		config.Instrumentation.Prometheus = true
 		config.Instrumentation.MaxOpenConnections = 3
 		config.Instrumentation.Namespace = "tendermint"
-
-		
 
 		// Workaround for Tendermint's bug
 		config.Storage = tmcfg.DefaultStorageConfig()
