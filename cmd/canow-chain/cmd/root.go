@@ -120,7 +120,7 @@ func initRootCmd(
 		AddGenesisAccountCmd(app.DefaultNodeHome),
 		tmcli.NewCompletionCmd(rootCmd, true),
 		config.Cmd(),
-		cheqdcmd.ExtendInit(genutilcli.InitCmd(app.ModuleBasics, app.DefaultNodeHome)),
+		ExtendInit(genutilcli.InitCmd(app.ModuleBasics, app.DefaultNodeHome)),
 		cheqdcmd.ExtendDebug(debug.Cmd()),
 		// this line is used by starport scaffolding # root/commands
 	)
