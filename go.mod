@@ -8,7 +8,7 @@ require (
 	github.com/cosmos/ibc-go/v6 v6.1.0
 	github.com/google/uuid v1.3.0
 	github.com/ignite/cli v0.26.1
-	github.com/onsi/ginkgo/v2 v2.7.0
+	github.com/onsi/ginkgo/v2 v2.8.0
 	github.com/onsi/gomega v1.26.0
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/cobra v1.6.1
