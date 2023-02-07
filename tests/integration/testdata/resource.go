@@ -3,7 +3,7 @@ package testdata
 import (
 	"encoding/base64"
 
-	"github.com/canow-co/cheqd-node/tests/integration/helpers"
+	"github.com/canow-co/canow-chain/tests/integration/helpers"
 )
 
 const (

@@ -12,7 +12,7 @@ else
 fi
 
 # Params
-CHAIN_ID=${1:-"cheqd"} # First parameter, default is "cheqd"
+CHAIN_ID=${1:-"canow"} # First parameter, default is "canow"
 
 VALIDATORS_COUNT=${2:-4} # Second parameter, default is 4
 SEEDS_COUNT=${3:-1} # Third parameter, default is 1
@@ -46,7 +46,7 @@ function configure_node() {
   sed -i $SED_EXT 's/timeout_prevote = "1s"/timeout_prevote = "500ms"/g' "${CONFIG_TOML}"
   sed -i $SED_EXT 's/timeout_precommit = "1s"/timeout_precommit = "500ms"/g' "${CONFIG_TOML}"
   sed -i $SED_EXT 's/timeout_commit = "5s"/timeout_commit = "500ms"/g' "${CONFIG_TOML}"
-  sed -i $SED_EXT 's/log_level = "info"/log_level = "debug"/g' "${CONFIG_TOML}"
+  sed -i $SED_EXT 's/log_level = "\w*"/log_level = "info"/g' "${CONFIG_TOML}"
 }
 
 function configure_genesis() {

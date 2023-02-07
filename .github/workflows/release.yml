@@ -61,7 +61,7 @@ jobs:
         id: get_gobin
         run: |
           GOPATH=${GOPATH:-${HOME}/go}
-          echo "GOBIN=${GOBIN:-${GOPATH}/bin}" >> "$GITHUB_OUTPUTS"
+          echo "GOBIN=${GOBIN:-${GOPATH}/bin}" >> "$GITHUB_OUTPUT"
         shell: bash
 
       - name: Publish the Release
