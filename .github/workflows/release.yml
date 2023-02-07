@@ -27,7 +27,9 @@ jobs:
 
       - name: Set release version number
         id: set-version
-        run: echo "RELEASE_VERSION=$(git describe --tags "${{ github.sha }}")" >> "$GITHUB_OUTPUTS"
+        run: |
+          RELEASE_VERSION=$( git describe --tags "${{ github.sha }}")
+          echo "RELEASE_VERSION=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
 
       - uses: actions/setup-go@v3
         with:
@@ -59,7 +61,7 @@ jobs:
         id: get_gobin
         run: |
           GOPATH=${GOPATH:-${HOME}/go}
-          echo "GOBIN=${GOBIN:-${GOPATH}/bin}" >> "$GITHUB_OUTPUTS"
+          echo "GOBIN=${GOBIN:-${GOPATH}/bin}" >> "$GITHUB_OUTPUT"
         shell: bash
 
       - name: Publish the Release
