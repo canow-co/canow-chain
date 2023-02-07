@@ -2,14 +2,13 @@
 # shellcheck disable=SC2086
 
 # Generates network configuration for an arbitrary amount of validators, observers, and seeds.
-
 set -euo pipefail
 
-# sed in macos requires extra argument
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    SED_EXT=''
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    SED_EXT='.orig'
+# sed in MacOS requires extra argument
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  SED_EXT='.orig'
+else
+  SED_EXT=''
 fi
 
 # Params
@@ -39,16 +38,15 @@ function configure_node() {
   APP_TOML="${NODE_HOME}/config/app.toml"
   CONFIG_TOML="${NODE_HOME}/config/config.toml"
 
-  sed -i $SED_EXT 's/minimum-gas-prices = ""/minimum-gas-prices = "25ncheq"/g' "${APP_TOML}"
+  sed -i $SED_EXT 's/minimum-gas-prices = ""/minimum-gas-prices = "50ncheq"/g' "${APP_TOML}"
   sed -i $SED_EXT 's/enable = false/enable = true/g' "${APP_TOML}"
-
   sed -i $SED_EXT 's|laddr = "tcp://127.0.0.1:26657"|laddr = "tcp://0.0.0.0:26657"|g' "${CONFIG_TOML}"
   sed -i $SED_EXT 's|addr_book_strict = true|addr_book_strict = false|g' "${CONFIG_TOML}"
-
   sed -i $SED_EXT 's/timeout_propose = "3s"/timeout_propose = "500ms"/g' "${CONFIG_TOML}"
   sed -i $SED_EXT 's/timeout_prevote = "1s"/timeout_prevote = "500ms"/g' "${CONFIG_TOML}"
   sed -i $SED_EXT 's/timeout_precommit = "1s"/timeout_precommit = "500ms"/g' "${CONFIG_TOML}"
   sed -i $SED_EXT 's/timeout_commit = "5s"/timeout_commit = "500ms"/g' "${CONFIG_TOML}"
+  sed -i $SED_EXT 's/log_level = "\w*"/log_level = "info"/g' "${CONFIG_TOML}"
 }
 
 function configure_genesis() {
@@ -63,7 +61,7 @@ function configure_genesis() {
   # Default denom
   sed -i $SED_EXT 's/"stake"/"ncheq"/' "${GENESIS}"
 
-  # Short voting period¶
+  # Short voting period
   sed -i $SED_EXT 's/"voting_period": "172800s"/"voting_period": "12s"/' "${GENESIS}"
 
   # Test accounts
@@ -79,6 +77,34 @@ function configure_genesis() {
   jq '.app_state.bank.balances += [{"address": "'${BASE_ACCOUNT_2}'", "coins": [{"denom": "ncheq", "amount": "100001000000000000"}] }]' "$GENESIS" > "$GENESIS_TMP"  && \
     mv "${GENESIS_TMP}" "${GENESIS}"
   jq '.app_state.auth.accounts += [{"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "'${BASE_ACCOUNT_2}'", "pub_key": null,"account_number": "0","sequence": "0"}]' "$GENESIS" > "$GENESIS_TMP" && \
+    mv "${GENESIS_TMP}" "${GENESIS}"
+
+  BASE_ACCOUNT_3="canow1m7qjmjc7lhm4ydly70mj6gsqc4pdynmzvprpxn"
+  # Mnemonic: alien worry rent coil melt treat eager used pioneer truck warfare number glimpse describe pulse bar scout nurse twenty lab lunch defy blossom bridge
+  jq '.app_state.bank.balances += [{"address": "'${BASE_ACCOUNT_3}'", "coins": [{"denom": "ncheq", "amount": "100"}] }]' "$GENESIS" > "$GENESIS_TMP"  && \
+    mv "${GENESIS_TMP}" "${GENESIS}"
+  jq '.app_state.auth.accounts += [{"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "'${BASE_ACCOUNT_3}'", "pub_key": null,"account_number": "0","sequence": "0"}]' "$GENESIS" > "$GENESIS_TMP" && \
+    mv "${GENESIS_TMP}" "${GENESIS}"
+
+  BASE_ACCOUNT_4="canow16tf864x097ejh2wav793z4938j0lr2fg8l26rt"
+  # Mnemonic: hope naive brief outdoor purchase abandon place output ten suffer grape cliff strike loud arch switch attract link panic retreat planet lion potato repair
+  jq '.app_state.bank.balances += [{"address": "'${BASE_ACCOUNT_4}'", "coins": [{"denom": "ncheq", "amount": "100001000000000000"}] }]' "$GENESIS" > "$GENESIS_TMP"  && \
+    mv "${GENESIS_TMP}" "${GENESIS}"
+  jq '.app_state.auth.accounts += [{"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "'${BASE_ACCOUNT_4}'", "pub_key": null,"account_number": "0","sequence": "0"}]' "$GENESIS" > "$GENESIS_TMP" && \
+    mv "${GENESIS_TMP}" "${GENESIS}"
+
+  BASE_ACCOUNT_5="canow1yd7n3hc2yh2gjtlxh6lwz3eqpz8k7uz0s0ncuj"
+  # Mnemonic: later sentence pumpkin logic front area patch salmon insect quick topple hollow scissors purchase pluck focus climb food enforce private rotate abstract more advice
+  jq '.app_state.bank.balances += [{"address": "'${BASE_ACCOUNT_5}'", "coins": [{"denom": "ncheq", "amount": "100001000000000000"}] }]' "$GENESIS" > "$GENESIS_TMP"  && \
+    mv "${GENESIS_TMP}" "${GENESIS}"
+  jq '.app_state.auth.accounts += [{"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "'${BASE_ACCOUNT_5}'", "pub_key": null,"account_number": "0","sequence": "0"}]' "$GENESIS" > "$GENESIS_TMP" && \
+    mv "${GENESIS_TMP}" "${GENESIS}"
+
+  BASE_ACCOUNT_6="canow1h48utnqhmkzvlp76qv65da0ahtz64smz2yw2rg"
+  # Mnemonic: margin burden miss kidney plug replace jaguar sound spoil notice lens inquiry laugh canvas firm sister fortune later tired asset scatter true athlete nice
+  jq '.app_state.bank.balances += [{"address": "'${BASE_ACCOUNT_6}'", "coins": [{"denom": "ncheq", "amount": "100"}] }]' "$GENESIS" > "$GENESIS_TMP"  && \
+    mv "${GENESIS_TMP}" "${GENESIS}"
+  jq '.app_state.auth.accounts += [{"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "'${BASE_ACCOUNT_6}'", "pub_key": null,"account_number": "0","sequence": "0"}]' "$GENESIS" > "$GENESIS_TMP" && \
     mv "${GENESIS_TMP}" "${GENESIS}"
 
   BASE_VESTING_ACCOUNT="canow1m6j32klalgrzpg6vlzhmkwtjj5aay9kn5ezl76"

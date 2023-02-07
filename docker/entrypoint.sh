@@ -12,6 +12,7 @@ if [ ! -d "${CANOW_ROOT_DIR}/config" ]
 then
     echo "Node config not found. Initializing."
     canow-chain init "moniker-placeholder"
+    sed -i 's/log_level = "\w*"/log_level = "info"/g' "${CANOW_ROOT_DIR}/config/config.toml"
 else
     echo "Node config exists. Skipping initialization."
 fi
