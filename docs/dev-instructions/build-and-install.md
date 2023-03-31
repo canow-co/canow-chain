@@ -23,7 +23,7 @@ Move the binary to  `/usr/bin/`
 mv build/canow-chain /usr/bin/
 ```
 
-### Step 2. Define permissions (optional)
+### Define permissions (optional)
 
 On this step we need to allow the binary execution if it is needed.
 
