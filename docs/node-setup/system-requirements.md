@@ -20,7 +20,7 @@ Extended information on [recommended hardware requirements is available in Tende
 
 ## Operating system
 
-Our [packaged releases](https://github.com/canow-co/canow-chain/releases) are currently compiled and tested for `Ubuntu 20.04 LTS`, which is the recommended operating system for installation using interactive installer or binaries.
+Our [packaged releases](https://github.com/canow-co/canow-chain/releases) are currently compiled and tested for `Ubuntu 22.04 LTS`, which is the recommended operating system for installation using interactive installer or binaries.
 
 For other operating systems, we recommend using [pre-built Docker image releases for `canow-chain`](https://github.com/orgs/canow-co/packages?repo_name=canow-chain).
 

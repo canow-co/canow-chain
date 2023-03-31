@@ -22,7 +22,7 @@ docker pull ghcr.io/canow-co/canow-chain:<version>
 **Step2.** Start Docker image:
 
 ```commandline
-docker run -it --rm -p "26657:26657" -p "26656:26656" -p "1317:1317" canow-chain
+docker run -it -p "26657:26657" -p "26656:26656" -p "1317:1317" canow-chain
 ```
 
 
