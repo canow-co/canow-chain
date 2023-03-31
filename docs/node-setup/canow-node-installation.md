@@ -7,6 +7,26 @@ There are a few ways of canow-chain node installation:
 
 ## Binary installation
 
+```commandline
+# create a new directory and cd
+mkdir ~/canow-chain-dir && cd ~/canow-chain-dir
+
+# download the binary file for Linux x86-64
+curl -L -o canow-chain.tar.gz https://github.com/canow-co/canow-chain/releases/download/v0.2.1/canow-chain-v0.2.1-linux.tar.gz
+
+# unarchive the files
+tar -xzvf canow-chain.tar.gz
+
+# make canow-chain executable
+chmod +x canow-chain
+
+# install to the system
+sudo cp canow-chain /usr/local/bin/canow-chain
+
+# make sure that canow-chain works
+canow-chain version
+```
+
 ## Docker container
 
 **This way is NOT recommended**. Especially for validator node because validator's key may be easily lost. 

@@ -22,7 +22,7 @@ Canow Ledger is a blockchain network for self-sovereign identity based on Cosmos
 - Use DID Doc resources to support any types of Verifiable Credentials.
 - Create account with your `ARX` tokens wallet.
 - Manage your wallet key and `ARX` tokens.
-- Join Canow network like a validator or observer.
+- Join Canow network as a validator or observer.
 - Delegate `ARX` tokens to existing validator and receive a passive income.
 
 ### 🚧  — Testnet

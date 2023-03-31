@@ -1,4 +1,4 @@
-# Setup local poll
+# Setup local pool
 
 /docker/localnet/docker-compose.env
 

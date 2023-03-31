@@ -15,7 +15,7 @@ canow-chain tx staking create-validator \
   --commission-max-change-rate="0.01" \
   --min-self-delegation="1000000" \
   --gas="auto" \
-  --gas-prices="25xarx" \
+  --gas-prices="25zarx" \
   --from=<key_name>
 ```
 
