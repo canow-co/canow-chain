@@ -175,7 +175,7 @@ Each DID Document MUST have a metadata section when a representation is produced
 2. **updated** (string): The value of the property MUST follow the same formatting rules as the created property. The updated field is null if an Update operation has never been performed on the DID document. If an updated property exists, it can be the same value as the created property when the difference between the two timestamps is less than one second.
 3. **deactivated** (string): If DID has been deactivated, DID document metadata MUST include this property with the boolean value true. By default this is set to false.
 4. **versionId** (string): Contains transaction hash of the current DIDDoc version.
-5. **linkedResourceMetadata** (list of resources metadata referred to as [Resource previews](https://github.com/cheqd/node-docs/blob/main/architecture/adr-list/adr-008-ledger-resources.md)| *optional*). Cannot be changed by CreateDID or UpdateDID transactions. canow ledger stores only the resource identifiers in the DID Doc metadata. The remainder of the resources' metadata is added when a DID is resolved.
+5. **linkedResourceMetadata** (list of resources metadata referred to as [Resource previews](https://github.com/cheqd/identity-docs/blob/cc14ef125e3c8eefb934cc272ad704b00ff89d60/architecture/adr-list/adr-002-did-linked-resources.md)| *optional*). Cannot be changed by CreateDID or UpdateDID transactions. canow ledger stores only the resource identifiers in the DID Doc metadata. The remainder of the resources' metadata is added when a DID is resolved.
 
 Example of DIDDoc metadata:
 
@@ -204,7 +204,7 @@ Example of DIDDoc metadata:
 
 ## DID Resources
 
-It is associated with DID Document bytes data with specific Resource metadata. More details in [ADR 008: On-ledger Resources with DID URLs](https://github.com/cheqd/node-docs/blob/main/architecture/adr-list/adr-008-ledger-resources.md). DID Resource properties:
+It is associated with DID Document bytes data with specific Resource metadata. More details in [ADR 008: On-ledger Resources with DID URLs](https://github.com/cheqd/identity-docs/blob/cc14ef125e3c8eefb934cc272ad704b00ff89d60/architecture/adr-list/adr-002-did-linked-resources.md). DID Resource properties:
 
 - **ResourceMetadata**
   - **Resource Collection ID:** an identifier of a “parent” DID Document without `did:canow:testnet:` prefix;
@@ -458,7 +458,7 @@ Using the idea of linked DIDs (trusted DID chain) does not exclude the possibili
   - [CL signatures](https://eprint.iacr.org/2012/562.pdf)
     - [Revocation Entry](https://hyperledger.github.io/anoncreds-spec/#issuer-create-and-publish-revocation-registry-objects)
 - [Revocation Status List](https://w3c-ccg.github.io/vc-status-rl-2020/)
-- [DID Resources](https://github.com/cheqd/node-docs/blob/main/architecture/adr-list/adr-008-ledger-resources.md)
+- [DID Resources](https://github.com/cheqd/identity-docs/blob/cc14ef125e3c8eefb934cc272ad704b00ff89d60/architecture/adr-list/adr-002-did-linked-resources.md)
 - [Tendermint](https://tendermint.com/)
 - [Cosmos blockchain framework](https://cosmos.network/) official project website
   - [cosmos-sdk](https://github.com/cosmos/cosmos-sdk) GitHub repository ([documentation](https://docs.cosmos.network/))
