@@ -59,7 +59,7 @@ The "moniker" for your node is a "friendly" name that will be available to peers
 
 ### 2. Download the genesis file
 
-   Download the `genesis.json` file for the relevant [persistent chain](https://github.com/canow-co/canow-chain/tree/main/networks/) and put it in the `$HOME/.canow-chain/config` directory.
+   Download the `genesis.json` file for the relevant [persistent chain](../../networks) and put it in the `$HOME/.canow-chain/config` directory.
 
    ```bash
    wget -O $HOME/.canow-chain/config/genesis.json https://raw.githubusercontent.com/canow-co/canow-chain/main/networks/testnet/genesis.json
@@ -67,7 +67,7 @@ The "moniker" for your node is a "friendly" name that will be available to peers
 
 ### 3. Define the seed configuration for populating the list of peers known by a node
 
-   Update `seeds` with a comma separated list of seed node addresses specified in `seeds.txt` for the relevant [network](https://github.com/canow-co/canow-chain/tree/main/networks/).
+   Update `seeds` with a comma separated list of seed node addresses specified in `seeds.txt` for the relevant [network](../../networks).
 
    For canow testnet, set the `SEEDS` environment variable:
 

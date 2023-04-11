@@ -305,7 +305,7 @@ For supporting CL Anoncreds, Schema and Credential definition(Cred_def) entities
 
 ### BBS+ signature
 
-[BBS+ signature](https://w3c-ccg.github.io/ldp-bbs2020/) is an alternative to [CL signature](https://eprint.iacr.org/2012/562.pdf) in SSI world. It is a new modern flow that supports selective disclosure and hence can be used instead of CL Anoncreds in many cases.
+[BBS+ signature](https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html) is an alternative to [CL signature](https://eprint.iacr.org/2012/562.pdf) in SSI world. It is a new modern flow that supports selective disclosure and hence can be used instead of CL Anoncreds in many cases.
 
 BBS signature is stored in DID Doc [[spec](https://www.w3.org/TR/did-core/#core-properties)] as a [Verification method](#verification-method) (`publicKeyMultibase` or `publicKeyJwk`) in **[Assertion](https://www.w3.org/TR/did-core/#assertion)** section.
 
@@ -453,7 +453,7 @@ Using the idea of linked DIDs (trusted DID chain) does not exclude the possibili
 - [DID Specification Registries](https://www.w3.org/TR/did-spec-registries/)
 - [DIDComm Messaging v2.0](https://identity.foundation/didcomm-messaging/spec/v2.0/) specification
 - [Verifiable Credentials Data Model](https://www.w3.org/TR/vc-data-model/) specification
-- [BBS+ signature](https://w3c-ccg.github.io/ldp-bbs2020/) specification
+- [BBS+ signature](https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-02.html) specification
 - [CL Anoncreds](https://hyperledger.github.io/anoncreds-spec/) specification
   - [CL signatures](https://eprint.iacr.org/2012/562.pdf)
     - [Revocation Entry](https://hyperledger.github.io/anoncreds-spec/#issuer-create-and-publish-revocation-registry-objects)

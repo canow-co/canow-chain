@@ -30,7 +30,7 @@ We plan on supporting other operating systems in the future, based on demand for
 
 We recommend using a storage path that can be kept persistent and restored/remounted (if necessary) for the configuration, data, and log directories associated with a node. This allows a node to be restored along with configuration files such as node keys and for the node's copy of the ledger to be restored without triggering a full chain sync.
 
-The default directory location for `canow-chain` installations is `$HOME/.canow-chain`, which computes to `/home/canow/.canow-chain` when [using the interactive installer](interactive/interactive-installer.md). Custom paths can be defined if desired.
+The default directory location for `canow-chain` installations is `$HOME/.canow-chain`. Custom paths can be defined if desired.
 
 ### Ports
 

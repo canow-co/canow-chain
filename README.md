@@ -32,7 +32,7 @@ ___
 Canow Testnet is a network where you can get Testnet ARX tokens to try Canow ledger and test your functionality without any real payments.
 
 - [Setup Testnet node](docs/node-setup/validator-creation.md) to participate the network.
-- [Big Dipper Explorer](https://explorer.testnet.canowchain.com) for the network monitoring.
+- [Big Dipper Explorer](https://explorer.testnet.canowchain.com/desmos) for the network monitoring.
 - [Omniflix instance](https://omniflix.testnet.canowchain.com) for tokens transferring, delegating and adding Canow wallet to Keplr.
 - [Community chat]() for your questions to Canow Chain maintainers and other participants
 
