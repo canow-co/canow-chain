@@ -35,4 +35,4 @@ Parameters required in the transaction above are:
 
 ## Status check
 
-The status of your node can be checked in the network [Explorer](https://explorer.testnet.canowchain.com) or via [Omniflix](https://omniflix.testnet.canowchain.com) page for making delegations.
+The status of your node can be checked in the network [Explorer](https://explorer.testnet.canowchain.com/desmos) or via [Omniflix](https://omniflix.testnet.canowchain.com) page for making delegations.
