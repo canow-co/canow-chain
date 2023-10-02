@@ -175,7 +175,7 @@ Each DID Document MUST have a metadata section when a representation is produced
 2. **updated** (string): The value of the property MUST follow the same formatting rules as the created property. The updated field is null if an Update operation has never been performed on the DID document. If an updated property exists, it can be the same value as the created property when the difference between the two timestamps is less than one second.
 3. **deactivated** (string): If DID has been deactivated, DID document metadata MUST include this property with the boolean value true. By default this is set to false.
 4. **versionId** (string): Contains transaction hash of the current DIDDoc version.
-5. **linkedResourceMetadata** (list of resources metadata referred to as [Resource previews](https://github.com/cheqd/node-docs/blob/main/architecture/adr-list/adr-008-ledger-resources.md)| *optional*). Cannot be changed by CreateDID or UpdateDID transactions. canow ledger stores only the resource identifiers in the DID Doc metadata. The remainder of the resources' metadata is added when a DID is resolved.
+5. **linkedResourceMetadata** (list of resources metadata referred to as [Resource previews](https://docs.cheqd.io/identity/architecture/adr-list/adr-002-did-linked-resources)| *optional*). Cannot be changed by CreateDID or UpdateDID transactions. canow ledger stores only the resource identifiers in the DID Doc metadata. The remainder of the resources' metadata is added when a DID is resolved.
 
 Example of DIDDoc metadata:
 
@@ -204,7 +204,7 @@ Example of DIDDoc metadata:
 
 ## DID Resources
 
-It is associated with DID Document bytes data with specific Resource metadata. More details in [ADR 008: On-ledger Resources with DID URLs](https://github.com/cheqd/node-docs/blob/main/architecture/adr-list/adr-008-ledger-resources.md). DID Resource properties:
+It is associated with DID Document bytes data with specific Resource metadata. More details in [ADR 008: On-ledger Resources with DID URLs](https://docs.cheqd.io/identity/architecture/adr-list/adr-002-did-linked-resources). DID Resource properties:
 
 - **ResourceMetadata**
   - **Resource Collection ID:** an identifier of a “parent” DID Document without `did:canow:testnet:` prefix;
@@ -305,7 +305,7 @@ For supporting CL Anoncreds, Schema and Credential definition(Cred_def) entities
 
 ### BBS+ signature
 
-[BBS+ signature](https://w3c-ccg.github.io/ldp-bbs2020/) is an alternative to [CL signature](https://eprint.iacr.org/2012/562.pdf) in SSI world. It is a new modern flow that supports selective disclosure and hence can be used instead of CL Anoncreds in many cases.
+[BBS+ signature](https://www.w3.org/TR/vc-di-bbs/) is an alternative to [CL signature](https://eprint.iacr.org/2012/562.pdf) in SSI world. It is a new modern flow that supports selective disclosure and hence can be used instead of CL Anoncreds in many cases.
 
 BBS signature is stored in DID Doc [[spec](https://www.w3.org/TR/did-core/#core-properties)] as a [Verification method](#verification-method) (`publicKeyMultibase` or `publicKeyJwk`) in **[Assertion](https://www.w3.org/TR/did-core/#assertion)** section.
 
@@ -453,12 +453,12 @@ Using the idea of linked DIDs (trusted DID chain) does not exclude the possibili
 - [DID Specification Registries](https://www.w3.org/TR/did-spec-registries/)
 - [DIDComm Messaging v2.0](https://identity.foundation/didcomm-messaging/spec/v2.0/) specification
 - [Verifiable Credentials Data Model](https://www.w3.org/TR/vc-data-model/) specification
-- [BBS+ signature](https://w3c-ccg.github.io/ldp-bbs2020/) specification
+- [BBS+ signature](https://www.w3.org/TR/vc-di-bbs/) specification
 - [CL Anoncreds](https://hyperledger.github.io/anoncreds-spec/) specification
   - [CL signatures](https://eprint.iacr.org/2012/562.pdf)
     - [Revocation Entry](https://hyperledger.github.io/anoncreds-spec/#issuer-create-and-publish-revocation-registry-objects)
 - [Revocation Status List](https://w3c-ccg.github.io/vc-status-rl-2020/)
-- [DID Resources](https://github.com/cheqd/node-docs/blob/main/architecture/adr-list/adr-008-ledger-resources.md)
+- [DID Resources](https://docs.cheqd.io/identity/architecture/adr-list/adr-002-did-linked-resources)
 - [Tendermint](https://tendermint.com/)
 - [Cosmos blockchain framework](https://cosmos.network/) official project website
   - [cosmos-sdk](https://github.com/cosmos/cosmos-sdk) GitHub repository ([documentation](https://docs.cosmos.network/))
