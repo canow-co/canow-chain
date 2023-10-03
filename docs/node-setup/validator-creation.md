@@ -20,6 +20,7 @@ canow-chain tx staking create-validator \
 ```
 
 Parameters required in the transaction above are:
+
 * **amount** is an amount of tokens to stake
 * **from** is a key alias of the node operator account that makes the initial stake
 * **min-self-delegation** is a strictly positive integer that represents the minimum amount of self-delegated voting power your validator must always have. A min-self-delegation of 1000000000 means your validator will never have a self-delegation lower than 1ARX.
