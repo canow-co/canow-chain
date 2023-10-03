@@ -4,29 +4,29 @@ Setup Go according project [environment description](environment.md).
 
 Pull repo from GitHub
 
-```commandline
+```bash
 git clone https://github.com/canow-co/canow-chain.git
 cd canow-chain
 ```
 
-### Build the project
+## Build the project
 
-```commandline
+```bash
 make build
 ```
 
-### Install binary
+## Install binary
 
-Move the binary to  `/usr/bin/`
+Move the binary to `/usr/bin/`
 
-```commandline
+```bash
 mv build/canow-chain /usr/bin/
 ```
 
-### Define permissions (optional)
+## Define permissions (optional)
 
 On this step we need to allow the binary execution if it is needed.
 
-```commandline
+```bash
 sudo chmod +x /usr/bin/canow-chain
 ```

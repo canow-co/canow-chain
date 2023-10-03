@@ -7,7 +7,7 @@ There are a few ways of canow-chain node installation:
 
 ## Binary installation
 
-```commandline
+```bash
 # create a new directory and cd
 mkdir ~/canow-chain-dir && cd ~/canow-chain-dir
 
@@ -35,13 +35,13 @@ But if this way has been chosen, you can find pre-built image for all released v
 
 **Step1.** Pull the Docker image at the required `version`:
 
-```commandline
+```bash
 docker pull ghcr.io/canow-co/canow-chain:<version>
 ```
 
 **Step2.** Start Docker image:
 
-```commandline
+```bash
 docker run -it -p "26657:26657" -p "26656:26656" -p "1317:1317" canow-chain
 ```
 
