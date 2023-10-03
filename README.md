@@ -1,19 +1,10 @@
-<div align="center">
-  <img src="docs/canow.svg" width="100" height="100" />
-  
-  <hr height="0.5px" />
-  
-  <br/>
-  
-  <h1> Canow Ledger </h1>
-  <p> Self-Sovereign identity ledger based on Cosmos SDK framework. </p>
-  
-  <br/>
-</div>
+# Canow Ledger
 
-### ℹ️ — Canow Ledger benefits
+Self-Sovereign identity ledger based on Cosmos SDK framework.
 
-___
+## ℹ️ — Canow Ledger benefits
+
+---
 
 Canow Ledger is a blockchain network for self-sovereign identity based on Cosmos SDK framework. It allows you:
 
@@ -25,24 +16,23 @@ Canow Ledger is a blockchain network for self-sovereign identity based on Cosmos
 - Join Canow network as a validator or observer.
 - Delegate `ARX` tokens to existing validator and receive a passive income.
 
-### 🚧  — Testnet
+## 🚧 — Testnet
 
-___
+---
 
 Canow Testnet is a network where you can get Testnet ARX tokens to try Canow ledger and test your functionality without any real payments.
 
 - [Setup Testnet node](docs/node-setup/validator-creation.md) to participate the network.
-- [Big Dipper Explorer](https://explorer.testnet.canowchain.com) for the network monitoring.
+- [Big Dipper Explorer](https://explorer.testnet.canowchain.com/desmos) for the network monitoring.
 - [Omniflix instance](https://omniflix.testnet.canowchain.com) for tokens transferring, delegating and adding Canow wallet to Keplr.
-- [Community chat]() for your questions to Canow Chain maintainers and other participants
 
-### 🤝 — How to contribute
+## 🤝 — How to contribute
 
-___
+---
 
 We will be happy to see your contributions and work together! Thanks in advance!
 
 - Development [environment](docs/dev-instructions/environment.md) secrets.
-- How to [build and install](docs/dev-instructions/build-and-install.md)  **canow-chain** application.
+- How to [build and install](docs/dev-instructions/build-and-install.md) **canow-chain** application.
 - How to set up [a local pool](docs/dev-instructions/setup-local-pool.md).
 - [List of issues](https://github.com/canow-co/canow-chain/issues) for bug reports and feature suggestions.
