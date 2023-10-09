@@ -1,0 +1,66 @@
+{
+    "payload": {
+        "context": [
+            "abc",
+            "def"
+        ],
+        "id": "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+        "controller": [
+            "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4"
+        ],
+        "verificationMethod": [
+            {
+                "id": "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-1",
+                "verificationMethodType": "Ed25519VerificationKey2020",
+                "controller": "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+                "verificationMaterial": "z6MkgsWjD4afggHtpX4Vzc8r6HzSzEU2jcpGsmuqnt9Vyg9j"
+            },
+            {
+                "id": "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-2",
+                "verificationMethodType": "Ed25519VerificationKey2020",
+                "controller": "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+                "verificationMaterial": "z6MkkkfNPuwBunkHrL8rzwUj6XsVji2bkAxGvsXJnP87QYvC"
+            },
+            {
+                "id": "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-3",
+                "verificationMethodType": "Ed25519VerificationKey2020",
+                "controller": "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+                "verificationMaterial": "z6MknyN27f3oxB3g8VmXb5nZU2GFcQdnMUF5bHWYG49BQkqM"
+            },
+            {
+                "id": "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-4",
+                "verificationMethodType": "Ed25519VerificationKey2020",
+                "controller": "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4",
+                "verificationMaterial": "z6MkwCfE6fWEp2DTTsiK3wEFYTFthcGCiyiqkZADyrcCanP7"
+            }
+        ],
+        "authentication": [
+            "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-1"
+        ],
+        "assertionMethod": [
+            "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-1",
+            "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-2",
+            "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-3",
+            "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-4"
+        ],
+        "capability_invocation": [
+            "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-1",
+            "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-3",
+            "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-4"
+        ],
+        "capabilityDelegation": [
+            "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-4",
+            "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#key-2"
+        ],
+        "service": [
+            {
+                "id": "did:canow:testnet:91e5f0cf-5f1e-5c19-97d3-d313e84033b4#service-1",
+                "serviceType": "type-1",
+                "serviceEndpoint": [
+                    "endpoint-1"
+                ]
+            }
+        ],
+        "alsoKnownAs": []
+    }
+}

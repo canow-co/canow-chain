@@ -1,6 +1,6 @@
 # Setup local pool
 
-/docker/localnet/docker-compose.env
+/docker/localnet/build-latest.env
 
 ```bash
 BUILD_IMAGE="canow-co/canow-chain:build-latest"
@@ -13,5 +13,5 @@ Launch a local pool
 - 1 observer
 
 ```bash
-docker compose --env-file docker-compose.env up --force-recreate
+docker compose --env-file build-latest.env up --force-recreate
 ```

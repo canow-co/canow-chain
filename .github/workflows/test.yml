@@ -12,7 +12,6 @@ permissions:
   checks: write
 
 jobs:
-
   unit-tests:
     name: "Unit Tests"
     runs-on: ubuntu-latest
@@ -55,7 +54,7 @@ jobs:
 
       - name: Restore binary permissions
         run: sudo chmod +x ${{ env.RUNNER_BIN_DIR }}/canow-chain
-      
+
       - name: Change broadcast-mode an application CLI configuration file
         run: canow-chain config broadcast-mode block
 
@@ -76,7 +75,7 @@ jobs:
       - name: Set up Docker localnet
         working-directory: ./docker/localnet
         run: |
-          docker compose --env-file docker-compose.env up --detach --no-build
+          docker compose --env-file build-latest.env up --detach --no-build
 
       - name: Import keys
         working-directory: ./docker/localnet
@@ -95,7 +94,7 @@ jobs:
       - name: Run tests
         working-directory: ./tests/integration
         run: ginkgo -r --tags integration --race --randomize-suites --keep-going --trace --junit-report ../../report-integration.xml
-      
+
       - name: Upload integration tests result
         uses: actions/upload-artifact@v3
         with:
@@ -127,9 +126,9 @@ jobs:
 
       - uses: mikepenz/action-junit-report@v3
         with:
-          report_paths: 'report.xml'
+          report_paths: "report.xml"
           token: ${{ secrets.GH_TOKEN }}
           check_name: ""
-          suite_regex: '*'
+          suite_regex: "*"
           include_passed: true
           detailed_summary: true
