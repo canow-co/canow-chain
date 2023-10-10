@@ -1,10 +1,21 @@
 {
     "payload": {
+        "data": "eyJhdHRyIjpbIm5hbWUiLCJhZ2UiXX0=",
         "collectionId": "C8113F5E-E124-4400-a3c8-109b4f6722ad",
         "id": "b67d9bdc-b8f4-45fd-b5f6-1af38c26d4c8",
         "name": "UUID mixed",
-        "resourceType": "TestResourceTypeMixed23",
-        "data": "eyAibWVzc2FnZSI6ICJoZWxsbyB3b3JsZCJ9"
+        "version": "1.2-uuid",
+        "resourceType": "CL-Schema",
+        "alsoKnownAs": [
+            {
+                "uri": "https://example.com/alternative-uri",
+                "description": ""
+            },
+            {
+                "uri": "https://example.com/alternative-uri",
+                "description": "Alternative URI description"
+            }
+        ]
     },
     "signInputs": [
         {

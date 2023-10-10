@@ -6,21 +6,52 @@ import (
 	"fmt"
 	"path/filepath"
 
+	clihelpers "github.com/canow-co/canow-chain/tests/integration/helpers"
 	cli "github.com/canow-co/canow-chain/tests/upgrade/integration/cli"
 	didcli "github.com/canow-co/cheqd-node/x/did/client/cli"
-	didtypesv1 "github.com/canow-co/cheqd-node/x/did/types/v1"
-	resourcetypesv1 "github.com/canow-co/cheqd-node/x/resource/types/v1"
-	govtypesv1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
+	didtypes "github.com/canow-co/cheqd-node/x/did/types"
+	resourcetypes "github.com/canow-co/cheqd-node/x/resource/types"
+	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
+	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
 var _ = Describe("Upgrade - Pre", func() {
+	var feeParams didtypes.FeeParams
+	var resourceFeeParams resourcetypes.FeeParams
+
+	BeforeEach(func() {
+		// Query fee params
+		res, err := cli.QueryParams(cli.Validator0, didtypes.ModuleName, string(didtypes.ParamStoreKeyFeeParams))
+		Expect(err).To(BeNil())
+		err = clihelpers.Codec.UnmarshalJSON([]byte(res.Value), &feeParams)
+		Expect(err).To(BeNil())
+
+		res, err = cli.QueryParams(cli.Validator0, resourcetypes.ModuleName, string(resourcetypes.ParamStoreKeyFeeParams))
+		Expect(err).To(BeNil())
+		err = clihelpers.Codec.UnmarshalJSON([]byte(res.Value), &resourceFeeParams)
+		Expect(err).To(BeNil())
+	})
+
 	Context("Before a softare upgrade execution is initiated", func() {
 		It("should wait for chain to bootstrap", func() {
 			By("pinging the node status until the dvoting end height is reached")
 			err := cli.WaitForChainHeight(cli.Validator0, cli.CliBinaryName, cli.BootstrapHeight, cli.BootstrapPeriod)
 			Expect(err).To(BeNil())
+		})
+
+		It("should match the expected module version map", func() {
+			By("loading the expected module version map")
+			var expected upgradetypes.QueryModuleVersionsResponse
+			_, err := Loader(filepath.Join(GeneratedJSONDir, "pre", "query - module-version-map", "v0.2.1.json"), &expected)
+			Expect(err).To(BeNil())
+
+			By("matching the expected module version map")
+			actual, err := cli.QueryModuleVersionMap(cli.Validator0)
+			Expect(err).To(BeNil())
+
+			Expect(actual.ModuleVersions).To(Equal(expected.ModuleVersions), "module version map mismatch")
 		})
 
 		It("should load and run existing diddoc payloads - case: create", func() {
@@ -29,7 +60,7 @@ var _ = Describe("Upgrade - Pre", func() {
 			Expect(err).To(BeNil())
 
 			for _, payload := range ExistingDidDocCreatePayloads {
-				var DidDocCreatePayload didtypesv1.MsgCreateDidPayload
+				var DidDocCreatePayload didcli.DIDDocument
 				var DidDocCreateSignInput []didcli.SignInput
 
 				testCase := GetCaseName(payload)
@@ -40,7 +71,8 @@ var _ = Describe("Upgrade - Pre", func() {
 				DidDocCreateSignInput, err = Loader(payload, &DidDocCreatePayload)
 				Expect(err).To(BeNil())
 
-				res, err := cli.CreateDidLegacy(DidDocCreatePayload, DidDocCreateSignInput, cli.Validator0)
+				tax := feeParams.CreateDid.String()
+				res, err := cli.CreateDid(DidDocCreatePayload, DidDocCreateSignInput, cli.Validator0, "", tax)
 				Expect(err).To(BeNil())
 				Expect(res.Code).To(BeEquivalentTo(0))
 			}
@@ -52,7 +84,7 @@ var _ = Describe("Upgrade - Pre", func() {
 			Expect(err).To(BeNil())
 
 			for _, payload := range ExistingDidDocUpdatePayloads {
-				var DidDocUpdatePayload didtypesv1.MsgUpdateDidPayload
+				var DidDocUpdatePayload didcli.DIDDocument
 				var DidDocUpdateSignInput []didcli.SignInput
 
 				testCase := GetCaseName(payload)
@@ -63,13 +95,8 @@ var _ = Describe("Upgrade - Pre", func() {
 				DidDocUpdateSignInput, err = Loader(payload, &DidDocUpdatePayload)
 				Expect(err).To(BeNil())
 
-				resp, err := cli.QueryDidLegacy(DidDocUpdatePayload.Id, cli.Validator0)
-				Expect(err).To(BeNil())
-				Expect(resp.Did.Id).To(BeEquivalentTo(DidDocUpdatePayload.Id))
-
-				DidDocUpdatePayload.VersionId = resp.Metadata.VersionId
-
-				res, err := cli.UpdateDidLegacy(DidDocUpdatePayload, DidDocUpdateSignInput, cli.Validator0)
+				tax := feeParams.UpdateDid.String()
+				res, err := cli.UpdateDid(DidDocUpdatePayload, DidDocUpdateSignInput, cli.Validator0, "", tax)
 				Expect(err).To(BeNil())
 				Expect(res.Code).To(BeEquivalentTo(0))
 			}
@@ -81,7 +108,7 @@ var _ = Describe("Upgrade - Pre", func() {
 			Expect(err).To(BeNil())
 
 			for _, payload := range ExistingResourceCreatePayloads {
-				var ResourceCreatePayload resourcetypesv1.MsgCreateResourcePayload
+				var ResourceCreatePayload resourcetypes.MsgCreateResourcePayload
 				var ResourceCreateSignInput []didcli.SignInput
 
 				testCase := GetCaseName(payload)
@@ -91,20 +118,17 @@ var _ = Describe("Upgrade - Pre", func() {
 				ResourceCreateSignInput, err = Loader(payload, &ResourceCreatePayload)
 				Expect(err).To(BeNil())
 
-				By("copying the existing resource file to the container")
 				ResourceFile, err := CreateTestJSON(GinkgoT().TempDir(), ResourceCreatePayload.Data)
 				Expect(err).To(BeNil())
-				_, err = cli.LocalnetExecCopyAbsoluteWithPermissions(ResourceFile, cli.DockerHome, cli.Validator0)
-				Expect(err).To(BeNil())
 
-				res, err := cli.CreateResourceLegacy(
-					ResourceCreatePayload.CollectionId,
-					ResourceCreatePayload.Id,
-					ResourceCreatePayload.Name,
-					ResourceCreatePayload.ResourceType,
-					filepath.Base(ResourceFile),
+				res, err := cli.CreateResource(
+					ResourceCreatePayload,
+					ResourceFile,
 					ResourceCreateSignInput,
-					cli.Validator0)
+					cli.Validator0,
+					resourceFeeParams.Json.String(),
+				)
+
 				Expect(err).To(BeNil())
 				Expect(res.Code).To(BeEquivalentTo(0))
 			}
@@ -172,9 +196,9 @@ var _ = Describe("Upgrade - Pre", func() {
 
 		It("should query the proposal status to ensure it has passed", func() {
 			By("sending a QueryProposal Msg from `validator0` container")
-			proposal, err := cli.QueryProposalLegacy(cli.Validator0, "1")
+			proposal, err := cli.QueryProposal(cli.Validator0, "1")
 			Expect(err).To(BeNil())
-			Expect(proposal.Status).To(BeEquivalentTo(govtypesv1beta1.StatusPassed))
+			Expect(proposal.Status).To(BeEquivalentTo(govtypes.StatusPassed))
 		})
 
 		It("should wait for the upgrade height to be reached", func() {

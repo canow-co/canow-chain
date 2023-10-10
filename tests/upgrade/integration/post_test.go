@@ -9,25 +9,25 @@ import (
 	clihelpers "github.com/canow-co/canow-chain/tests/integration/helpers"
 	cli "github.com/canow-co/canow-chain/tests/upgrade/integration/cli"
 	didcli "github.com/canow-co/cheqd-node/x/did/client/cli"
-	didtypesv2 "github.com/canow-co/cheqd-node/x/did/types"
-	resourcetypesv2 "github.com/canow-co/cheqd-node/x/resource/types"
+	didtypes "github.com/canow-co/cheqd-node/x/did/types"
+	resourcetypes "github.com/canow-co/cheqd-node/x/resource/types"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
 var _ = Describe("Upgrade - Post", func() {
-	var feeParams didtypesv2.FeeParams
-	var resourceFeeParams resourcetypesv2.FeeParams
+	var feeParams didtypes.FeeParams
+	var resourceFeeParams resourcetypes.FeeParams
 
 	BeforeEach(func() {
 		// Query fee params
-		res, err := cli.QueryParams(cli.Validator0, didtypesv2.ModuleName, string(didtypesv2.ParamStoreKeyFeeParams))
+		res, err := cli.QueryParams(cli.Validator0, didtypes.ModuleName, string(didtypes.ParamStoreKeyFeeParams))
 		Expect(err).To(BeNil())
 		err = clihelpers.Codec.UnmarshalJSON([]byte(res.Value), &feeParams)
 		Expect(err).To(BeNil())
 
-		res, err = cli.QueryParams(cli.Validator0, resourcetypesv2.ModuleName, string(resourcetypesv2.ParamStoreKeyFeeParams))
+		res, err = cli.QueryParams(cli.Validator0, resourcetypes.ModuleName, string(resourcetypes.ParamStoreKeyFeeParams))
 		Expect(err).To(BeNil())
 		err = clihelpers.Codec.UnmarshalJSON([]byte(res.Value), &resourceFeeParams)
 		Expect(err).To(BeNil())
@@ -53,7 +53,10 @@ var _ = Describe("Upgrade - Post", func() {
 		It("should match the expected module version map", func() {
 			By("loading the expected module version map")
 			var expected upgradetypes.QueryModuleVersionsResponse
-			_, err := Loader(filepath.Join(GeneratedJSONDir, "post", "query - module-version-map", "v1.json"), &expected)
+			_, err := Loader(
+				filepath.Join(GeneratedJSONDir, "post", "query - module-version-map", fmt.Sprintf("%s.json", cli.UpgradeName)),
+				&expected,
+			)
 			Expect(err).To(BeNil())
 
 			By("matching the expected module version map")
@@ -93,7 +96,7 @@ var _ = Describe("Upgrade - Post", func() {
 			Expect(err).To(BeNil())
 
 			for _, payload := range DidDocDeactivatePayloads {
-				var DidDocDeacctivatePayload didtypesv2.MsgDeactivateDidDocPayload
+				var DidDocDeacctivatePayload didtypes.MsgDeactivateDidDocPayload
 				var DidDocDeactivateSignInput []didcli.SignInput
 
 				testCase := GetCaseName(payload)
@@ -117,7 +120,7 @@ var _ = Describe("Upgrade - Post", func() {
 			Expect(err).To(BeNil())
 
 			for _, payload := range ResourcePayloads {
-				var ResourceCreatePayload resourcetypesv2.MsgCreateResourcePayload
+				var ResourceCreatePayload resourcetypes.MsgCreateResourcePayload
 
 				testCase := GetCaseName(payload)
 				By("Running: create " + testCase)
@@ -148,7 +151,7 @@ var _ = Describe("Upgrade - Post", func() {
 			Expect(err).To(BeNil())
 
 			for _, payload := range ExpectedDidDocUpdateRecords {
-				var DidDocUpdateRecord didtypesv2.DidDoc
+				var DidDocUpdateRecord didtypes.DidDoc
 
 				testCase := GetCaseName(payload)
 				By("Running: query " + testCase)
@@ -164,22 +167,22 @@ var _ = Describe("Upgrade - Post", func() {
 					DidDocUpdateRecord.Context = []string{}
 				}
 				if DidDocUpdateRecord.Authentication == nil {
-					DidDocUpdateRecord.Authentication = []*didtypesv2.VerificationRelationship{}
+					DidDocUpdateRecord.Authentication = []*didtypes.VerificationRelationship{}
 				}
 				if DidDocUpdateRecord.AssertionMethod == nil {
-					DidDocUpdateRecord.AssertionMethod = []*didtypesv2.VerificationRelationship{}
+					DidDocUpdateRecord.AssertionMethod = []*didtypes.VerificationRelationship{}
 				}
 				if DidDocUpdateRecord.CapabilityInvocation == nil {
-					DidDocUpdateRecord.CapabilityInvocation = []*didtypesv2.VerificationRelationship{}
+					DidDocUpdateRecord.CapabilityInvocation = []*didtypes.VerificationRelationship{}
 				}
 				if DidDocUpdateRecord.CapabilityDelegation == nil {
-					DidDocUpdateRecord.CapabilityDelegation = []*didtypesv2.VerificationRelationship{}
+					DidDocUpdateRecord.CapabilityDelegation = []*didtypes.VerificationRelationship{}
 				}
 				if DidDocUpdateRecord.KeyAgreement == nil {
-					DidDocUpdateRecord.KeyAgreement = []*didtypesv2.VerificationRelationship{}
+					DidDocUpdateRecord.KeyAgreement = []*didtypes.VerificationRelationship{}
 				}
 				if DidDocUpdateRecord.Service == nil {
-					DidDocUpdateRecord.Service = []*didtypesv2.Service{}
+					DidDocUpdateRecord.Service = []*didtypes.Service{}
 				}
 				if DidDocUpdateRecord.AlsoKnownAs == nil {
 					DidDocUpdateRecord.AlsoKnownAs = []string{}
@@ -195,7 +198,7 @@ var _ = Describe("Upgrade - Post", func() {
 			Expect(err).To(BeNil())
 
 			for _, payload := range ExpectedResourceCreateRecords {
-				var ResourceCreateRecord resourcetypesv2.ResourceWithMetadata
+				var ResourceCreateRecord resourcetypes.ResourceWithMetadata
 
 				testCase := GetCaseName(payload)
 				By("Running: query " + testCase)
