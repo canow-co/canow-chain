@@ -1,9 +1,9 @@
 {
     "payload": {
         "data": "eyJhdHRyIjpbIm5hbWUiLCJhZ2UiXX0=",
-        "collectionId": "HWdKrn8vpY6nVZEz",
+        "collectionId": "7Tqg6BwSSWapxgUDm9KKgg",
         "id": "7f2589aa-1279-4bd7-b704-f868772b460a",
-        "name": "Indy 16 symbols resource",
+        "name": "Indy DID resource",
         "version": "1.1-indy",
         "resourceType": "CL-Schema",
         "alsoKnownAs": [
@@ -19,7 +19,7 @@
     },
     "signInputs": [
         {
-            "verificationMethodId": "did:canow:testnet:HWdKrn8vpY6nVZEz#key-1",
+            "verificationMethodId": "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg#key-1",
             "privKey": "dTHxupAW0yqeeIgqZkjndoWSbZ2kRjK2FMwI6bgtZR6aNYVzr6sn2zzT5zOUYPMflJu17gBqNH0tjp62SlLg/w=="
         }
     ]

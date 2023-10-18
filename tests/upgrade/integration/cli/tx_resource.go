@@ -1,34 +1,14 @@
 package cli
 
 import (
-	"encoding/base64"
 	"encoding/json"
 	"path/filepath"
 
 	integrationhelpers "github.com/canow-co/canow-chain/tests/integration/helpers"
 	"github.com/canow-co/cheqd-node/x/did/client/cli"
-	types "github.com/canow-co/cheqd-node/x/resource/types"
+	"github.com/canow-co/cheqd-node/x/resource/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
-
-func CreateResourceLegacy(collectionID string, resourceID string, resourceName string, resourceType string, resourceFile string, signInputs []cli.SignInput, container string) (sdk.TxResponse, error) {
-	args := []string{
-		"--collection-id", collectionID,
-		"--resource-id", resourceID,
-		"--resource-name", resourceName,
-		"--resource-type", resourceType,
-		"--resource-file", resourceFile,
-	}
-
-	for _, signInput := range signInputs {
-		args = append(args, signInput.VerificationMethodID)
-		args = append(args, base64.StdEncoding.EncodeToString(signInput.PrivKey))
-	}
-
-	args = append(args, GasParams...)
-
-	return Tx(container, CliBinaryName, "resource", "create-resource", OperatorAccounts[container], args...)
-}
 
 func CreateResource(payload types.MsgCreateResourcePayload, resourceFile string, signInputs []cli.SignInput, container, fees string) (sdk.TxResponse, error) {
 	resourceFileName := filepath.Base(resourceFile)

@@ -10,10 +10,10 @@ func TrimExtraLineOffset(input string, offset int) string {
 
 func TrimImportedStdout(output string) string {
 	lines := strings.Split(output, "\n")
-	trimmed := make([]string, len(lines))
-	for i, line := range lines {
+	trimmed := make([]string, 0, len(lines))
+	for _, line := range lines {
 		if !strings.Contains(line, "Successfully migrated key") && !strings.Contains(line, "gas estimate:") {
-			trimmed[i] = line
+			trimmed = append(trimmed, line)
 		}
 	}
 

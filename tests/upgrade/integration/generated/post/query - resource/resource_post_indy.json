@@ -4,7 +4,7 @@
             "data": "eyJhdHRyIjpbIm5hbWUiLCJhZ2UiXX0K"
         },
         "metadata": {
-            "collectionId": "5rjaLzcffhGUH4nt4fyfAg",
+            "collectionId": "2MZYuPv2Km7Q1eD4GCsSb6",
             "id": "9fbb1b86-91f8-4942-97b9-725b7714131c",
             "name": "Test Resource After Upgrade Name Indy Case",
             "version": "1.1-indy",
@@ -19,7 +19,7 @@
                     "description": "Alternative URI description"
                 },
                 {
-                    "uri": "did:canow:testnet:5rjaLzcffhGUH4nt4fyfAg/resources/9fbb1b86-91f8-4942-97b9-725b7714131c",
+                    "uri": "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6/resources/9fbb1b86-91f8-4942-97b9-725b7714131c",
                     "description": "did-url"
                 }
             ],

@@ -4,14 +4,14 @@
             "data": "eyAibWVzc2FnZSI6ICJoZWxsbyB3b3JsZCJ9"
         },
         "metadata": {
-            "collectionId": "5rjaLzcffhGUH4nt4fyfAg",
+            "collectionId": "2MZYuPv2Km7Q1eD4GCsSb6",
             "id": "7f2589aa-1279-4bd7-b704-f868772b460a",
-            "name": "Indy 16 symbols resource",
+            "name": "Indy DID resource",
             "version": "",
             "resourceType": "TestResourceType",
             "alsoKnownAs": [
                 {
-                    "uri": "did:canow:testnet:5rjaLzcffhGUH4nt4fyfAg/resources/7f2589aa-1279-4bd7-b704-f868772b460a",
+                    "uri": "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6/resources/7f2589aa-1279-4bd7-b704-f868772b460a",
                     "description": "did-url"
                 }
             ],

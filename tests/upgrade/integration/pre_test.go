@@ -22,6 +22,14 @@ var _ = Describe("Upgrade - Pre", func() {
 	var resourceFeeParams resourcetypes.FeeParams
 
 	BeforeEach(func() {
+		// Configure broadcast mode on all the nodes where CLI can be used from in order to interact with the chain
+		args := []string{cli.CliBinaryName, "config", "broadcast-mode", "block"}
+
+		for _, validator := range cli.ValidatorNodes {
+			_, err := cli.LocalnetExecExec(validator, args...)
+			Expect(err).To(BeNil())
+		}
+
 		// Query fee params
 		res, err := cli.QueryParams(cli.Validator0, didtypes.ModuleName, string(didtypes.ParamStoreKeyFeeParams))
 		Expect(err).To(BeNil())

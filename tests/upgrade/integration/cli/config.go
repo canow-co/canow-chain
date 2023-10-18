@@ -31,9 +31,10 @@ const (
 
 var (
 	TXParams = []string{
-		"--keyring-backend", KeyringBackend,
 		"--chain-id", integrationnetwork.ChainID,
-		"-y",
+		"--keyring-backend", KeyringBackend,
+		"--output", OutputFormat,
+		"--yes",
 	}
 	GasParams = []string{
 		"--gas", Gas,

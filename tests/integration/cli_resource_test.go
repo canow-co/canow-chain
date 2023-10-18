@@ -273,7 +273,7 @@ var _ = Describe("cheqd cli - positive resource", func() {
 
 		pubKeyMultibase58 := testsetup.GenerateEd25519VerificationKey2020VerificationMaterial(pubKey)
 		payload := didcli.DIDDocument{
-			ID:         did,
+			ID: did,
 			VerificationMethod: []didcli.VerificationMethod{
 				map[string]any{
 					"id":                 keyId,
@@ -308,7 +308,7 @@ var _ = Describe("cheqd cli - positive resource", func() {
 		Expect(err).To(BeNil())
 
 		res, err = cli.CreateResource(tmpDir, resourcetypes.MsgCreateResourcePayload{
-			CollectionId:    collectionId,
+			CollectionId: collectionId,
 			Id:           resourceId,
 			Name:         resourceName,
 			Version:      resourceVersion,
@@ -343,7 +343,7 @@ var _ = Describe("cheqd cli - positive resource", func() {
 		Expect(err).To(BeNil())
 
 		payload := didcli.DIDDocument{
-			ID:         did,
+			ID: did,
 			Authentication: []any{
 				map[string]any{
 					"id":                 keyId,
@@ -410,7 +410,6 @@ var _ = Describe("cheqd cli - positive resource", func() {
 		pubKeyMultibase58 := testsetup.GenerateEd25519VerificationKey2020VerificationMaterial(pubKey)
 		Expect(err).To(BeNil())
 
-
 		payload := didcli.DIDDocument{
 			ID: did,
 			VerificationMethod: []didcli.VerificationMethod{
@@ -421,7 +420,6 @@ var _ = Describe("cheqd cli - positive resource", func() {
 					"publicKeyMultibase": pubKeyMultibase58,
 				},
 			},
-
 		}
 		signInputs := []didcli.SignInput{
 			{
