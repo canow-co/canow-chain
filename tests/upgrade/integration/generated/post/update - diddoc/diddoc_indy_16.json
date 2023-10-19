@@ -36,11 +36,11 @@
             "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-3"
         ],
         "capabilityDelegation": [
-            "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-4",
+            "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-1",
             "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-2"
         ],
         "keyAgreement": [
-            "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-4"
+            "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-3"
         ],
         "service": [
             {

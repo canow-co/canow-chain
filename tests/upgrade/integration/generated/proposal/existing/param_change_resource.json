@@ -6,7 +6,21 @@
         {
             "subspace": "resource",
             "key": "feeparams",
-            "value": {"image": {"denom": "zarx", "amount": "20000000000"}, "json": {"denom": "zarx", "amount": "5000000000"}, "default": {"denom": "zarx", "amount": "10000000000"}, "burn_factor": "0.990000000000000000"}
+            "value": {
+                "image": {
+                    "denom": "zarx",
+                    "amount": "20000000000"
+                },
+                "json": {
+                    "denom": "zarx",
+                    "amount": "5000000000"
+                },
+                "default": {
+                    "denom": "zarx",
+                    "amount": "10000000000"
+                },
+                "burn_factor": "0.990000000000000000"
+            }
         }
     ],
     "deposit": "10000000000zarx"

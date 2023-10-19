@@ -16,11 +16,11 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("Upgrade - Post", func() {
+var _ = Describe("Upgrade - Post", Ordered, func() {
 	var feeParams didtypes.FeeParams
 	var resourceFeeParams resourcetypes.FeeParams
 
-	BeforeEach(func() {
+	BeforeAll(func() {
 		// Query fee params
 		res, err := cli.QueryParams(cli.Validator0, didtypes.ModuleName, string(didtypes.ParamStoreKeyFeeParams))
 		Expect(err).To(BeNil())
@@ -33,7 +33,7 @@ var _ = Describe("Upgrade - Post", func() {
 		Expect(err).To(BeNil())
 	})
 
-	Context("After a software upgrade execution has concluded", func() {
+	Context("After a software upgrade execution has concluded", Ordered, func() {
 		It("should wait for node catching up", func() {
 			By("pinging the node status until catching up is flagged as false")
 			err := cli.WaitForCaughtUp(cli.Validator0, cli.CliBinaryName, cli.VotingPeriod*6)
