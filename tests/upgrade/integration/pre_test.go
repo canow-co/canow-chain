@@ -17,11 +17,11 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("Upgrade - Pre", func() {
+var _ = Describe("Upgrade - Pre", Ordered, func() {
 	var feeParams didtypes.FeeParams
 	var resourceFeeParams resourcetypes.FeeParams
 
-	BeforeEach(func() {
+	BeforeAll(func() {
 		// Configure broadcast mode on all the nodes where CLI can be used from in order to interact with the chain
 		args := []string{cli.CliBinaryName, "config", "broadcast-mode", "block"}
 
@@ -42,9 +42,9 @@ var _ = Describe("Upgrade - Pre", func() {
 		Expect(err).To(BeNil())
 	})
 
-	Context("Before a softare upgrade execution is initiated", func() {
+	Context("Before a softare upgrade execution is initiated", Ordered, func() {
 		It("should wait for chain to bootstrap", func() {
-			By("pinging the node status until the dvoting end height is reached")
+			By("pinging the node status until the bootstrap height is reached")
 			err := cli.WaitForChainHeight(cli.Validator0, cli.CliBinaryName, cli.BootstrapHeight, cli.BootstrapPeriod)
 			Expect(err).To(BeNil())
 		})

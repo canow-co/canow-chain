@@ -79,12 +79,12 @@ func SubmitUpgradeProposal(upgradeHeight int64, container string) (sdk.TxRespons
 	fmt.Println("Submitting upgrade proposal from", container)
 	args := append([]string{
 		CliBinaryName,
-		"tx", "gov", "submit-proposal", "software-upgrade",
+		"tx", "gov", "submit-legacy-proposal", "software-upgrade",
 		UpgradeName,
 		"--title", "Upgrade Title",
 		"--description", "Upgrade Description",
 		"--upgrade-height", strconv.FormatInt(upgradeHeight, 10),
-		"--upgrade-info", "Upgrade Info",
+		"--no-validate",
 		"--from", OperatorAccounts[container],
 	}, TXParams...)
 
