@@ -36,9 +36,15 @@
             }
         ],
         "authentication": [
-            "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-1",
-            "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-2",
-            "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-3"
+            {
+                "verificationMethodId": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-1"
+            },
+            {
+                "verificationMethodId": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-2"
+            },
+            {
+                "verificationMethodId": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-3"
+            }
         ],
         "service": [
             {

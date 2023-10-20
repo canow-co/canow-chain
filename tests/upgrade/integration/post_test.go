@@ -96,7 +96,7 @@ var _ = Describe("Upgrade - Post", Ordered, func() {
 			Expect(err).To(BeNil())
 
 			for _, payload := range DidDocDeactivatePayloads {
-				var DidDocDeacctivatePayload didtypes.MsgDeactivateDidDocPayload
+				var DidDocDeactivatePayload didtypes.MsgDeactivateDidDocPayload
 				var DidDocDeactivateSignInput []didcli.SignInput
 
 				testCase := GetCaseName(payload)
@@ -104,11 +104,11 @@ var _ = Describe("Upgrade - Post", Ordered, func() {
 				fmt.Println("Running: " + testCase)
 
 				By("reading ")
-				DidDocDeactivateSignInput, err = Loader(payload, &DidDocDeacctivatePayload)
+				DidDocDeactivateSignInput, err = Loader(payload, &DidDocDeactivatePayload)
 				Expect(err).To(BeNil())
 
 				tax := feeParams.DeactivateDid.String()
-				res, err := cli.DeactivateDid(DidDocDeacctivatePayload, DidDocDeactivateSignInput, cli.Validator0, tax)
+				res, err := cli.DeactivateDid(DidDocDeactivatePayload, DidDocDeactivateSignInput, cli.Validator0, tax)
 				Expect(err).To(BeNil())
 				Expect(res.Code).To(BeEquivalentTo(0))
 			}
@@ -121,12 +121,13 @@ var _ = Describe("Upgrade - Post", Ordered, func() {
 
 			for _, payload := range ResourcePayloads {
 				var ResourceCreatePayload resourcetypes.MsgCreateResourcePayload
+				var ResourceCreateSignInput []didcli.SignInput
 
 				testCase := GetCaseName(payload)
 				By("Running: create " + testCase)
 				fmt.Println("Running: " + testCase)
 
-				signInputs, err := Loader(payload, &ResourceCreatePayload)
+				ResourceCreateSignInput, err := Loader(payload, &ResourceCreatePayload)
 				Expect(err).To(BeNil())
 
 				ResourceFile, err := CreateTestJSON(GinkgoT().TempDir(), ResourceCreatePayload.Data)
@@ -135,7 +136,7 @@ var _ = Describe("Upgrade - Post", Ordered, func() {
 				res, err := cli.CreateResource(
 					ResourceCreatePayload,
 					ResourceFile,
-					signInputs,
+					ResourceCreateSignInput,
 					cli.Validator0,
 					resourceFeeParams.Json.String(),
 				)
@@ -147,81 +148,89 @@ var _ = Describe("Upgrade - Post", Ordered, func() {
 
 		It("should load and run expected diddoc payloads", func() {
 			By("matching the glob pattern for existing diddoc payloads")
-			ExpectedDidDocUpdateRecords, err := RelGlob(GeneratedJSONDir, "post", "query - diddoc", "*.json")
+			ExpectedDidDocRecords, err := RelGlob(GeneratedJSONDir, "post", "query - diddoc", "*.json")
 			Expect(err).To(BeNil())
 
-			for _, payload := range ExpectedDidDocUpdateRecords {
-				var DidDocUpdateRecord didtypes.DidDoc
+			for _, payload := range ExpectedDidDocRecords {
+				var DidDocRecord didtypes.DidDoc
 
 				testCase := GetCaseName(payload)
 				By("Running: query " + testCase)
 				fmt.Println("Running: " + testCase)
 
-				_, err = Loader(payload, &DidDocUpdateRecord)
+				_, err = Loader(payload, &DidDocRecord)
 				Expect(err).To(BeNil())
 
-				res, err := cli.QueryDid(DidDocUpdateRecord.Id, cli.Validator0)
+				res, err := cli.QueryDid(DidDocRecord.Id, cli.Validator0)
 				Expect(err).To(BeNil())
 
-				if DidDocUpdateRecord.Context == nil {
-					DidDocUpdateRecord.Context = []string{}
+				if DidDocRecord.Context == nil {
+					DidDocRecord.Context = []string{}
 				}
-				if DidDocUpdateRecord.Authentication == nil {
-					DidDocUpdateRecord.Authentication = []*didtypes.VerificationRelationship{}
+				if DidDocRecord.Authentication == nil {
+					DidDocRecord.Authentication = []*didtypes.VerificationRelationship{}
 				}
-				if DidDocUpdateRecord.AssertionMethod == nil {
-					DidDocUpdateRecord.AssertionMethod = []*didtypes.VerificationRelationship{}
+				if DidDocRecord.AssertionMethod == nil {
+					DidDocRecord.AssertionMethod = []*didtypes.VerificationRelationship{}
 				}
-				if DidDocUpdateRecord.CapabilityInvocation == nil {
-					DidDocUpdateRecord.CapabilityInvocation = []*didtypes.VerificationRelationship{}
+				if DidDocRecord.CapabilityInvocation == nil {
+					DidDocRecord.CapabilityInvocation = []*didtypes.VerificationRelationship{}
 				}
-				if DidDocUpdateRecord.CapabilityDelegation == nil {
-					DidDocUpdateRecord.CapabilityDelegation = []*didtypes.VerificationRelationship{}
+				if DidDocRecord.CapabilityDelegation == nil {
+					DidDocRecord.CapabilityDelegation = []*didtypes.VerificationRelationship{}
 				}
-				if DidDocUpdateRecord.KeyAgreement == nil {
-					DidDocUpdateRecord.KeyAgreement = []*didtypes.VerificationRelationship{}
+				if DidDocRecord.KeyAgreement == nil {
+					DidDocRecord.KeyAgreement = []*didtypes.VerificationRelationship{}
 				}
-				if DidDocUpdateRecord.Service == nil {
-					DidDocUpdateRecord.Service = []*didtypes.Service{}
+				if DidDocRecord.Service == nil {
+					DidDocRecord.Service = []*didtypes.Service{}
 				}
-				if DidDocUpdateRecord.AlsoKnownAs == nil {
-					DidDocUpdateRecord.AlsoKnownAs = []string{}
+				for _, Service := range DidDocRecord.Service {
+					if Service.Accept == nil {
+						Service.Accept = []string{}
+					}
+					if Service.RoutingKeys == nil {
+						Service.RoutingKeys = []string{}
+					}
+				}
+				if DidDocRecord.AlsoKnownAs == nil {
+					DidDocRecord.AlsoKnownAs = []string{}
 				}
 
-				Expect(*res.Value.DidDoc).To(Equal(DidDocUpdateRecord))
+				Expect(*res.Value.DidDoc).To(Equal(DidDocRecord))
 			}
 		})
 
 		It("should load and run expected resource payloads", func() {
 			By("matching the glob pattern for existing resource payloads")
-			ExpectedResourceCreateRecords, err := RelGlob(GeneratedJSONDir, "post", "query - resource", "*.json")
+			ExpectedResourceRecords, err := RelGlob(GeneratedJSONDir, "post", "query - resource", "*.json")
 			Expect(err).To(BeNil())
 
-			for _, payload := range ExpectedResourceCreateRecords {
-				var ResourceCreateRecord resourcetypes.ResourceWithMetadata
+			for _, payload := range ExpectedResourceRecords {
+				var ResourceRecord resourcetypes.ResourceWithMetadata
 
 				testCase := GetCaseName(payload)
 				By("Running: query " + testCase)
 				fmt.Println("Running: " + testCase)
 
-				_, err = Loader(payload, &ResourceCreateRecord)
+				_, err = Loader(payload, &ResourceRecord)
 				Expect(err).To(BeNil())
 
-				res, err := cli.QueryResource(ResourceCreateRecord.Metadata.CollectionId, ResourceCreateRecord.Metadata.Id, cli.Validator0)
+				res, err := cli.QueryResource(ResourceRecord.Metadata.CollectionId, ResourceRecord.Metadata.Id, cli.Validator0)
 
 				Expect(err).To(BeNil())
-				Expect(res.Resource.Metadata.Id).To(Equal(ResourceCreateRecord.Metadata.Id))
-				Expect(res.Resource.Metadata.CollectionId).To(Equal(ResourceCreateRecord.Metadata.CollectionId))
-				Expect(res.Resource.Metadata.Name).To(Equal(ResourceCreateRecord.Metadata.Name))
-				Expect(res.Resource.Metadata.Version).To(Equal(ResourceCreateRecord.Metadata.Version))
-				Expect(res.Resource.Metadata.ResourceType).To(Equal(ResourceCreateRecord.Metadata.ResourceType))
-				Expect(res.Resource.Metadata.AlsoKnownAs).To(Equal(ResourceCreateRecord.Metadata.AlsoKnownAs))
-				Expect(res.Resource.Metadata.MediaType).To(Equal(ResourceCreateRecord.Metadata.MediaType))
+				Expect(res.Resource.Metadata.Id).To(Equal(ResourceRecord.Metadata.Id))
+				Expect(res.Resource.Metadata.CollectionId).To(Equal(ResourceRecord.Metadata.CollectionId))
+				Expect(res.Resource.Metadata.Name).To(Equal(ResourceRecord.Metadata.Name))
+				Expect(res.Resource.Metadata.Version).To(Equal(ResourceRecord.Metadata.Version))
+				Expect(res.Resource.Metadata.ResourceType).To(Equal(ResourceRecord.Metadata.ResourceType))
+				Expect(res.Resource.Metadata.AlsoKnownAs).To(Equal(ResourceRecord.Metadata.AlsoKnownAs))
+				Expect(res.Resource.Metadata.MediaType).To(Equal(ResourceRecord.Metadata.MediaType))
 				// Created is populated on successful creation. We are ignoring it here.
 				// Expect(res.Resource.Metadata.Created).To(Equal(ResourceCreateRecord.Metadata.Created))
-				Expect(res.Resource.Metadata.Checksum).To(Equal(ResourceCreateRecord.Metadata.Checksum))
-				Expect(res.Resource.Metadata.PreviousVersionId).To(Equal(ResourceCreateRecord.Metadata.PreviousVersionId))
-				Expect(res.Resource.Metadata.NextVersionId).To(Equal(ResourceCreateRecord.Metadata.NextVersionId))
+				Expect(res.Resource.Metadata.Checksum).To(Equal(ResourceRecord.Metadata.Checksum))
+				Expect(res.Resource.Metadata.PreviousVersionId).To(Equal(ResourceRecord.Metadata.PreviousVersionId))
+				Expect(res.Resource.Metadata.NextVersionId).To(Equal(ResourceRecord.Metadata.NextVersionId))
 			}
 		})
 	})

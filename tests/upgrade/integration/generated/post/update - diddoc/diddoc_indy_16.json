@@ -4,54 +4,54 @@
             "abc",
             "def"
         ],
-        "id": "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6",
+        "id": "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg",
         "controller": [
-            "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6"
+            "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg"
         ],
         "verificationMethod": [
             {
-                "id": "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-1",
+                "id": "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg#key-1",
                 "type": "Ed25519VerificationKey2020",
-                "controller": "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6",
+                "controller": "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg",
                 "publicKeyMultibase": "z6MkpqEAYo7Ri8WYt6Kx4efLQdVJNgh4QzDf8ptVxJoexXdx"
             },
             {
-                "id": "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-2",
+                "id": "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg#key-2",
                 "type": "Ed25519VerificationKey2020",
-                "controller": "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6",
+                "controller": "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg",
                 "publicKeyMultibase": "z6MkqX2qR3rvt9UQpXsaYKFqGjX79ooFfwhhpZo8HfVXiDMP"
             },
             {
-                "id": "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-3",
+                "id": "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg#key-3",
                 "type": "Ed25519VerificationKey2020",
-                "controller": "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6",
+                "controller": "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg",
                 "publicKeyMultibase": "z6MkqTTDS64UDxJGqNPb9FyeKRpz9YhDpV7qazkjXJkfRcfx"
             }
         ],
         "authentication": [
-            "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-1"
+            "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg#key-1"
         ],
         "assertionMethod": [
-            "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-2",
-            "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-3"
+            "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg#key-2",
+            "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg#key-3"
         ],
         "capabilityDelegation": [
-            "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-1",
-            "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-2"
+            "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg#key-1",
+            "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg#key-2"
         ],
         "keyAgreement": [
-            "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-3"
+            "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg#key-3"
         ],
         "service": [
             {
-                "id": "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#service-1",
+                "id": "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg#service-1",
                 "type": "type-1",
                 "serviceEndpoint": [
                     "endpoint-1"
                 ]
             },
             {
-                "id": "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#service-2",
+                "id": "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg#service-2",
                 "type": "type-1",
                 "serviceEndpoint": [
                     "endpoint-2"
@@ -64,7 +64,7 @@
     },
     "signInputs": [
         {
-            "verificationMethodId": "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-1",
+            "verificationMethodId": "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg#key-1",
             "privKey": "dTHxupAW0yqeeIgqZkjndoWSbZ2kRjK2FMwI6bgtZR6aNYVzr6sn2zzT5zOUYPMflJu17gBqNH0tjp62SlLg/w=="
         }
     ]

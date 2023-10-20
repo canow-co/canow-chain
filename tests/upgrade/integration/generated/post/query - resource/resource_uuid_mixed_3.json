@@ -4,14 +4,14 @@
             "data": "eyAibWVzc2FnZSI6ICJoZWxsbyB3b3JsZCJ9"
         },
         "metadata": {
-            "collectionId": "85d9e742-be4d-59e8-9b10-5449db2e2d04",
+            "collectionId": "C8113F5E-E124-4400-a3c8-109b4f6722ad",
             "id": "76ecedeb-225d-4164-90c2-a4857ac3c01a",
             "name": "UUID mixed",
             "version": "",
             "resourceType": "TestResourceTypeMixed23",
             "alsoKnownAs": [
                 {
-                    "uri": "did:canow:testnet:85d9e742-be4d-59e8-9b10-5449db2e2d04/resources/76ecedeb-225d-4164-90c2-a4857ac3c01a",
+                    "uri": "did:canow:testnet:C8113F5E-E124-4400-a3c8-109b4f6722ad/resources/76ecedeb-225d-4164-90c2-a4857ac3c01a",
                     "description": "did-url"
                 }
             ],

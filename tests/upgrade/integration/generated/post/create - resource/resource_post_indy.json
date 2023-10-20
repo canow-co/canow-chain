@@ -1,7 +1,7 @@
 {
     "payload": {
         "data": "eyJhdHRyIjpbIm5hbWUiLCJhZ2UiXX0=",
-        "collectionId": "2MZYuPv2Km7Q1eD4GCsSb6",
+        "collectionId": "7Tqg6BwSSWapxgUDm9KKgg",
         "id": "9fbb1b86-91f8-4942-97b9-725b7714131c",
         "name": "Test Resource After Upgrade Name Indy Case",
         "version": "1.1-indy",
@@ -19,7 +19,7 @@
     },
     "signInputs": [
         {
-            "verificationMethodId": "did:canow:testnet:2MZYuPv2Km7Q1eD4GCsSb6#key-1",
+            "verificationMethodId": "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg#key-1",
             "privKey": "dTHxupAW0yqeeIgqZkjndoWSbZ2kRjK2FMwI6bgtZR6aNYVzr6sn2zzT5zOUYPMflJu17gBqNH0tjp62SlLg/w=="
         }
     ]
