@@ -29,12 +29,12 @@ func CreateResource(payload types.MsgCreateResourcePayload, resourceFile string,
 		return sdk.TxResponse{}, err
 	}
 
-	_, err = LocalnetExecExec(container, "/bin/bash", "-c", "echo '"+string(payloadWithSignInputsJSON)+"' > "+payloadFileName)
+	_, err = LocalnetExecExec(container, "/bin/bash", "-c", "echo -n '"+string(payloadWithSignInputsJSON)+"' > "+payloadFileName)
 	if err != nil {
 		return sdk.TxResponse{}, err
 	}
 
-	_, err = LocalnetExecExec(container, "/bin/bash", "-c", "echo '"+string(payload.Data)+"' > "+resourceFileName)
+	_, err = LocalnetExecExec(container, "/bin/bash", "-c", "echo -n '"+string(payload.Data)+"' > "+resourceFileName)
 	if err != nil {
 		return sdk.TxResponse{}, err
 	}

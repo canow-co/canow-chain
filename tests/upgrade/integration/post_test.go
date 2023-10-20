@@ -219,6 +219,9 @@ var _ = Describe("Upgrade - Post", Ordered, func() {
 				res, err := cli.QueryResource(ResourceRecord.Metadata.CollectionId, ResourceRecord.Metadata.Id, cli.Validator0)
 
 				Expect(err).To(BeNil())
+
+				Expect(res.Resource.Resource.Data).To(Equal(ResourceRecord.Resource.Data))
+
 				Expect(res.Resource.Metadata.Id).To(Equal(ResourceRecord.Metadata.Id))
 				Expect(res.Resource.Metadata.CollectionId).To(Equal(ResourceRecord.Metadata.CollectionId))
 				Expect(res.Resource.Metadata.Name).To(Equal(ResourceRecord.Metadata.Name))

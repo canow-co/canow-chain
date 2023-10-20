@@ -1,10 +1,10 @@
 {
     "payload": {
         "resource": {
-            "data": "eyJhdHRyIjpbIm5hbWUiLCJhZ2UiXX0K"
+            "data": "eyJhdHRyIjpbIm5hbWUiLCJhZ2UiXX0="
         },
         "metadata": {
-            "collectionId": "45465F44-A45C-4B91-8C21-9AF6C0E33137",
+            "collectionId": "45465f44-a45c-4b91-8c21-9af6c0e33137",
             "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
             "name": "Test Resource After Upgrade Name UUID Case",
             "version": "1.2-uuid",
@@ -19,12 +19,12 @@
                     "description": "Alternative URI description"
                 },
                 {
-                    "uri": "did:canow:testnet:45465F44-A45C-4B91-8C21-9AF6C0E33137/resources/54cb8b4d-af33-4606-bc54-0f035ee30e0f",
+                    "uri": "did:canow:testnet:45465f44-a45c-4b91-8c21-9af6c0e33137/resources/54cb8b4d-af33-4606-bc54-0f035ee30e0f",
                     "description": "did-url"
                 }
             ],
             "mediaType": "application/json",
-            "checksum": "d9c6f336c5edfc5034bc66aab9277daac01e1e85b41e49e6bf1b7a8f2a81c04f",
+            "checksum": "00a0085b5b8ede397cf9f84431ed90f35e6f67ead3cedcc99a2e34ca9e493edf",
             "previousVersionId": "",
             "nextVersionId": ""
         }

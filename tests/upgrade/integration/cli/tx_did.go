@@ -26,7 +26,7 @@ func CreateDid(payload cli.DIDDocument, signInputs []cli.SignInput, container, v
 		return sdk.TxResponse{}, err
 	}
 
-	out, err := LocalnetExecExec(container, "/bin/bash", "-c", "echo '"+string(outerPayloadJSON)+"' > payload.json")
+	out, err := LocalnetExecExec(container, "/bin/bash", "-c", "echo -n '"+string(outerPayloadJSON)+"' > payload.json")
 	if err != nil {
 		return sdk.TxResponse{}, err
 	}
@@ -60,7 +60,7 @@ func UpdateDid(payload cli.DIDDocument, signInputs []cli.SignInput, container, v
 		return sdk.TxResponse{}, err
 	}
 
-	out, err := LocalnetExecExec(container, "/bin/bash", "-c", "echo '"+string(outerPayloadJSON)+"' > payload.json")
+	out, err := LocalnetExecExec(container, "/bin/bash", "-c", "echo -n '"+string(outerPayloadJSON)+"' > payload.json")
 	if err != nil {
 		return sdk.TxResponse{}, err
 	}
@@ -91,7 +91,7 @@ func DeactivateDid(payload types.MsgDeactivateDidDocPayload, signInputs []cli.Si
 		return sdk.TxResponse{}, err
 	}
 
-	out, err := LocalnetExecExec(container, "/bin/bash", "-c", "echo '"+string(outerPayloadJSON)+"' > payload.json")
+	out, err := LocalnetExecExec(container, "/bin/bash", "-c", "echo -n '"+string(outerPayloadJSON)+"' > payload.json")
 	if err != nil {
 		return sdk.TxResponse{}, err
 	}
