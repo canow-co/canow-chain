@@ -6,6 +6,7 @@ defaults:
     shell: bash
 env:
   RUNNER_BIN_DIR: /home/runner/.local/bin
+  TESTNET_LATEST_VERSION: "0.2.1"
 permissions:
   contents: write
   packages: read
@@ -52,18 +53,18 @@ jobs:
           name: canow-chain-linux
           path: ${{ env.RUNNER_BIN_DIR }}
 
-      - name: Restore binary permissions
+      - name: Set binary permissions
         run: sudo chmod +x ${{ env.RUNNER_BIN_DIR }}/canow-chain
 
-      - name: Change broadcast-mode an application CLI configuration file
+      - name: Set broadcast-mode to block in client configuration file
         run: canow-chain config broadcast-mode block
 
-      - name: Download node Docker image
+      - name: Download canow-chain Docker image
         uses: actions/download-artifact@v3
         with:
           name: canow-chain-build.tar
 
-      - name: Load node Docker image
+      - name: Load canow-chain Docker image
         run: docker load -i canow-chain-build.tar
 
       - name: Generate localnet configs
@@ -101,10 +102,140 @@ jobs:
           name: report-integration.xml
           path: report-integration.xml
 
+  upgrade-tests:
+    name: "Upgrade Tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # Preparations
+
+      - name: Download old canow-chain binary (testnet-latest) for performing network setup
+        run: |
+          mkdir -p ${{ env.RUNNER_BIN_DIR }}
+          wget -c https://github.com/canow-co/canow-chain/releases/download/${{ env.TESTNET_LATEST_VERSION }}/canow-chain-${{ env.TESTNET_LATEST_VERSION }}-Linux-x86_64.tar.gz
+          tar -xvf canow-chain-${{ env.TESTNET_LATEST_VERSION }}-Linux-x86_64.tar.gz -C ${{ env.RUNNER_BIN_DIR }} --strip-components=1
+
+      - name: Set old binary permissions
+        run: sudo chmod +x ${{ env.RUNNER_BIN_DIR }}/canow-chain
+
+      - name: Login to GitHub Container Registry to let docker compose pull old canow-chain Docker image
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download new canow-chain Docker image (build-latest)
+        uses: actions/download-artifact@v3
+        with:
+          name: canow-chain-build.tar
+
+      - name: Load new canow-chain Docker image
+        run: docker load -i canow-chain-build.tar
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version-file: ./go.mod
+          cache: true
+
+      - name: Install ginkgo
+        working-directory: ./..
+        run: go install github.com/onsi/ginkgo/v2/ginkgo@latest
+      
+      # Run tests
+      - name: Set up network with old canow-chain version (testnet-latest)
+        working-directory: ./tests/upgrade/integration
+        run: |
+          bash scripts/setup.sh
+
+      - name: Run pre-upgrade tests
+        working-directory: ./tests/upgrade/integration
+        run: |
+          ginkgo -r --race --tags upgrade_integration --focus-file pre_test.go --keep-going --trace --junit-report ../../../report-pre-upgrade.xml
+
+      - name: Upload pre-upgrade tests result
+        uses: actions/upload-artifact@v3
+        with:
+          name: report-pre-upgrade.xml
+          path: report-pre-upgrade.xml
+
+      - name: Restart network with new canow-chain version (build-latest)
+        working-directory: ./tests/upgrade/integration
+        run: |
+          bash scripts/upgrade.sh
+
+      - name: Run post-upgrade tests
+        working-directory: ./tests/upgrade/integration
+        run: |
+          ginkgo -r --race --tags upgrade_integration --focus-file post_test.go --keep-going --trace --junit-report ../../../report-post-upgrade.xml
+
+      - name: Upload post-upgrade tests result
+        uses: actions/upload-artifact@v3
+        with:
+          name: report-post-upgrade.xml
+          path: report-post-upgrade.xml
+
+      - name: Download new canow-chain binary (build-latest) for running integration tests
+        uses: actions/download-artifact@v3
+        id: download
+        with:
+          name: canow-chain
+          path: ${{ env.RUNNER_BIN_DIR }}
+
+      - name: Set new binary permissions
+        run: sudo chmod +x ${{ env.RUNNER_BIN_DIR }}/canow-chain
+
+      - name: Set broadcast-mode to block in client configuration file
+        run: canow-chain config broadcast-mode block
+
+      - name: Run integration tests on upgraded network
+        working-directory: ./tests/integration
+        run: |
+          ginkgo -r --tags integration --race --randomize-suites --keep-going --trace --junit-report ../../report-upgraded-integration.xml
+
+      - name: Upload upgraded network integration tests result
+        uses: actions/upload-artifact@v3
+        with:
+          name: report-upgraded-integration.xml
+          path: report-upgraded-integration.xml
+
+      - name: Show logs on failure
+        if: failure()
+        working-directory: ./docker/localnet
+        run: docker compose --env-file build-latest.env logs --tail --follow
+
+      - name: Submit governance fee parameter change proposals
+        working-directory: ./tests/upgrade/integration
+        run: |
+          ginkgo -r --race --tags upgrade_integration --focus-file param_change_proposal_test.go --keep-going --trace --junit-report ../../../report-pricing-proposal.xml
+
+      - name: Upload pricing proposal tests result
+        uses: actions/upload-artifact@v3
+        with:
+          name: report-pricing-proposal.xml
+          path: report-pricing-proposal.xml
+
+      - name: Run pricing integration tests after successful param change proposal
+        working-directory: ./tests/integration
+        run: |
+          ginkgo -r --tags integration --race --randomize-suites --keep-going --trace --skip-file cli_diddoc_test.go --skip-file cli_diddoc_negative_test.go --skip-file cli_resource_test.go --skip-file cli_resource_negative_test.go --junit-report ../../report-pricing-change.xml
+
+      - name: Upload pricing change tests result
+        uses: actions/upload-artifact@v3
+        with:
+          name: report-pricing-change.xml
+          path: report-pricing-change.xml
+
+      - name: Cleanup after tests
+        working-directory: ./tests/upgrade/integration
+        run: |
+          bash scripts/cleanup.sh
+
   report-results:
     name: "Report"
     runs-on: ubuntu-latest
-    needs: [integration-tests]
+    needs: [unit-tests, integration-tests, upgrade-tests]
     if: always()
 
     steps:
@@ -119,10 +250,35 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: report-integration.xml
+      
+      - name: Download pre-upgrade tests report
+        uses: actions/download-artifact@v3
+        with:
+          name: report-pre-upgrade.xml
+
+      - name: Download post-upgrade tests report
+        uses: actions/download-artifact@v3
+        with:
+          name: report-post-upgrade.xml
+      
+      - name: Download upgraded network integration tests report
+        uses: actions/download-artifact@v3
+        with:
+          name: report-upgraded-integration.xml
+
+      - name: Download pricing proposal tests report
+        uses: actions/download-artifact@v3
+        with:
+          name: report-pricing-proposal.xml
+      
+      - name: Download pricing change tesst report
+        uses: actions/download-artifact@v3
+        with:
+          name: report-pricing-change.xml
 
       - name: Combine test results
         run: |
-          python .github/scripts/xml_combine.py report-integration.xml report-unit.xml > report.xml
+          python .github/scripts/xml_combine.py report-unit.xml report-integration.xml report-pre-upgrade.xml report-post-upgrade.xml report-upgraded-integration.xml report-pricing-proposal.xml report-pricing-change.xml > report.xml
 
       - uses: mikepenz/action-junit-report@v3
         with:
