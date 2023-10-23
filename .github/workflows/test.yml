@@ -6,7 +6,7 @@ defaults:
     shell: bash
 env:
   RUNNER_BIN_DIR: /home/runner/.local/bin
-  TESTNET_LATEST_VERSION: "0.2.1"
+  TESTNET_LATEST_BIN_VER: "v0.2.1"
 permissions:
   contents: write
   packages: read
@@ -113,8 +113,8 @@ jobs:
       - name: Download old canow-chain binary (testnet-latest) for performing network setup
         run: |
           mkdir -p ${{ env.RUNNER_BIN_DIR }}
-          wget -c https://github.com/canow-co/canow-chain/releases/download/${{ env.TESTNET_LATEST_VERSION }}/canow-chain-${{ env.TESTNET_LATEST_VERSION }}-Linux-x86_64.tar.gz
-          tar -xvf canow-chain-${{ env.TESTNET_LATEST_VERSION }}-Linux-x86_64.tar.gz -C ${{ env.RUNNER_BIN_DIR }} --strip-components=1
+          wget -c https://github.com/canow-co/canow-chain/releases/download/${{ env.TESTNET_LATEST_BIN_VER }}/canow-chain-${{ env.TESTNET_LATEST_BIN_VER }}-linux.tar.gz
+          tar -xvf canow-chain-${{ env.TESTNET_LATEST_BIN_VER }}-linux.tar.gz -C ${{ env.RUNNER_BIN_DIR }} --strip-components=1
 
       - name: Set old binary permissions
         run: sudo chmod +x ${{ env.RUNNER_BIN_DIR }}/canow-chain
@@ -180,7 +180,7 @@ jobs:
         uses: actions/download-artifact@v3
         id: download
         with:
-          name: canow-chain
+          name: canow-chain-linux
           path: ${{ env.RUNNER_BIN_DIR }}
 
       - name: Set new binary permissions
