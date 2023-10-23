@@ -104,7 +104,7 @@ var _ = Describe("cheqd cli - negative diddoc pricing", func() {
 					"publicKeyMultibase": payload.VerificationMethod[0]["publicKeyMultibase"],
 				},
 			},
-			Authentication: payload.Authentication,
+			Authentication:  payload.Authentication,
 			AssertionMethod: []any{payload.VerificationMethod[0]["id"]}, // <-- changed
 		}
 
@@ -158,7 +158,7 @@ var _ = Describe("cheqd cli - negative diddoc pricing", func() {
 					"publicKeyMultibase": payload.VerificationMethod[0]["publicKeyMultibase"],
 				},
 			},
-			Authentication: payload.Authentication,
+			Authentication:  payload.Authentication,
 			AssertionMethod: []any{payload.VerificationMethod[0]["id"]}, // <-- changed
 		}
 
@@ -225,7 +225,7 @@ var _ = Describe("cheqd cli - negative diddoc pricing", func() {
 					"publicKeyMultibase": payload.VerificationMethod[0]["publicKeyMultibase"],
 				},
 			},
-			Authentication: payload.Authentication,
+			Authentication:  payload.Authentication,
 			AssertionMethod: []any{payload.VerificationMethod[0]["id"]}, // <-- changed
 		}
 
@@ -306,7 +306,7 @@ var _ = Describe("cheqd cli - negative diddoc pricing", func() {
 					"publicKeyMultibase": payload.VerificationMethod[0]["publicKeyMultibase"],
 				},
 			},
-			Authentication: payload.Authentication,
+			Authentication:  payload.Authentication,
 			AssertionMethod: []any{payload.VerificationMethod[0]["id"]}, // <-- changed
 		}
 

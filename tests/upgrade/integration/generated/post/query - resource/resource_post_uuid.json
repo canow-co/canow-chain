@@ -1,0 +1,32 @@
+{
+    "payload": {
+        "resource": {
+            "data": "eyJhdHRyIjpbIm5hbWUiLCJhZ2UiXX0="
+        },
+        "metadata": {
+            "collectionId": "45465f44-a45c-4b91-8c21-9af6c0e33137",
+            "id": "54cb8b4d-af33-4606-bc54-0f035ee30e0f",
+            "name": "Test Resource After Upgrade Name UUID Case",
+            "version": "1.2-uuid",
+            "resourceType": "CL-Schema",
+            "alsoKnownAs": [
+                {
+                    "uri": "https://example.com/alternative-uri",
+                    "description": ""
+                },
+                {
+                    "uri": "https://example.com/alternative-uri",
+                    "description": "Alternative URI description"
+                },
+                {
+                    "uri": "did:canow:testnet:45465f44-a45c-4b91-8c21-9af6c0e33137/resources/54cb8b4d-af33-4606-bc54-0f035ee30e0f",
+                    "description": "did-url"
+                }
+            ],
+            "mediaType": "application/json",
+            "checksum": "00a0085b5b8ede397cf9f84431ed90f35e6f67ead3cedcc99a2e34ca9e493edf",
+            "previousVersionId": "",
+            "nextVersionId": ""
+        }
+    }
+}

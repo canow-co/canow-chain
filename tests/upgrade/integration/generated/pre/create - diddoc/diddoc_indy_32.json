@@ -1,0 +1,78 @@
+{
+    "payload": {
+        "context": [
+            "abc",
+            "def"
+        ],
+        "id": "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB",
+        "controller": [
+            "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB"
+        ],
+        "verificationMethod": [
+            {
+                "id": "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-1",
+                "type": "Ed25519VerificationKey2020",
+                "controller": "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB",
+                "publicKeyMultibase": "z6Mkt1M9dWKQMSUjE7VXxidhXpah8JGuebU6Pox7mU7iY8mW"
+            },
+            {
+                "id": "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-2",
+                "type": "Ed25519VerificationKey2020",
+                "controller": "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB",
+                "publicKeyMultibase": "z6MkoMnWWviQr7EKDe3CNKeUqWzyzQ3yMwqDuEGm3Vpp3Rq8"
+            },
+            {
+                "id": "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-3",
+                "type": "Ed25519VerificationKey2020",
+                "controller": "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB",
+                "publicKeyMultibase": "z6MkrEqEdWVB1b8ENt7VjStKnDtyiUK8vBXB9WnRN49VKXPx"
+            },
+            {
+                "id": "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-4",
+                "type": "Ed25519VerificationKey2020",
+                "controller": "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB",
+                "publicKeyMultibase": "z6MkeZENiP78isxXtk1AwusrLSGTH74LU48SkQJEmUpFCxFK"
+            }
+        ],
+        "authentication": [
+            "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-1",
+            "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-2"
+        ],
+        "assertionMethod": [
+            "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-3"
+        ],
+        "capabilityInvocation": [
+            "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-4",
+            "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-1"
+        ],
+        "capabilityDelegation": [
+            "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-4",
+            "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-2"
+        ],
+        "keyAgreement": [
+            "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-1",
+            "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-2",
+            "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-3",
+            "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-4"
+        ],
+        "service": [
+            {
+                "id": "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#service-1",
+                "type": "type-1",
+                "serviceEndpoint": [
+                    "endpoint-1"
+                ]
+            }
+        ],
+        "alsoKnownAs": [
+            "alias-1",
+            "alias-2"
+        ]
+    },
+    "signInputs": [
+        {
+            "verificationMethodId": "did:canow:testnet:6cgbu8ZPoWTnR5Rv5JcSMB#key-1",
+            "privKey": "V+DHGMMA9O4fvIBM1gnyivbKxLudXrG1bHwMjnF4Xi3JYEmEn03givjkKTnAdQ8/DG5qfPU6qVoRUaBgNiwU+Q=="
+        }
+    ]
+}

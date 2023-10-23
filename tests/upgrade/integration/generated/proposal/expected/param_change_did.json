@@ -1,0 +1,15 @@
+{
+    "create_did": {
+        "denom": "zarx",
+        "amount": "100000000000"
+    },
+    "update_did": {
+        "denom": "zarx",
+        "amount": "50000000000"
+    },
+    "deactivate_did": {
+        "denom": "zarx",
+        "amount": "20000000000"
+    },
+    "burn_factor": "0.990000000000000000"
+}

@@ -1,0 +1,26 @@
+{
+    "payload": {
+        "data": "eyJhdHRyIjpbIm5hbWUiLCJhZ2UiXX0=",
+        "collectionId": "2e5ca092-8264-47c7-9216-8b36e01e5554",
+        "id": "9011d912-258e-4c76-93a8-200c2031685e",
+        "name": "UUID lowercase",
+        "version": "1.2-uuid",
+        "resourceType": "CL-Schema",
+        "alsoKnownAs": [
+            {
+                "uri": "https://example.com/alternative-uri",
+                "description": ""
+            },
+            {
+                "uri": "https://example.com/alternative-uri",
+                "description": "Alternative URI description"
+            }
+        ]
+    },
+    "signInputs": [
+        {
+            "verificationMethodId": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-1",
+            "privKey": "9ODcnGwn0iiX9M47BTnfnoL8VfoK6BZLk7NX++txjABV4VqtfVOsEgTX9bQ1hg/uXQwBO3onISMQ0hCWbdTalw=="
+        }
+    ]
+}

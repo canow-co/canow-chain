@@ -66,7 +66,6 @@ var _ = Describe("cheqd cli - negative resource", func() {
 				},
 			},
 			Authentication: []any{keyId},
-
 		}
 
 		signInputs = []didcli.SignInput{

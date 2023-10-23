@@ -1,0 +1,32 @@
+{
+    "payload": {
+        "resource": {
+            "data": "eyJhdHRyIjpbIm5hbWUiLCJhZ2UiXX0="
+        },
+        "metadata": {
+            "collectionId": "c8113f5e-e124-4400-a3c8-109b4f6722ad",
+            "id": "f2f985da-62b5-457b-8167-54a0a739bdc4",
+            "name": "UUID mixed",
+            "version": "1.2-uuid",
+            "resourceType": "CL-Schema",
+            "alsoKnownAs": [
+                {
+                    "uri": "https://example.com/alternative-uri",
+                    "description": ""
+                },
+                {
+                    "uri": "https://example.com/alternative-uri",
+                    "description": "Alternative URI description"
+                },
+                {
+                    "uri": "did:canow:testnet:c8113f5e-e124-4400-a3c8-109b4f6722ad/resources/f2f985da-62b5-457b-8167-54a0a739bdc4",
+                    "description": "did-url"
+                }
+            ],
+            "mediaType": "application/json",
+            "checksum": "00a0085b5b8ede397cf9f84431ed90f35e6f67ead3cedcc99a2e34ca9e493edf",
+            "previousVersionId": "",
+            "nextVersionId": "b67d9bdc-b8f4-45fd-b5f6-1af38c26d4c8"
+        }
+    }
+}

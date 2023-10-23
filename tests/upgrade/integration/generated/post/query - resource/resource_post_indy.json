@@ -1,0 +1,32 @@
+{
+    "payload": {
+        "resource": {
+            "data": "eyJhdHRyIjpbIm5hbWUiLCJhZ2UiXX0="
+        },
+        "metadata": {
+            "collectionId": "7Tqg6BwSSWapxgUDm9KKgg",
+            "id": "9fbb1b86-91f8-4942-97b9-725b7714131c",
+            "name": "Test Resource After Upgrade Name Indy Case",
+            "version": "1.1-indy",
+            "resourceType": "CL-Schema",
+            "alsoKnownAs": [
+                {
+                    "uri": "https://example.com/alternative-uri",
+                    "description": ""
+                },
+                {
+                    "uri": "https://example.com/alternative-uri",
+                    "description": "Alternative URI description"
+                },
+                {
+                    "uri": "did:canow:testnet:7Tqg6BwSSWapxgUDm9KKgg/resources/9fbb1b86-91f8-4942-97b9-725b7714131c",
+                    "description": "did-url"
+                }
+            ],
+            "mediaType": "application/json",
+            "checksum": "00a0085b5b8ede397cf9f84431ed90f35e6f67ead3cedcc99a2e34ca9e493edf",
+            "previousVersionId": "",
+            "nextVersionId": ""
+        }
+    }
+}

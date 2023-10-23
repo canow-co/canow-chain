@@ -7,11 +7,11 @@ import (
 	"fmt"
 
 	"github.com/canow-co/canow-chain/tests/integration/cli"
+	"github.com/canow-co/canow-chain/tests/integration/helpers"
 	"github.com/canow-co/canow-chain/tests/integration/network"
 	"github.com/canow-co/canow-chain/tests/integration/testdata"
 	didcli "github.com/canow-co/cheqd-node/x/did/client/cli"
 	testsetup "github.com/canow-co/cheqd-node/x/did/tests/setup"
-	"github.com/canow-co/canow-chain/tests/integration/helpers"
 	"github.com/canow-co/cheqd-node/x/did/types"
 	"github.com/google/uuid"
 
