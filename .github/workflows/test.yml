@@ -114,7 +114,7 @@ jobs:
         run: |
           mkdir -p ${{ env.RUNNER_BIN_DIR }}
           wget -c https://github.com/canow-co/canow-chain/releases/download/${{ env.TESTNET_LATEST_BIN_VER }}/canow-chain-${{ env.TESTNET_LATEST_BIN_VER }}-linux.tar.gz
-          tar -xvf canow-chain-${{ env.TESTNET_LATEST_BIN_VER }}-linux.tar.gz -C ${{ env.RUNNER_BIN_DIR }} --strip-components=1
+          tar -xvf canow-chain-${{ env.TESTNET_LATEST_BIN_VER }}-linux.tar.gz -C ${{ env.RUNNER_BIN_DIR }}
 
       - name: Set old binary permissions
         run: sudo chmod +x ${{ env.RUNNER_BIN_DIR }}/canow-chain
