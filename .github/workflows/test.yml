@@ -176,7 +176,18 @@ jobs:
           name: report-post-upgrade.xml
           path: report-post-upgrade.xml
 
-      - name: Download new canow-chain binary (build-latest) for running integration tests
+      - name: Submit governance fee parameter change proposals
+        working-directory: ./tests/upgrade/integration
+        run: |
+          ginkgo -r --race --tags upgrade_integration --focus-file param_change_proposal_test.go --keep-going --trace --junit-report ../../../report-pricing-proposal.xml
+
+      - name: Upload pricing proposal tests result
+        uses: actions/upload-artifact@v3
+        with:
+          name: report-pricing-proposal.xml
+          path: report-pricing-proposal.xml
+
+      - name: Download new canow-chain binary (build-latest) for running pricing tests
         uses: actions/download-artifact@v3
         id: download
         with:
@@ -188,33 +199,6 @@ jobs:
 
       - name: Set broadcast-mode to block in client configuration file
         run: canow-chain config broadcast-mode block
-
-      - name: Run integration tests on upgraded network
-        working-directory: ./tests/integration
-        run: |
-          ginkgo -r --tags integration --race --randomize-suites --keep-going --trace --junit-report ../../report-upgraded-integration.xml
-
-      - name: Upload upgraded network integration tests result
-        uses: actions/upload-artifact@v3
-        with:
-          name: report-upgraded-integration.xml
-          path: report-upgraded-integration.xml
-
-      - name: Show logs on failure
-        if: failure()
-        working-directory: ./docker/localnet
-        run: docker compose --env-file build-latest.env logs --tail --follow
-
-      - name: Submit governance fee parameter change proposals
-        working-directory: ./tests/upgrade/integration
-        run: |
-          ginkgo -r --race --tags upgrade_integration --focus-file param_change_proposal_test.go --keep-going --trace --junit-report ../../../report-pricing-proposal.xml
-
-      - name: Upload pricing proposal tests result
-        uses: actions/upload-artifact@v3
-        with:
-          name: report-pricing-proposal.xml
-          path: report-pricing-proposal.xml
 
       - name: Run pricing integration tests after successful param change proposal
         working-directory: ./tests/integration
@@ -260,11 +244,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: report-post-upgrade.xml
-      
-      - name: Download upgraded network integration tests report
-        uses: actions/download-artifact@v3
-        with:
-          name: report-upgraded-integration.xml
 
       - name: Download pricing proposal tests report
         uses: actions/download-artifact@v3
@@ -278,7 +257,7 @@ jobs:
 
       - name: Combine test results
         run: |
-          python .github/scripts/xml_combine.py report-unit.xml report-integration.xml report-pre-upgrade.xml report-post-upgrade.xml report-upgraded-integration.xml report-pricing-proposal.xml report-pricing-change.xml > report.xml
+          python .github/scripts/xml_combine.py report-unit.xml report-integration.xml report-pre-upgrade.xml report-post-upgrade.xml report-pricing-proposal.xml report-pricing-change.xml > report.xml
 
       - uses: mikepenz/action-junit-report@v3
         with:
