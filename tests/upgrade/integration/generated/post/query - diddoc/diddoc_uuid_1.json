@@ -2,8 +2,7 @@
     "payload": {
         "context": [
             "abc",
-            "def",
-            "ghi"
+            "def"
         ],
         "id": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554",
         "controller": [
@@ -41,9 +40,41 @@
             },
             {
                 "verificationMethodId": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-2"
+            }
+        ],
+        "assertionMethod": [
+            {
+                "verificationMethodId": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-3"
+            }
+        ],
+        "capabilityInvocation": [
+            {
+                "verificationMethodId": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-4"
+            },
+            {
+                "verificationMethodId": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-1"
+            }
+        ],
+        "capabilityDelegation": [
+            {
+                "verificationMethodId": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-4"
+            },
+            {
+                "verificationMethodId": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-2"
+            }
+        ],
+        "keyAgreement": [
+            {
+                "verificationMethodId": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-1"
+            },
+            {
+                "verificationMethodId": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-2"
             },
             {
                 "verificationMethodId": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-3"
+            },
+            {
+                "verificationMethodId": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#key-4"
             }
         ],
         "service": [
@@ -53,19 +84,11 @@
                 "serviceEndpoint": [
                     "endpoint-1"
                 ]
-            },
-            {
-                "id": "did:canow:testnet:2e5ca092-8264-47c7-9216-8b36e01e5554#service-2",
-                "serviceType": "type-2",
-                "serviceEndpoint": [
-                    "endpoint-2"
-                ]
             }
         ],
         "alsoKnownAs": [
             "alias-1",
-            "alias-2",
-            "alias-3"
+            "alias-2"
         ]
     }
 }
