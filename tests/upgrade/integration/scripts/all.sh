@@ -14,8 +14,8 @@ ginkgo -r --race --tags upgrade_integration --focus-file pre_test.go
 
 bash "$DIR_/upgrade.sh"
 
-ginkgo -r --race --tags upgrade_integration --focus-file param_change_proposal_test.go
-
 ginkgo -r --race --tags upgrade_integration --focus-file post_test.go
+
+ginkgo -r --race --tags upgrade_integration --focus-file param_change_proposal_test.go
 
 bash "$DIR_/cleanup.sh"

@@ -152,7 +152,7 @@ var _ = Describe("Upgrade - Post", Ordered, func() {
 			Expect(err).To(BeNil())
 
 			for _, payload := range ExpectedDidDocRecords {
-				var DidDocRecord didtypes.DidDoc
+				var DidDocRecord didtypes.DidDocWithMetadata
 
 				testCase := GetCaseName(payload)
 				By("Running: query " + testCase)
@@ -161,31 +161,31 @@ var _ = Describe("Upgrade - Post", Ordered, func() {
 				_, err = Loader(payload, &DidDocRecord)
 				Expect(err).To(BeNil())
 
-				res, err := cli.QueryDid(DidDocRecord.Id, cli.Validator0)
+				res, err := cli.QueryDid(DidDocRecord.DidDoc.Id, cli.Validator0)
 				Expect(err).To(BeNil())
 
-				if DidDocRecord.Context == nil {
-					DidDocRecord.Context = []string{}
+				if DidDocRecord.DidDoc.Context == nil {
+					DidDocRecord.DidDoc.Context = []string{}
 				}
-				if DidDocRecord.Authentication == nil {
-					DidDocRecord.Authentication = []*didtypes.VerificationRelationship{}
+				if DidDocRecord.DidDoc.Authentication == nil {
+					DidDocRecord.DidDoc.Authentication = []*didtypes.VerificationRelationship{}
 				}
-				if DidDocRecord.AssertionMethod == nil {
-					DidDocRecord.AssertionMethod = []*didtypes.VerificationRelationship{}
+				if DidDocRecord.DidDoc.AssertionMethod == nil {
+					DidDocRecord.DidDoc.AssertionMethod = []*didtypes.VerificationRelationship{}
 				}
-				if DidDocRecord.CapabilityInvocation == nil {
-					DidDocRecord.CapabilityInvocation = []*didtypes.VerificationRelationship{}
+				if DidDocRecord.DidDoc.CapabilityInvocation == nil {
+					DidDocRecord.DidDoc.CapabilityInvocation = []*didtypes.VerificationRelationship{}
 				}
-				if DidDocRecord.CapabilityDelegation == nil {
-					DidDocRecord.CapabilityDelegation = []*didtypes.VerificationRelationship{}
+				if DidDocRecord.DidDoc.CapabilityDelegation == nil {
+					DidDocRecord.DidDoc.CapabilityDelegation = []*didtypes.VerificationRelationship{}
 				}
-				if DidDocRecord.KeyAgreement == nil {
-					DidDocRecord.KeyAgreement = []*didtypes.VerificationRelationship{}
+				if DidDocRecord.DidDoc.KeyAgreement == nil {
+					DidDocRecord.DidDoc.KeyAgreement = []*didtypes.VerificationRelationship{}
 				}
-				if DidDocRecord.Service == nil {
-					DidDocRecord.Service = []*didtypes.Service{}
+				if DidDocRecord.DidDoc.Service == nil {
+					DidDocRecord.DidDoc.Service = []*didtypes.Service{}
 				}
-				for _, Service := range DidDocRecord.Service {
+				for _, Service := range DidDocRecord.DidDoc.Service {
 					if Service.Accept == nil {
 						Service.Accept = []string{}
 					}
@@ -193,11 +193,12 @@ var _ = Describe("Upgrade - Post", Ordered, func() {
 						Service.RoutingKeys = []string{}
 					}
 				}
-				if DidDocRecord.AlsoKnownAs == nil {
-					DidDocRecord.AlsoKnownAs = []string{}
+				if DidDocRecord.DidDoc.AlsoKnownAs == nil {
+					DidDocRecord.DidDoc.AlsoKnownAs = []string{}
 				}
 
-				Expect(*res.Value.DidDoc).To(Equal(DidDocRecord))
+				Expect(*res.Value.DidDoc).To(Equal(*DidDocRecord.DidDoc))
+				Expect(res.Value.Metadata.Deactivated).To(Equal(DidDocRecord.Metadata.Deactivated))
 			}
 		})
 

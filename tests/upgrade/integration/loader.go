@@ -51,6 +51,8 @@ func Loader(path string, ptrPayload interface{}) ([]cli.SignInput, error) {
 		err = integrationhelpers.Codec.UnmarshalJSON(tc.Payload, ptrPayload)
 	case *didtypesv2.DidDoc:
 		err = integrationhelpers.Codec.UnmarshalJSON(tc.Payload, ptrPayload)
+	case *didtypesv2.DidDocWithMetadata:
+		err = integrationhelpers.Codec.UnmarshalJSON(tc.Payload, ptrPayload)
 	case *resourcetypesv2.MsgCreateResourcePayload:
 		err = integrationhelpers.Codec.UnmarshalJSON(tc.Payload, ptrPayload)
 	case *resourcetypesv2.Metadata:
