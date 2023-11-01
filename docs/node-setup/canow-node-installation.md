@@ -12,7 +12,7 @@ There are a few ways of canow-chain node installation:
 mkdir ~/canow-chain-dir && cd ~/canow-chain-dir
 
 # download the binary file for Linux x86-64
-curl -L -o canow-chain.tar.gz https://github.com/canow-co/canow-chain/releases/download/v0.2.2/canow-chain-v0.2.2-linux.tar.gz
+curl -L -o canow-chain.tar.gz https://github.com/canow-co/canow-chain/releases/download/v0.3.0/canow-chain-v0.3.0-linux.tar.gz
 
 # unarchive the files
 tar -xzvf canow-chain.tar.gz
@@ -117,7 +117,7 @@ For setting up Canow node you can use cosmoviser for an automatically upgrade.
 If you are prompted for a password for the `canow` user, type `exit` to logout and then attempt to execute this as a privileged user (with `sudo` privileges or as root user, if necessary).
 
 ```bash
-  wget -O /etc/systemd/system/canow-chain.service https://github.com/canow-co/canow-chain/releases/download/v0.2.2/cosmovisor.service
+  wget -O /etc/systemd/system/canow-chain.service https://github.com/canow-co/canow-chain/releases/download/v0.3.0/cosmovisor.service
   systemctl start canow-chain
 ```
 
