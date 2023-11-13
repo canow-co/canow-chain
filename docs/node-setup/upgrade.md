@@ -116,19 +116,23 @@
 17. Update `canow-chain` client on your machine to the same version as `testnet` network has been updated to:
 
     ```bash
-    rm -rf ~/canow-chain-dir
+    sudo rm -rf /tmp/canow-chain-release
 
-    mkdir ~/canow-chain-dir
+    sudo mkdir /tmp/canow-chain-release
 
-    cd ~/canow-chain-dir
+    cd /tmp/canow-chain-release
 
-    curl -L -o canow-chain.tar.gz https://github.com/canow-co/canow-chain/releases/download/v0.3.0/canow-chain-v0.3.0-linux.tar.gz
+    sudo curl -L -o canow-chain.tar.gz https://github.com/canow-co/canow-chain/releases/download/v0.3.0/canow-chain-v0.3.0-linux.tar.gz
 
-    tar -xzvf canow-chain.tar.gz
+    sudo tar -xzvf canow-chain.tar.gz --no-same-owner
 
-    chmod +x canow-chain
+    sudo chmod +x canow-chain
 
     sudo cp canow-chain /usr/local/bin/
+
+    cd ~
+
+    sudo rm -rf /tmp/canow-chain-release
     ```
 
 18. Ensure that `canow-chain` client on your machine has now the version `v0.3.0`:
