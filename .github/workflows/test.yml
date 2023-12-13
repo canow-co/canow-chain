@@ -20,10 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-go@v3
+      - uses: actions/setup-go@v4
         with:
           go-version-file: ./go.mod
-          cache: true
 
       - name: Install ginkgo
         working-directory: ./..
@@ -83,10 +82,9 @@ jobs:
         run: |
           bash import-keys.sh
 
-      - uses: actions/setup-go@v3
+      - uses: actions/setup-go@v4
         with:
           go-version-file: ./go.mod
-          cache: true
 
       - name: Install ginkgo
         working-directory: ./..
@@ -134,15 +132,14 @@ jobs:
       - name: Load new canow-chain Docker image
         run: docker load -i canow-chain-build.tar
 
-      - uses: actions/setup-go@v3
+      - uses: actions/setup-go@v4
         with:
           go-version-file: ./go.mod
-          cache: true
 
       - name: Install ginkgo
         working-directory: ./..
         run: go install github.com/onsi/ginkgo/v2/ginkgo@latest
-      
+
       # Run tests
       - name: Set up network with old canow-chain version (testnet-latest)
         working-directory: ./tests/upgrade/integration
@@ -234,7 +231,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: report-integration.xml
-      
+
       - name: Download pre-upgrade tests report
         uses: actions/download-artifact@v3
         with:
@@ -249,7 +246,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: report-pricing-proposal.xml
-      
+
       - name: Download pricing change tesst report
         uses: actions/download-artifact@v3
         with:

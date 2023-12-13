@@ -9,7 +9,6 @@ env:
   BIN_NAME: canow-chain
 
 jobs:
-
   build-binary:
     name: "Node binary"
     strategy:
@@ -24,11 +23,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      
-      - uses: actions/setup-go@v3
+
+      - uses: actions/setup-go@v4
         with:
           go-version-file: ./go.mod
-          cache: true
 
       - name: Build application binary
         run: env VERSION="$( git describe --tags ${{ github.sha }})" CGO_ENABLED=1 GOOS=${{ matrix.goos }} GOARCH=amd64 make build
