@@ -10,3 +10,6 @@ release/
 
 ### APP-SPECIFIC EXCLUSIONS ###
 build/
+
+# dotenv environment variable files
+.env
