@@ -73,8 +73,6 @@ jobs:
             ${{ steps.get_gobin.outputs.gobin }}/cosmovisor
           prerelease: true
           generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
   release-docker:
     name: "Docker image"
@@ -99,7 +97,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GH_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Configure Docker image metadata
         id: meta

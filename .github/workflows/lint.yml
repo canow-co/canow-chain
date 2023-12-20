@@ -64,7 +64,7 @@ jobs:
           IGNORE_GITIGNORED_FILES: true
           FILTER_REGEX_EXCLUDE: vue/.*
           DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LOG_LEVEL: WARN
           VALIDATE_ALL_CODEBASE: true
           MULTI_STATUS: true

@@ -21,7 +21,7 @@ jobs:
       # replace vX.X.X below with the most recently released version
       - uses: CondeNast/conventional-pull-request-action@v0.1.2
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           # to override config-conventional rules, specify a relative path to your rules module, actions/checkout is required for this setting!
           commitlintRulesPath: "./.github/linters/.commitlint.rules.js" # default: undefined
